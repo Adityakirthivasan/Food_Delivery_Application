@@ -11,6 +11,9 @@ import {
 
 import Ionicons from '@react-native-vector-icons/ionicons';
 
+import RatingBadge from '../common/RatingBadge';
+import { useNavigation } from '@react-navigation/native';
+
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 interface Props {
@@ -20,8 +23,16 @@ interface Props {
 export default function RestaurantCard({
   item,
 }: Props) {
+  const navigation = useNavigation<any>();
   return (
-    <View style={styles.card}>
+    <TouchableOpacity
+  style={styles.card}
+  activeOpacity={0.95}
+  onPress={() =>
+    navigation.navigate('ProductDetailScreen', {
+      item,
+    })
+  }>
 
       <View>
 
@@ -67,19 +78,11 @@ export default function RestaurantCard({
 
         <View style={styles.ratingRow}>
 
-          <View style={styles.ratingBox}>
+          <RatingBadge rating={item.rating} />
 
-            <Ionicons
-              name="star"
-              size={8}
-              color="#fff"
-            />
-
-          </View>
-
-          <Text style={styles.info}>
-            {item.rating} (1.4k+) • {item.deliveryTime} • {item.distance}
-          </Text>
+<Text style={styles.info}>
+  (1.4k+) • {item.deliveryTime} • {item.distance}
+</Text>
 
         </View>
 
@@ -108,7 +111,7 @@ export default function RestaurantCard({
 
       </View>
 
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -186,15 +189,15 @@ name: {
     marginTop: 6,
   },
 
-  ratingBox: {
-    width: 12,
-    height: 12,
-    borderRadius: 2,
-    backgroundColor: '#34C759',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 6,
-  },
+  // ratingBox: {
+  //   width: 12,
+  //   height: 12,
+  //   borderRadius: 2,
+  //   backgroundColor: '#34C759',
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   marginRight: 6,
+  // },
 
 info: {
   fontSize: 13,

@@ -3,3 +3,15 @@ export type BottomTabParamList = {
   FlashFood: undefined;
   Reorder: undefined;
 };
+
+export type RootStackParamList = {
+  BottomTabs: undefined;
+
+  OfferScreen: undefined;
+  BestSellerScreen: undefined;
+  MyOrdersScreen: undefined;
+
+  ProductDetailScreen: {
+    item: any;
+  };
+};

@@ -4,7 +4,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
   Image,
   ScrollView,
@@ -12,18 +11,27 @@ import {
 
 import Ionicons from '@react-native-vector-icons/ionicons';
 import Feather from '@react-native-vector-icons/feather';
-import MaterialCommunityIcons from '@react-native-vector-icons/material-design-icons';
+
+import { useNavigation } from '@react-navigation/native';
 
 import TopPickCard from '../../components/cards/TopPickCard';
 import RestaurantCard from '../../components/cards/RestaurantCard';
 import FilterChip from '../../components/buttons/FilterChip';
+import CategoryCard from '../../components/cards/CategoryCard';
+
+import LocationHeader from '../../components/headers/LocationHeader';
+import SearchBar from '../../components/inputs/SearchBar';
 
 import {
   topPicksData,
   restaurantData,
+  categoryData
 } from '../../data/homeData';
 
 export default function HomeScreen() {
+
+  const navigation = useNavigation<any>();
+
   return (
     <View style={styles.container}>
 
@@ -32,99 +40,21 @@ export default function HomeScreen() {
         bounces={false}>
 
         {/* TOP SECTION */}
+
         <View style={styles.topSection}>
 
-          {/* LOCATION */}
-          <View style={styles.locationRow}>
+<LocationHeader
+  title="Rivertown Haven"
+  subtitle="SGM, petals, sai baba colony..."
+  onProfilePress={() =>
+    navigation.navigate('MyOrdersScreen')
+  }
+/>
 
-            <View>
-
-              <View style={styles.locationTitleRow}>
-
-                <Ionicons
-                  name="location-sharp"
-                  size={16}
-                  color="#fff"
-                />
-
-                <Text style={styles.locationTitle}>
-                  Rivertown Haven
-                </Text>
-
-                <Ionicons
-                  name="chevron-down"
-                  size={16}
-                  color="#fff"
-                />
-
-              </View>
-
-              <Text style={styles.locationSub}>
-                SGM, petals, sai baba colony...
-              </Text>
-
-            </View>
-
-            <TouchableOpacity style={styles.profileButton}>
-
-              <Ionicons
-                name="person"
-                size={18}
-                color="#fff"
-              />
-
-            </TouchableOpacity>
-
-          </View>
-
-          {/* SEARCH */}
-          <View style={styles.searchRow}>
-
-            <View style={styles.searchBar}>
-
-              <Feather
-                name="search"
-                size={20}
-                color="#555"
-              />
-
-              <TextInput
-                placeholder="Search your food"
-                placeholderTextColor="#8E8E93"
-                style={styles.input}
-              />
-
-              <View style={styles.divider} />
-
-              <MaterialCommunityIcons
-                name="microphone"
-                size={22}
-                color="#F97316"
-              />
-
-            </View>
-
-<TouchableOpacity style={styles.vegButton}>
-
-  <Text style={styles.vegText}>
-    Veg
-  </Text>
-
- <View style={styles.toggleTrack}>
-
-  <View style={styles.vegToggleOuter}>
-
-    <View style={styles.vegToggleInner} />
-
-  </View>
-
-</View>
-
-</TouchableOpacity>
-
-          </View>
+          <SearchBar showVegToggle />
 
           {/* OFFER */}
+
           <View style={styles.offerContainer}>
 
             <View>
@@ -159,6 +89,7 @@ export default function HomeScreen() {
         </View>
 
         {/* FREE DELIVERY */}
+
         <View style={styles.deliveryCard}>
 
           <View>
@@ -187,6 +118,7 @@ export default function HomeScreen() {
         </View>
 
         {/* CATEGORIES */}
+
         <View style={styles.categorySection}>
 
           <Text style={styles.sectionTitle}>
@@ -198,28 +130,13 @@ export default function HomeScreen() {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.categoryScroll}>
 
-            {[
-              'Meat',
-              'Cold drinks',
-              'Dessert',
-              'Burger',
-              'Pizza',
-            ].map((item, index) => (
+            {categoryData.map((item) => (
 
-              <View key={index} style={styles.categoryItem}>
-
-                <Image
-                  source={{
-                    uri: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38',
-                  }}
-                  style={styles.categoryImage}
-                />
-
-                <Text style={styles.categoryText}>
-                  {item}
-                </Text>
-
-              </View>
+              <CategoryCard
+                key={item.id}
+                title={item.title}
+                image={item.image}
+              />
 
             ))}
 
@@ -228,6 +145,7 @@ export default function HomeScreen() {
         </View>
 
         {/* TOP PICKS */}
+
         <View style={styles.topPickContainer}>
 
           <View style={styles.topPickHeader}>
@@ -257,10 +175,12 @@ export default function HomeScreen() {
             showsHorizontalScrollIndicator={false}>
 
             {topPicksData.map((item) => (
+
               <TopPickCard
                 key={item.id}
                 item={item}
               />
+
             ))}
 
           </ScrollView>
@@ -268,6 +188,7 @@ export default function HomeScreen() {
         </View>
 
         {/* MORE WITH US */}
+
         <View style={styles.moreSection}>
 
           <Text style={styles.moreTitle}>
@@ -276,26 +197,64 @@ export default function HomeScreen() {
 
           <View style={styles.moreImageRow}>
 
-            {[1, 2, 3].map((item) => (
+            {/* OFFER PAGE */}
 
-              <View key={item} style={styles.moreCard}>
+            <TouchableOpacity
+              style={styles.moreCard}
+              onPress={() =>
+                navigation.navigate('OfferScreen')
+              }>
 
-                <Image
-                  source={{
-                    uri: 'https://images.unsplash.com/photo-1513104890138-7c749659a591',
-                  }}
-                  style={styles.moreImage}
-                />
+              <Image
+                source={{
+                  uri: 'https://images.unsplash.com/photo-1513104890138-7c749659a591',
+                }}
+                style={styles.moreImage}
+              />
 
-              </View>
+            </TouchableOpacity>
 
-            ))}
+            {/* BEST SELLER */}
+
+            {/* <TouchableOpacity style={styles.moreCard}> */}
+            <TouchableOpacity
+  style={styles.moreCard}
+  onPress={() =>
+    navigation.navigate('BestSellerScreen')
+  }>
+
+              <Image
+                source={{
+                  uri: 'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0',
+                }}
+                style={styles.moreImage}
+              />
+
+            </TouchableOpacity>
+
+            {/* BEST SELLER */}
+
+            <TouchableOpacity
+  style={styles.moreCard}
+  onPress={() =>
+    navigation.navigate('BestSellerScreen')
+  }>
+
+              <Image
+                source={{
+                  uri: 'https://images.unsplash.com/photo-1551024601-bec78aea704b',
+                }}
+                style={styles.moreImage}
+              />
+
+            </TouchableOpacity>
 
           </View>
 
         </View>
 
         {/* FILTERS */}
+
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -331,6 +290,7 @@ export default function HomeScreen() {
         </ScrollView>
 
         {/* RESTAURANTS */}
+
         <View style={styles.restaurantSection}>
 
           <Text style={styles.restaurantTitle}>
@@ -338,10 +298,12 @@ export default function HomeScreen() {
           </Text>
 
           {restaurantData.map((item) => (
+
             <RestaurantCard
               key={item.id}
               item={item}
             />
+
           ))}
 
         </View>
@@ -359,120 +321,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 
-topSection: {
-  width: '100%',
-  minHeight: 355,
-  paddingHorizontal: 16,
-  paddingTop: 50,
-  paddingBottom: 28,
-  borderBottomLeftRadius: 30,
-  borderBottomRightRadius: 30,
-  backgroundColor: '#F97316',
-},
+  topSection: {
+    width: '100%',
+    minHeight: 355,
+    paddingHorizontal: 16,
+    paddingTop: 50,
+    paddingBottom: 28,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    backgroundColor: '#F97316',
+  },
 
-  locationRow: {
+  offerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginTop: 24,
   },
-
-  locationTitleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  locationTitle: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: '700',
-    marginHorizontal: 4,
-  },
-
-  locationSub: {
-    color: '#FDE7D3',
-    marginTop: 5,
-    fontSize: 13,
-  },
-
-  profileButton: {
-    width: 58,
-    height: 34,
-    borderRadius: 17,
-    backgroundColor: '#000',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-searchRow: {
-  flexDirection: 'row',
-  marginTop: 20,
-  alignItems: 'center',
-},
-
-searchBar: {
-  flex: 1,
-  height: 50,
-  backgroundColor: '#fff',
-  borderRadius: 15,
-  paddingHorizontal: 16,
-  flexDirection: 'row',
-  alignItems: 'center',
-},
-
-  input: {
-    flex: 1,
-    fontSize: 15,
-    marginLeft: 10,
-    color:'#000',
-  },
-
-  divider: {
-    width: 1,
-    height: 22,
-    backgroundColor: '#E5E5E5',
-    marginHorizontal: 12,
-  },
-
-vegButton: {
-  width: 64,
-  height: 50,
-  backgroundColor: '#fff',
-  borderRadius: 15,
-  marginLeft: 12,
-  justifyContent: 'center',
-  alignItems: 'center',
-},
-
-vegText: {
-  fontWeight: '600',
-  fontSize: 14,
-  marginBottom: 4,
-},
-
-  toggleContainer: {
-    width: 20,
-    height: 8,
-    borderRadius: 10,
-    backgroundColor: '#D9D9D9',
-    justifyContent: 'center',
-    paddingHorizontal: 2,
-  },
-
-  toggleCircle: {
-    width: 8,
-    height: 10,
-    borderRadius: 8,
-    backgroundColor: '#fff',
-    borderWidth: 2,
-    borderColor: 'green',
-  },
-
-offerContainer: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  marginTop: 24,
-},
 
   offerTitle: {
     color: '#fff',
@@ -481,13 +346,13 @@ offerContainer: {
     width: 220,
   },
 
-offerSub: {
-  color: '#fff',
-  fontSize: 15,
-  width: 170,
-  marginTop: 8,
-  lineHeight: 20,
-},
+  offerSub: {
+    color: '#fff',
+    fontSize: 15,
+    width: 170,
+    marginTop: 8,
+    lineHeight: 20,
+  },
 
   orderButton: {
     width: 120,
@@ -504,34 +369,35 @@ offerSub: {
     fontWeight: '600',
   },
 
-offerImage: {
-  width: 140,
-  height: 140,
-  borderRadius: 20,
-  resizeMode: 'cover',
-},
-
-deliveryCard: {
-  width: '92%',
-  height: 145,
-  borderRadius: 20,
-  backgroundColor: '#fff',
-  alignSelf: 'center',
-  marginTop: 20,
-  padding: 20,
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-
-  shadowColor: '#000',
-  shadowOffset: {
-    width: 0,
-    height: 1,
+  offerImage: {
+    width: 140,
+    height: 140,
+    borderRadius: 20,
+    resizeMode: 'cover',
   },
-  shadowOpacity: 0.12,
-  shadowRadius: 4,
-  elevation: 3,
-},
+
+  deliveryCard: {
+    width: '92%',
+    height: 145,
+    borderRadius: 20,
+    backgroundColor: '#fff',
+    alignSelf: 'center',
+    marginTop: 20,
+    padding: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+
+    shadowOpacity: 0.12,
+    shadowRadius: 4,
+    elevation: 3,
+  },
 
   deliveryTitle: {
     fontSize: 20,
@@ -572,23 +438,6 @@ deliveryCard: {
   categoryScroll: {
     marginTop: 18,
     paddingRight: 16,
-  },
-
-  categoryItem: {
-    marginRight: 20,
-    alignItems: 'center',
-  },
-
-  categoryImage: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-  },
-
-  categoryText: {
-    marginTop: 8,
-    fontSize: 15,
-    fontWeight: '500',
   },
 
   topPickContainer: {
@@ -635,26 +484,26 @@ deliveryCard: {
     marginTop: 18,
   },
 
-moreCard: {
-  width: 122,
-  height: 122,
-  borderRadius: 12,
-  borderWidth: 1,
-  borderColor: '#D9D9D9',
-  backgroundColor: '#fff',
-  justifyContent: 'center',
-  alignItems: 'center',
+  moreCard: {
+    width: 122,
+    height: 122,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#D9D9D9',
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
 
-  shadowColor: '#000',
-  shadowOffset: {
-    width: 0,
-    height: 1,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+
+    shadowOpacity: 0.12,
+    shadowRadius: 4,
+    elevation: 3,
   },
-  shadowOpacity: 0.12,
-  shadowRadius: 4,
-
-  elevation: 3,
-},
 
   moreImage: {
     width: 85,
@@ -678,30 +527,4 @@ moreCard: {
     fontSize: 20,
     fontWeight: '600',
   },
- toggleTrack: {
-  width: 34,
-  height: 14,
-  borderRadius: 10,
-  backgroundColor: '#D9D9D9',
-  justifyContent: 'center',
-  paddingLeft: 2,
-},
-
-vegToggleOuter: {
-  width: 14,
-  height: 14,
-  borderRadius: 3,
-  borderWidth: 1.5,
-  borderColor: '#228B22',
-  justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: '#fff',
-},
-
-vegToggleInner: {
-  width: 8,
-  height: 8,
-  borderRadius: 10,
-  backgroundColor: '#228B22',
-},
 });

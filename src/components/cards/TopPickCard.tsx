@@ -12,6 +12,9 @@ import {
 import Ionicons from '@react-native-vector-icons/ionicons';
 import Feather from '@react-native-vector-icons/feather';
 
+import RatingBadge from '../common/RatingBadge';
+import { useNavigation } from '@react-navigation/native';
+
 const CARD_WIDTH = Dimensions.get('window').width * 0.37;
 
 interface Props {
@@ -28,8 +31,17 @@ interface Props {
 export default function TopPickCard({
   item,
 }: Props) {
+
+  const navigation = useNavigation<any>();
   return (
-    <View style={styles.card}>
+    <TouchableOpacity
+  style={styles.card}
+  activeOpacity={0.9}
+  onPress={() =>
+    navigation.navigate('ProductDetailScreen', {
+      item,
+    })
+  }>
 
       <View>
 
@@ -56,23 +68,10 @@ export default function TopPickCard({
           {item.category}
         </Text>
 
-        <View style={styles.smallRatingContainer}>
-
-          <View style={styles.smallRatingBox}>
-
-            <Ionicons
-              name="star"
-              size={6}
-              color="#fff"
-            />
-
-          </View>
-
-          <Text style={styles.smallRatingText}>
-            {item.rating}
-          </Text>
-
-        </View>
+        <RatingBadge
+          rating={item.rating}
+          small
+        />
 
       </View>
 
@@ -112,7 +111,7 @@ export default function TopPickCard({
 
       </View>
 
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -148,26 +147,26 @@ const styles = StyleSheet.create({
     color: '#444',
   },
 
-  smallRatingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 2,
-  },
+  // smallRatingContainer: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   marginTop: 2,
+  // },
 
-  smallRatingBox: {
-    width: 10,
-    height: 10,
-    borderRadius: 2,
-    backgroundColor: '#FF6B35',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 4,
-  },
+  // smallRatingBox: {
+  //   width: 10,
+  //   height: 10,
+  //   borderRadius: 2,
+  //   backgroundColor: '#FF6B35',
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   marginRight: 4,
+  // },
 
-  smallRatingText: {
-    fontSize: 12,
-    color: '#444',
-  },
+  // smallRatingText: {
+  //   fontSize: 12,
+  //   color: '#444',
+  // },
 
   restaurantName: {
     fontSize: 15,
