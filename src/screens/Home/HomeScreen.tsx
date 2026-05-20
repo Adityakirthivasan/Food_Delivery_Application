@@ -9,6 +9,8 @@ import {
   ScrollView,
 } from 'react-native';
 
+import LinearGradient from 'react-native-linear-gradient';
+
 import Ionicons from '@react-native-vector-icons/ionicons';
 import Feather from '@react-native-vector-icons/feather';
 
@@ -25,7 +27,7 @@ import SearchBar from '../../components/inputs/SearchBar';
 import {
   topPicksData,
   restaurantData,
-  categoryData
+  categoryData,
 } from '../../data/homeData';
 
 export default function HomeScreen() {
@@ -33,6 +35,7 @@ export default function HomeScreen() {
   const navigation = useNavigation<any>();
 
   return (
+
     <View style={styles.container}>
 
       <ScrollView
@@ -41,66 +44,117 @@ export default function HomeScreen() {
 
         {/* TOP SECTION */}
 
-        <View style={styles.topSection}>
+        <LinearGradient
+          colors={['#FF8340', '#C64500']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
+          style={styles.topSection}>
 
-<LocationHeader
-  title="Rivertown Haven"
-  subtitle="SGM, petals, sai baba colony..."
-  onProfilePress={() =>
-    navigation.navigate('MyOrdersScreen')
-  }
-/>
+          {/* LOCATION */}
+
+          <LocationHeader
+            title="Rivertown Haven"
+            subtitle="SGM, petals, sai baba colony..."
+            onProfilePress={() =>
+              navigation.navigate('MyOrdersScreen')
+            }
+          />
+
+          {/* SEARCH */}
 
           <SearchBar showVegToggle />
 
-          {/* OFFER */}
+          {/* OFFER TITLE */}
 
-          <View style={styles.offerContainer}>
+          <Text style={styles.offerTitle}>
+            Get extra $50 OFF!
+          </Text>
 
-            <View>
+          {/* OFFER SUBTITLE */}
 
-              <Text style={styles.offerTitle}>
-                Get extra $50 OFF!
-              </Text>
+          <Text style={styles.offerSubtitle}>
+            Win today, eat for less 
+            
+            tomorrow.
+          </Text>
 
-              <Text style={styles.offerSub}>
-                Win today, eat for less tomorrow.
-              </Text>
+          {/* BUTTON */}
 
-              <TouchableOpacity style={styles.orderButton}>
+          <TouchableOpacity style={styles.orderButton}>
 
-                <Text style={styles.orderButtonText}>
-                  Order now
-                </Text>
+            <Text style={styles.orderButtonText}>
+              Order now
+            </Text>
 
-              </TouchableOpacity>
+          </TouchableOpacity>
 
-            </View>
+          {/* IMAGES */}
+
+          <View style={styles.imageContainer}>
+
+            {/* SPEECH BUBBLE */}
 
             <Image
-              source={{
-                uri: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
-              }}
-              style={styles.offerImage}
+              source={require('../../assets/images/home/promo/Speech-bubble.png')}
+              style={styles.speechBubble}
+            />
+
+            {/* COMBO TEXT */}
+
+            <Image
+              source={require('../../assets/images/home/promo/Combo-bubble.png')}
+              style={styles.comboBubble}
+            />
+
+            {/* BURGER */}
+
+            <Image
+              source={require('../../assets/images/home/promo/Burger.png')}
+              style={styles.burger}
+            />
+
+            {/* CHARACTER */}
+
+            <Image
+              source={require('../../assets/images/home/promo/Character.png')}
+              style={styles.character}
+            />
+
+            {/* DRINK */}
+
+            <Image
+              source={require('../../assets/images/home/promo/Drink.png')}
+              style={styles.drink}
+            />
+
+            {/* FRIES */}
+
+            <Image
+              source={require('../../assets/images/home/promo/Fries.png')}
+              style={styles.fries}
             />
 
           </View>
 
-        </View>
+        </LinearGradient>
 
-        {/* FREE DELIVERY */}
+        {/* ACTION CARD */}
 
-        <View style={styles.deliveryCard}>
+        <View style={styles.actionCard}>
 
-          <View>
+          {/* LEFT CONTENT */}
 
-            <Text style={styles.deliveryTitle}>
-              Free delivery{'\n'}within 10km!
+          <View style={styles.actionContent}>
+
+            <Text style={styles.actionTitle}>
+              Free delivery
+              {'\n'}
+              within 10km!
             </Text>
 
-            <TouchableOpacity style={styles.deliveryButton}>
+            <TouchableOpacity style={styles.actionButton}>
 
-              <Text style={styles.deliveryButtonText}>
+              <Text style={styles.actionButtonText}>
                 Order now
               </Text>
 
@@ -108,14 +162,25 @@ export default function HomeScreen() {
 
           </View>
 
-          <Image
-            source={{
-              uri: 'https://images.unsplash.com/photo-1521401292936-0a2129a30b1c',
-            }}
-            style={styles.deliveryImage}
-          />
+          {/* SCOOTER IMAGE */}
+
+          <View style={styles.scooterContainer}>
+
+            <Image
+              source={require('../../assets/images/home/action/Scooter.png')}
+              style={styles.scooterImage}
+            />
+
+          </View>
 
         </View>
+
+        {/* SLIDER */}
+<View style={styles.sliderContainer}>
+
+  <View style={styles.sliderActive} />
+
+</View>  
 
         {/* CATEGORIES */}
 
@@ -197,8 +262,6 @@ export default function HomeScreen() {
 
           <View style={styles.moreImageRow}>
 
-            {/* OFFER PAGE */}
-
             <TouchableOpacity
               style={styles.moreCard}
               onPress={() =>
@@ -214,14 +277,11 @@ export default function HomeScreen() {
 
             </TouchableOpacity>
 
-            {/* BEST SELLER */}
-
-            {/* <TouchableOpacity style={styles.moreCard}> */}
             <TouchableOpacity
-  style={styles.moreCard}
-  onPress={() =>
-    navigation.navigate('BestSellerScreen')
-  }>
+              style={styles.moreCard}
+              onPress={() =>
+                navigation.navigate('BestSellerScreen')
+              }>
 
               <Image
                 source={{
@@ -232,13 +292,11 @@ export default function HomeScreen() {
 
             </TouchableOpacity>
 
-            {/* BEST SELLER */}
-
             <TouchableOpacity
-  style={styles.moreCard}
-  onPress={() =>
-    navigation.navigate('BestSellerScreen')
-  }>
+              style={styles.moreCard}
+              onPress={() =>
+                navigation.navigate('BestSellerScreen')
+              }>
 
               <Image
                 source={{
@@ -302,6 +360,9 @@ export default function HomeScreen() {
             <RestaurantCard
               key={item.id}
               item={item}
+              onPress={() =>
+                navigation.navigate('RestaurantScreen', { restaurant: item })
+              }
             />
 
           ))}
@@ -318,111 +379,170 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
   },
 
   topSection: {
     width: '100%',
-    minHeight: 355,
-    paddingHorizontal: 16,
-    paddingTop: 50,
-    paddingBottom: 28,
+    height: 300,
+
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
-    backgroundColor: '#F97316',
+
+    paddingTop: 50,
+    paddingHorizontal: 16,
+
+    overflow: 'hidden',
   },
 
-  offerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 24,
-  },
+offerTitle: {
+  position: 'absolute',
 
-  offerTitle: {
-    color: '#fff',
-    fontSize: 26,
-    fontWeight: '800',
-    width: 220,
-  },
+  width: 190,
+  height: 24,
 
-  offerSub: {
-    color: '#fff',
-    fontSize: 15,
-    width: 170,
-    marginTop: 8,
-    lineHeight: 20,
-  },
+  top: 181,
+  left: 16,
+
+  fontFamily: 'Montserrat-SemiBold',
+  fontWeight: '700',
+
+  fontSize: 20,
+  lineHeight: 20,
+
+  letterSpacing: -0.24,
+
+  color: '#FFFFFF',
+},
+
+offerSubtitle: {
+  position: 'absolute',
+
+  width: 190,
+
+  top: 205,
+  left: 16,
+
+  fontFamily: 'Montserrat-SemiBold',
+  fontWeight: '600',
+
+  fontSize: 12,
+  lineHeight: 12,
+
+  letterSpacing: -0.24,
+
+  color: '#FFFFFF',
+},
 
   orderButton: {
-    width: 120,
-    height: 44,
-    borderRadius: 14,
-    backgroundColor: '#000',
+    position: 'absolute',
+
+    width: 83,
+    height: 31,
+
+    top: 246,
+    left: 16,
+
+    borderRadius: 10,
+
+    backgroundColor: '#000000',
+
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 18,
   },
 
-  orderButtonText: {
-    color: '#fff',
-    fontWeight: '600',
+orderButtonText: {
+  fontFamily: 'Montserrat-Bold',
+  fontWeight: '600',
+
+  fontSize: 12,
+  lineHeight: 12,
+
+  letterSpacing: -0.24,
+
+  color: '#FFFFFF',
+},
+
+  imageContainer: {
+    position: 'absolute',
+
+    width: 165.22,
+    height: 164.79,
+
+    top: 172,
+    left: 248,
   },
 
-  offerImage: {
-    width: 140,
-    height: 140,
-    borderRadius: 20,
-    resizeMode: 'cover',
+  speechBubble: {
+    position: 'absolute',
+
+    width: 61.95,
+    height: 41.61,
+
+    top: 15,
+    left: 0,
+
+    resizeMode: 'contain',
   },
 
-  deliveryCard: {
-    width: '92%',
-    height: 145,
-    borderRadius: 20,
-    backgroundColor: '#fff',
-    alignSelf: 'center',
-    marginTop: 20,
-    padding: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  comboBubble: {
+    position: 'absolute',
 
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
+    width: 51.06,
+    height: 25.29,
 
-    shadowOpacity: 0.12,
-    shadowRadius: 4,
-    elevation: 3,
+    top: 22,
+    left: 5,
+
+    resizeMode: 'contain',
   },
 
-  deliveryTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+  burger: {
+    position: 'absolute',
+
+    width: 75.55,
+    height: 63.61,
+
+    top: 64,
+    left: 0,
+
+    resizeMode: 'contain',
   },
 
-  deliveryButton: {
-    width: 120,
-    height: 44,
-    borderRadius: 14,
-    backgroundColor: '#000',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 16,
+  character: {
+    position: 'absolute',
+
+    width: 60.97,
+    height: 147.82,
+
+    top: 10,
+    left: 62,
+
+    resizeMode: 'contain',
   },
 
-  deliveryButtonText: {
-    color: '#fff',
-    fontWeight: '600',
+  drink: {
+    position: 'absolute',
+
+    width: 46.24,
+    height: 95.47,
+
+    top: 32,
+    left: 119,
+
+    resizeMode: 'contain',
   },
 
-  deliveryImage: {
-    width: 110,
-    height: 110,
-    borderRadius: 20,
+  fries: {
+    position: 'absolute',
+
+    width: 34.5,
+    height: 56.79,
+
+    top: 82,
+    left: 98,
+
+    resizeMode: 'contain',
   },
 
   categorySection: {
@@ -527,4 +647,136 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
   },
+     actionCard: {
+    //width: 361,
+    width: '91%',
+    height: 145,
+
+    marginTop: 20,
+   // marginLeft: 16,
+   alignSelf: 'center',
+
+    borderRadius: 20,
+
+    backgroundColor: '#FFFFFF',
+
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+
+    shadowOpacity: 0.12,
+    shadowRadius: 4,
+
+    elevation: 3,
+
+    flexDirection: 'row',
+
+    overflow: 'hidden',
+  },
+
+  actionContent: {
+    width: 190,
+    height: 107,
+
+    marginTop: 19,
+    marginLeft: 19,
+
+    justifyContent: 'space-between',
+  },
+
+  actionTitle: {
+    width: 190,
+    height: 48,
+
+    fontFamily: 'Montserrat-Bold',
+    fontWeight: '700',
+
+    fontSize: 20,
+    lineHeight: 20,
+
+    letterSpacing: -0.24,
+
+    color: '#040404',
+  },
+
+  actionButton: {
+    width: 104,
+    height: 39,
+
+    borderRadius: 10,
+
+    backgroundColor: '#040404',
+
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  actionButtonText: {
+    fontFamily: 'Montserrat-Medium',
+    fontWeight: '500',
+
+    fontSize: 12,
+    lineHeight: 12,
+
+    letterSpacing: -0.24,
+
+    color: '#FFFFFF',
+  },
+
+  scooterContainer: {
+    width: 128.2,
+    height: 128.2,
+
+    marginTop: 8,
+
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  scooterImage: {
+    width: 128.19,
+    height: 108.08,
+
+    resizeMode: 'contain',
+  },
+
+  sliderContainer: {
+    width: 25,
+    height: 5,
+
+    marginTop: 12,
+
+    alignSelf: 'center',
+
+    borderRadius: 10,
+
+    backgroundColor: '#00000033',
+
+    overflow: 'hidden',
+
+    justifyContent: 'center',
+  },
+
+  sliderActive: {
+    width: 11,
+    height: 5,
+
+    borderRadius: 10,
+
+    backgroundColor: '#000000',
+
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+
+    shadowOpacity: 0.1,
+    shadowRadius: 7,
+
+    elevation: 2,
+  },
+
 });

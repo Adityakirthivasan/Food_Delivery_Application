@@ -25,56 +25,86 @@ export default function SearchBar({
   showMic = true,
   placeholder = 'Search your food',
 }: Props) {
+
   return (
+
     <View style={styles.searchRow}>
+
+      {/* SEARCH BOX */}
 
       <View
         style={[
           styles.searchBar,
           {
-            backgroundColor: dark ? '#F3F3F3' : '#fff',
+            backgroundColor: dark ? '#F3F3F3' : '#FFFFFF',
           },
         ]}>
 
+        {/* SEARCH ICON */}
+
         <Feather
           name="search"
-          size={20}
-          color="#555"
+          size={18}
+          color="#111111"
         />
+
+        {/* INPUT */}
 
         <TextInput
           placeholder={placeholder}
-          placeholderTextColor="#8E8E93"
+          placeholderTextColor="#696969"
           style={styles.input}
         />
 
+        {/* MIC */}
+
         {showMic && (
           <>
+
             <View style={styles.divider} />
 
-            <MaterialCommunityIcons
-              name="microphone"
-              size={22}
-              color="#F97316"
-            />
+            <View style={styles.micContainer}>
+
+              <MaterialCommunityIcons
+                name="microphone"
+                size={20}
+                color="#E95322"
+              />
+
+            </View>
+
           </>
         )}
 
       </View>
 
+      {/* VEG BUTTON */}
+
       {showVegToggle && (
 
         <TouchableOpacity style={styles.vegButton}>
 
-          <Text style={styles.vegText}>
-            Veg
-          </Text>
+          <View style={styles.vegInnerContainer}>
 
-          <View style={styles.toggleTrack}>
+            {/* VEG TEXT */}
 
-            <View style={styles.vegToggleOuter}>
+            <Text style={styles.vegText}>
+              Veg
+            </Text>
 
-              <View style={styles.vegToggleInner} />
+            {/* TOGGLE */}
+
+            <View style={styles.toggleTrack}>
+
+              {/* GREEN OUTER BOX */}
+
+              <View style={styles.vegToggleOuter}>
+
+                {/* GREEN INNER CIRCLE */}
+
+                <View style={styles.vegToggleInner} />
+
+              </View>
 
             </View>
 
@@ -90,76 +120,151 @@ export default function SearchBar({
 
 const styles = StyleSheet.create({
 
+  /* SEARCH ROW */
+
   searchRow: {
     flexDirection: 'row',
-    marginTop: 20,
+    marginTop: 18,
     alignItems: 'center',
   },
+
+  /* SEARCH BAR */
 
   searchBar: {
     flex: 1,
+
     height: 50,
-    borderRadius: 15,
-    paddingHorizontal: 16,
+
+    borderRadius: 10,
+
+    paddingHorizontal: 18,
+
     flexDirection: 'row',
     alignItems: 'center',
+
+    backgroundColor: '#FFFFFF',
   },
+
+  /* INPUT */
 
   input: {
     flex: 1,
-    fontSize: 15,
-    marginLeft: 10,
-    color: '#000',
+
+    marginLeft: 13,
+
+    fontFamily: 'Inter-Regular',
+    fontWeight: '400',
+
+    fontSize: 14,
+    lineHeight: 14,
+
+    letterSpacing: -0.24,
+
+    color: '#696969',
   },
+
+  /* DIVIDER */
 
   divider: {
     width: 1,
-    height: 22,
-    backgroundColor: '#DADADA',
-    marginHorizontal: 12,
+    height: 20,
+
+    backgroundColor: '#D9D9D9',
+
+    marginHorizontal: 14,
   },
+
+  /* MIC CONTAINER */
+
+  micContainer: {
+    width: 24,
+    height: 24,
+
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  /* VEG BUTTON */
 
   vegButton: {
-    width: 64,
+    width: 50,
     height: 50,
-    borderRadius: 15,
-    backgroundColor: '#fff',
-    marginLeft: 12,
+
+    marginLeft: 6,
+
+    borderRadius: 10,
+
+    backgroundColor: '#FFFFFF',
+
     justifyContent: 'center',
     alignItems: 'center',
   },
+
+  /* INNER VEG CONTAINER */
+
+  vegInnerContainer: {
+    width: 19,
+    height: 24,
+
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  /* VEG TEXT */
 
   vegText: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#666',
-    marginBottom: 3,
+    fontFamily: 'Inter-Bold',
+    fontWeight: '700',
+
+    fontSize: 10,
+    lineHeight: 10,
+
+    letterSpacing: -0.24,
+
+    color: '#696969',
   },
+
+  /* TOGGLE TRACK */
 
   toggleTrack: {
-    width: 30,
-    height: 14,
+    width: 17,
+    height: 8,
+
     borderRadius: 10,
+
     backgroundColor: '#D9D9D9',
+
     justifyContent: 'center',
-    paddingLeft: 2,
+
+    paddingLeft: 1,
   },
+
+  /* OUTER GREEN BOX */
 
   vegToggleOuter: {
-    width: 12,
-    height: 12,
-    borderRadius: 3,
-    borderWidth: 1.2,
+    width: 8,
+    height: 8,
+
+    borderRadius: 2,
+
+    borderWidth: 1,
     borderColor: '#228B22',
+
+    backgroundColor: '#FFFFFF',
+
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
   },
 
+  /* INNER GREEN CIRCLE */
+
   vegToggleInner: {
-    width: 6,
-    height: 6,
+    width: 4.8,
+    height: 4.8,
+
     borderRadius: 10,
+
     backgroundColor: '#228B22',
   },
+
 });

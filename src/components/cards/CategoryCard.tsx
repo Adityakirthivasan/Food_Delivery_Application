@@ -16,13 +16,19 @@ export default function CategoryCard({
   title,
   image,
 }: Props) {
+
   return (
+
     <View style={styles.categoryItem}>
+
+      {/* IMAGE */}
 
       <Image
         source={{ uri: image }}
         style={styles.categoryImage}
       />
+
+      {/* TEXT */}
 
       <Text style={styles.categoryText}>
         {title}
@@ -35,19 +41,36 @@ export default function CategoryCard({
 const styles = StyleSheet.create({
 
   categoryItem: {
-    marginRight: 20,
+    width: 82.43,
+    height: 70,
+
+    marginRight: 16,
+
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
 
   categoryImage: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: 56,
+    height: 56,
+
+    borderRadius: 56,
+
+    resizeMode: 'cover',
   },
 
   categoryText: {
-    marginTop: 8,
-    fontSize: 15,
-    fontWeight: '500',
+    fontFamily: 'Inter-Regular',
+    fontWeight: '400',
+
+    fontSize: 14,
+    lineHeight: 14,
+
+    letterSpacing: -0.24,
+
+    textAlign: 'center',
+
+    color: '#040404',
   },
+
 });

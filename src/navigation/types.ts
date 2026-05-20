@@ -11,6 +11,10 @@ export type RootStackParamList = {
   BestSellerScreen: undefined;
   MyOrdersScreen: undefined;
 
+  RestaurantScreen: {
+    item: any;
+  };
+
   ProductDetailScreen: {
     item: any;
   };

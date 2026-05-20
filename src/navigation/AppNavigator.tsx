@@ -9,6 +9,7 @@ import BottomTabs from './BottomTabs';
 import OfferScreen from '../screens/Offers/OfferScreen';
 import BestSellerScreen from '../screens/BestSeller/BestSellerScreen';
 import MyOrdersScreen from '../screens/Orders/OrderHistoryScreen';
+import RestaurantScreen from '../screens/Restaurant/RestaurantScreen';
 
 import ProductDetailScreen from '../screens/ProductDetail/ProductDetailScreen';
 
@@ -45,10 +46,10 @@ export default function AppNavigator() {
           component={MyOrdersScreen}
         />
 
-        <Stack.Screen
-          name="ProductDetailScreen"
-          component={ProductDetailScreen}
-        />
+<Stack.Screen
+  name="RestaurantScreen"
+  component={RestaurantScreen}
+/>
 
       </Stack.Navigator>
 

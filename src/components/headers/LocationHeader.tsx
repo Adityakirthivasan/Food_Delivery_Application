@@ -25,6 +25,7 @@ export default function LocationHeader({
   onProfilePress,
 }: Props) {
   return (
+
     <View style={styles.locationRow}>
 
       <View>
@@ -33,7 +34,7 @@ export default function LocationHeader({
 
           <Ionicons
             name="location-sharp"
-            size={16}
+            size={18}
             color={dark ? '#111' : '#fff'}
           />
 
@@ -51,7 +52,7 @@ export default function LocationHeader({
 
           <Ionicons
             name="chevron-down"
-            size={16}
+            size={18}
             color={dark ? '#111' : '#fff'}
           />
 
@@ -61,7 +62,7 @@ export default function LocationHeader({
           style={[
             styles.locationSub,
             {
-              color: dark ? '#777' : '#FDE7D3',
+              color: dark ? '#777' : '#FFFFFFBF',
             },
           ]}>
 
@@ -90,14 +91,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  locationTitle: {
-    fontSize: 20,
-    fontWeight: '700',
-    marginHorizontal: 4,
-  },
+locationTitle: {
+  fontFamily: 'Montserrat-Bold',
+  fontSize: 20,
+  lineHeight: 20,
+  letterSpacing: -0.24,
+  color: '#FFFFFF',
+  marginHorizontal: 4,
+},
 
-  locationSub: {
-    marginTop: 5,
-    fontSize: 13,
-  },
+locationSub: {
+  width: 168,
+  marginTop: 2,
+
+  fontFamily: 'Montserrat-Light',
+  fontSize: 12,
+  lineHeight: 12,
+  letterSpacing: -0.24,
+
+  color: '#FFFFFFBF',
+},
+
 });

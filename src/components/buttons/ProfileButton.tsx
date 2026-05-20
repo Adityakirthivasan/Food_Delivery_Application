@@ -15,6 +15,7 @@ export default function ProfileButton({
   onPress,
 }: Props) {
   return (
+
     <TouchableOpacity
       style={styles.profileButton}
       onPress={onPress}>
@@ -32,11 +33,15 @@ export default function ProfileButton({
 const styles = StyleSheet.create({
 
   profileButton: {
-    width: 58,
-    height: 34,
-    borderRadius: 17,
-    backgroundColor: '#000',
+    width: 42,
+    height: 25,
+
+    borderRadius: 12,
+
+    backgroundColor: '#040404',
+
     justifyContent: 'center',
     alignItems: 'center',
   },
+
 });
