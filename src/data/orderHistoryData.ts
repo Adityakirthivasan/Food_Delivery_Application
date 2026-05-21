@@ -3,63 +3,63 @@ export const orderHistoryData = [
     id: 1,
     title: 'Spice Haven Biryani',
     price: '$10.25',
-    image:
-      'https://images.unsplash.com/photo-1563379091339-03246963d96c',
+
+    image: require('../assets/images/home/categories/ChickenBiriyani.png'),
   },
 
   {
     id: 2,
     title: 'Golden Glaze Delight',
     price: '$10.25',
-    image:
-      'https://images.unsplash.com/photo-1551024601-bec78aea704b',
+
+    image: require('../assets/images/home/categories/Dessert.png'),
   },
 
   {
     id: 3,
     title: 'Arctic Frost Quencher',
     price: '$10.25',
-    image:
-      'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd',
+
+    image: require('../assets/images/home/categories/ColdDrinks.png'),
   },
 
   {
     id: 4,
     title: 'Bacon Bliss Bombshell',
     price: '$10.25',
-    image:
-      'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
+
+    image: require('../assets/images/home/categories/Burger.png'),
   },
 
   {
     id: 5,
     title: 'Mozzarella Marvel Pizza',
     price: '$10.25',
-    image:
-      'https://images.unsplash.com/photo-1513104890138-7c749659a591',
+
+    image: require('../assets/images/home/categories/Pizza.png'),
   },
 
   {
     id: 6,
     title: 'Sizzling Lemon Pasta',
     price: '$10.25',
-    image:
-      'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9',
+
+    image: require('../assets/images/home/categories/ChickenBiriyani.png'),
   },
 
   {
     id: 7,
     title: 'Choco Cream Donut',
     price: '$10.25',
-    image:
-      'https://images.unsplash.com/photo-1509440159596-0249088772ff',
+
+    image: require('../assets/images/home/categories/Dessert.png'),
   },
 
   {
     id: 8,
     title: 'Veggie Crunch Salad',
     price: '$10.25',
-    image:
-      'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
+
+    image: require('../assets/images/home/categories/Burger.png'),
   },
 ];

@@ -11,9 +11,16 @@ import {
 
 import Ionicons from '@react-native-vector-icons/ionicons';
 import Feather from '@react-native-vector-icons/feather';
+
 import { useNavigation } from '@react-navigation/native';
 
-const CARD_WIDTH = (Dimensions.get('window').width - 51) / 2;
+const { width } = Dimensions.get('window');
+
+const guidelineWidth = 393;
+
+const scale = width / guidelineWidth;
+
+const CARD_WIDTH = (width - 51) / 2;
 
 interface Props {
   item: any;
@@ -23,18 +30,24 @@ export default function BestSellerCard({
   item,
 }: Props) {
 
-    const navigation = useNavigation<any>();
+  const navigation = useNavigation<any>();
+
   return (
+
     <TouchableOpacity
-  style={styles.card}
-  activeOpacity={0.95}
-  onPress={() =>
-    navigation.navigate('ProductDetailScreen', {
-      item,
-    })
-  }>
+      style={styles.card}
+      activeOpacity={0.95}
+      onPress={() =>
+        navigation.navigate('ProductDetailScreen', {
+          item,
+        })
+      }>
+
+      {/* IMAGE BOX */}
 
       <View style={styles.imageContainer}>
+
+        {/* NEW ARRIVED */}
 
         {item.newArrived && (
 
@@ -48,22 +61,28 @@ export default function BestSellerCard({
 
         )}
 
+        {/* HEART */}
+
         <TouchableOpacity style={styles.heartButton}>
 
           <Ionicons
             name="heart-outline"
-            size={18}
-            color="#111"
+            size={14}
+            color="#040404"
           />
 
         </TouchableOpacity>
 
+        {/* IMAGE */}
+
         <Image
-          source={{ uri: item.image }}
+          source={item.image}
           style={styles.image}
         />
 
       </View>
+
+      {/* TITLE */}
 
       <Text
         numberOfLines={2}
@@ -73,14 +92,16 @@ export default function BestSellerCard({
 
       </Text>
 
+      {/* INFO */}
+
       <View style={styles.infoRow}>
 
         <View style={styles.infoItem}>
 
           <Feather
             name="clock"
-            size={14}
-            color="#7A7A7A"
+            size={13}
+            color="#696969"
           />
 
           <Text style={styles.infoText}>
@@ -89,16 +110,14 @@ export default function BestSellerCard({
 
         </View>
 
-        <Text style={styles.divider}>
-          |
-        </Text>
+        <View style={styles.separator} />
 
         <View style={styles.infoItem}>
 
           <Ionicons
             name="star-outline"
-            size={14}
-            color="#7A7A7A"
+            size={13}
+            color="#696969"
           />
 
           <Text style={styles.infoText}>
@@ -108,6 +127,8 @@ export default function BestSellerCard({
         </View>
 
       </View>
+
+      {/* BOTTOM */}
 
       <View style={styles.bottomRow}>
 
@@ -131,8 +152,8 @@ export default function BestSellerCard({
 
           <Ionicons
             name="add"
-            size={22}
-            color="#111"
+            size={18}
+            color="#040404"
           />
 
         </TouchableOpacity>
@@ -147,79 +168,111 @@ const styles = StyleSheet.create({
 
   card: {
     width: CARD_WIDTH,
-    marginBottom: 22,
+
+    marginBottom: 22 * scale,
   },
 
   imageContainer: {
     width: '100%',
-    height: 165,
-    borderRadius: 14,
+    height: 126 * scale,
+
     backgroundColor: '#FFFFFF',
+
+    borderRadius: 10 * scale,
+
     justifyContent: 'center',
     alignItems: 'center',
+
+    position: 'relative',
+
     overflow: 'hidden',
   },
 
   badge: {
     position: 'absolute',
-    top: 10,
+
     left: 0,
-    backgroundColor: '#F15A24',
-    height: 28,
+    top: 11 * scale,
+
+    width: 77 * scale,
+    height: 29 * scale,
+
+    backgroundColor: '#E95322',
+
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
+
     justifyContent: 'center',
-    paddingHorizontal: 10,
-    zIndex: 5,
+    alignItems: 'center',
+
+    zIndex: 10,
   },
 
   badgeText: {
-    color: '#fff',
-    fontSize: 13,
-    fontWeight: '600',
+    fontFamily: 'Inter-Bold',
+
+    fontSize: 12 * scale,
+
+    letterSpacing: -0.24,
+
+    color: '#FFFFFF',
   },
 
   heartButton: {
-    width: 32,
-    height: 32,
-    borderRadius: 20,
-    backgroundColor: '#fff',
+    width: 22 * scale,
+    height: 22 * scale,
+
+    borderRadius: 22,
+
+    backgroundColor: '#FFFFFF',
+
     position: 'absolute',
-    top: 10,
-    right: 10,
+
+    top: 12 * scale,
+    right: 12 * scale,
+
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 5,
 
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 0,
     },
 
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowOpacity: 0.1,
+    shadowRadius: 7,
+
+    elevation: 3,
+
+    zIndex: 20,
   },
 
   image: {
-    width: 135,
-    height: 135,
+    width: 110 * scale,
+    height: 90 * scale,
+
     resizeMode: 'contain',
   },
 
   title: {
-    fontSize: 15,
-    fontWeight: '500',
-    color: '#111',
-    marginTop: 10,
-    lineHeight: 20,
+    marginTop: 12 * scale,
+
+    fontFamily: 'Montserrat-Medium',
+
+    fontSize: 16 * scale,
+    lineHeight: 20 * scale,
+
+    letterSpacing: -0.24,
+
+    color: '#040404',
   },
 
   infoRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 6,
+
+    marginTop: 8 * scale,
   },
 
   infoItem: {
@@ -227,23 +280,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  divider: {
+  separator: {
+    width: 1,
+    height: 15,
+
+    backgroundColor: '#696969',
+
     marginHorizontal: 6,
-    color: '#A0A0A0',
-    fontSize: 13,
   },
 
   infoText: {
-    fontSize: 12,
-    color: '#7A7A7A',
     marginLeft: 4,
+
+    fontFamily: 'Inter-Regular',
+
+    fontSize: 12 * scale,
+    lineHeight: 15 * scale,
+
+    letterSpacing: -0.24,
+
+    color: '#696969',
   },
 
   bottomRow: {
+    marginTop: 12 * scale,
+
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 12,
   },
 
   priceRow: {
@@ -252,34 +316,40 @@ const styles = StyleSheet.create({
   },
 
   price: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: '#111',
+    fontFamily: 'Montserrat-Medium',
+
+    fontSize: 14 * scale,
+    lineHeight: 20 * scale,
+
+    letterSpacing: -0.24,
+
+    color: '#040404',
   },
 
   discount: {
-    fontSize: 12,
-    color: '#8A8A8A',
-    marginLeft: 6,
-    marginTop: 1,
+    marginLeft: 5,
+
+    fontFamily: 'Inter-Regular',
+
+    fontSize: 10 * scale,
+    lineHeight: 12 * scale,
+
+    letterSpacing: -0.24,
+
+    color: '#040404',
+
+    opacity: 0.5,
   },
 
   addButton: {
-    width: 34,
-    height: 34,
-    borderRadius: 8,
+    width: 25 * scale,
+    height: 25 * scale,
+
+    borderRadius: 5 * scale,
+
     backgroundColor: '#FFFFFF',
+
     justifyContent: 'center',
     alignItems: 'center',
-
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-
-    shadowOpacity: 0.06,
-    shadowRadius: 3,
-    elevation: 2,
   },
 });

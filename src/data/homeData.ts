@@ -66,36 +66,31 @@ export const categoryData = [
   {
     id: 1,
     title: 'Meat',
-    image:
-      'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38',
+    image: require('../assets/images/home/categories/Meat.png'),
   },
 
   {
     id: 2,
     title: 'Cold drinks',
-    image:
-      'https://images.unsplash.com/photo-1544145945-f90425340c7e',
+    image: require('../assets/images/home/categories/ColdDrinks.png'),
   },
 
   {
     id: 3,
     title: 'Dessert',
-    image:
-      'https://images.unsplash.com/photo-1551024601-bec78aea704b',
+    image: require('../assets/images/home/categories/Dessert.png'),
   },
 
   {
     id: 4,
     title: 'Burger',
-    image:
-      'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
+    image: require('../assets/images/home/categories/Burger.png'),
   },
 
   {
     id: 5,
-    title: 'Pizza',
-    image:
-      'https://images.unsplash.com/photo-1513104890138-7c749659a591',
+    title: 'Burger',
+    image: require('../assets/images/home/categories/Burger.png'),
   },
 ];
 

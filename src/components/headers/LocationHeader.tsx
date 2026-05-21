@@ -4,16 +4,20 @@ import {
   View,
   Text,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 
 import Ionicons from '@react-native-vector-icons/ionicons';
 
 import ProfileButton from '../buttons/ProfileButton';
 
+const { width } = Dimensions.get('window');
+
+const scale = width / 393;
+
 interface Props {
   title: string;
   subtitle: string;
-
   dark?: boolean;
   onProfilePress?: () => void;
 }
@@ -24,6 +28,7 @@ export default function LocationHeader({
   dark,
   onProfilePress,
 }: Props) {
+
   return (
 
     <View style={styles.locationRow}>
@@ -34,7 +39,7 @@ export default function LocationHeader({
 
           <Ionicons
             name="location-sharp"
-            size={18}
+            size={18 * scale}
             color={dark ? '#111' : '#fff'}
           />
 
@@ -52,13 +57,14 @@ export default function LocationHeader({
 
           <Ionicons
             name="chevron-down"
-            size={18}
+            size={18 * scale}
             color={dark ? '#111' : '#fff'}
           />
 
         </View>
 
         <Text
+          numberOfLines={1}
           style={[
             styles.locationSub,
             {
@@ -91,25 +97,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-locationTitle: {
-  fontFamily: 'Montserrat-Bold',
-  fontSize: 20,
-  lineHeight: 20,
-  letterSpacing: -0.24,
-  color: '#FFFFFF',
-  marginHorizontal: 4,
-},
+  locationTitle: {
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 16 * scale,
+    lineHeight: 16 * scale,
+    letterSpacing: -0.24,
+    marginHorizontal: 4 * scale,
+  },
 
-locationSub: {
-  width: 168,
-  marginTop: 2,
+  locationSub: {
+    width: 168 * scale,
+    marginTop: 6 * scale,
 
-  fontFamily: 'Montserrat-Light',
-  fontSize: 12,
-  lineHeight: 12,
-  letterSpacing: -0.24,
-
-  color: '#FFFFFFBF',
-},
+    fontFamily: 'Montserrat-Light',
+    fontSize: 12 * scale,
+    lineHeight: 12 * scale,
+    letterSpacing: -0.24,
+  },
 
 });

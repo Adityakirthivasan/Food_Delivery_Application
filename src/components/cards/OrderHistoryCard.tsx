@@ -5,7 +5,14 @@ import {
   Text,
   Image,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
+
+const { width } = Dimensions.get('window');
+
+const guidelineWidth = 393;
+
+const scale = width / guidelineWidth;
 
 interface Props {
   item: any;
@@ -14,19 +21,27 @@ interface Props {
 export default function OrderHistoryCard({
   item,
 }: Props) {
+
   return (
+
     <View style={styles.card}>
 
-      <View style={styles.imageContainer}>
+      {/* IMAGE */}
+
+      <View style={styles.imageBox}>
 
         <Image
-          source={{ uri: item.image }}
+          source={item.image}
           style={styles.image}
         />
 
       </View>
 
-      <View style={styles.contentContainer}>
+      {/* BODY */}
+
+      <View style={styles.body}>
+
+        {/* TOP */}
 
         <View style={styles.topRow}>
 
@@ -44,27 +59,31 @@ export default function OrderHistoryCard({
 
         </View>
 
+        {/* MIDDLE */}
+
         <View style={styles.middleRow}>
 
-          <Text style={styles.metaText}>
+          <Text style={styles.meta}>
             15 Mar 2020
           </Text>
 
-          <Text style={styles.metaText}>
+          <Text style={styles.meta}>
             5 Items
           </Text>
 
         </View>
 
+        {/* BOTTOM */}
+
         <View style={styles.bottomRow}>
 
           <View style={styles.statusRow}>
 
-            <Text style={styles.statusText}>
+            <Text style={styles.status}>
               Delivered
             </Text>
 
-            <Text style={styles.tickText}>
+            <Text style={styles.tick}>
               ✓✓
             </Text>
 
@@ -85,94 +104,153 @@ export default function OrderHistoryCard({
 const styles = StyleSheet.create({
 
   card: {
-    width: 353,
-    height: 105,
-    borderRadius: 16,
+    width: 353 * scale,
+    height: 108 * scale,
+
     backgroundColor: '#FFFFFF',
-    alignSelf: 'center',
-    marginBottom: 16,
+
+    borderRadius: 10 * scale,
+
     flexDirection: 'row',
-    paddingHorizontal: 14,
+
     alignItems: 'center',
+
+    paddingHorizontal: 10 * scale,
+
+    marginBottom: 16 * scale,
+
+    alignSelf: 'center',
   },
 
-  imageContainer: {
-    width: 82,
-    height: 82,
-    borderRadius: 10,
-    backgroundColor: '#F7F7F7',
+  imageBox: {
+    width: 99 * scale,
+    height: 76 * scale,
+
+    backgroundColor: '#F2F2F1',
+
+    borderRadius: 5 * scale,
+
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   image: {
-    width: 58,
-    height: 58,
+    width: 62 * scale,
+    height: 62 * scale,
+
     resizeMode: 'contain',
   },
 
-  contentContainer: {
+  body: {
     flex: 1,
-    marginLeft: 14,
-    height: 82,
+
+    marginLeft: 16 * scale,
+
+    height: 88 * scale,
+
     justifyContent: 'space-between',
   },
 
   topRow: {
     flexDirection: 'row',
+
     justifyContent: 'space-between',
+
     alignItems: 'flex-start',
   },
 
   title: {
-    width: 170,
-    fontSize: 17,
-    lineHeight: 22,
-    fontWeight: '500',
-    color: '#111111',
+    width: 150 * scale,
+
+    fontFamily: 'Montserrat-Medium',
+
+    fontSize: 16 * scale,
+
+    lineHeight: 20 * scale,
+
+    letterSpacing: -0.24,
+
+    color: '#040404',
   },
 
   price: {
-    fontSize: 13,
-    color: '#777777',
-    marginTop: 2,
+    fontFamily: 'Inter-Regular',
+
+    fontSize: 10 * scale,
+
+    lineHeight: 12 * scale,
+
+    letterSpacing: -0.24,
+
+    color: '#696969',
+
+    marginTop: 2 * scale,
   },
 
   middleRow: {
     flexDirection: 'row',
-    marginTop: 2,
+
+    alignItems: 'center',
   },
 
-  metaText: {
-    fontSize: 12,
-    color: '#8E8E93',
-    marginRight: 14,
+  meta: {
+    marginRight: 10 * scale,
+
+    fontFamily: 'Inter-Regular',
+
+    fontSize: 10 * scale,
+
+    lineHeight: 12 * scale,
+
+    letterSpacing: -0.24,
+
+    color: '#696969',
   },
 
   bottomRow: {
     flexDirection: 'row',
+
     justifyContent: 'space-between',
+
     alignItems: 'center',
   },
 
   statusRow: {
     flexDirection: 'row',
+
     alignItems: 'center',
   },
 
-  statusText: {
-    fontSize: 14,
-    color: '#666666',
+  status: {
+    fontFamily: 'Inter-Regular',
+
+    fontSize: 12 * scale,
+
+    lineHeight: 15 * scale,
+
+    letterSpacing: -0.24,
+
+    color: '#696969',
   },
 
-  tickText: {
-    fontSize: 12,
-    color: '#666666',
-    marginLeft: 5,
+  tick: {
+    marginLeft: 4 * scale,
+
+    fontSize: 11 * scale,
+
+    color: '#696969',
   },
 
   orderId: {
-    fontSize: 12,
-    color: '#8E8E93',
+    fontFamily: 'Inter-Regular',
+
+    fontSize: 10 * scale,
+
+    lineHeight: 12 * scale,
+
+    letterSpacing: -0.24,
+
+    color: '#696969',
   },
+
 });

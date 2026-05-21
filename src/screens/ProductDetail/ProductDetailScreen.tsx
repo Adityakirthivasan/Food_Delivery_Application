@@ -8,105 +8,164 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  Platform,
 } from 'react-native';
+
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
 import Ionicons from '@react-native-vector-icons/ionicons';
 
 import { addOnsData } from '../../data/addOnsData';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+const { width, height } = Dimensions.get('window');
+
+const guidelineWidth = 393;
+const guidelineHeight = 852;
+
+const horizontalScale = width / guidelineWidth;
+const verticalScale = height / guidelineHeight;
+
+const scale = (size: number) =>
+  horizontalScale * size;
+
+const moderateScale = (
+  size: number,
+  factor = 0.4,
+) =>
+  size + (scale(size) - size) * factor;
 
 export default function ProductDetailScreen({
   navigation,
   route,
 }: any) {
 
+  const insets = useSafeAreaInsets();
+
   const { item } = route.params;
 
   return (
-    <View style={styles.container}>
 
-      {/* IMAGE SECTION */}
+    <SafeAreaView
+      edges={['top', 'bottom']}
+      style={styles.container}>
 
-      <View style={styles.imageSection}>
+      {/* TOP IMAGE SECTION */}
 
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}>
+      <View style={styles.topSection}>
 
-          <Ionicons
-            name="arrow-back"
-            size={22}
-            color="#111"
-          />
+        {/* HEADER */}
 
-        </TouchableOpacity>
+        <View style={styles.header}>
 
-        <TouchableOpacity style={styles.searchButton}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.iconButton}
+            onPress={() => navigation.goBack()}>
 
-          <Ionicons
-            name="search-outline"
-            size={22}
-            color="#111"
-          />
+            <Ionicons
+              name="arrow-back"
+              size={22}
+              color="#040404"
+            />
 
-        </TouchableOpacity>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.iconButton}>
+
+            <Ionicons
+              name="search-outline"
+              size={21}
+              color="#040404"
+            />
+
+          </TouchableOpacity>
+
+        </View>
+
+        {/* PRODUCT IMAGE */}
 
         <Image
-          source={{
-            uri: item.image,
-          }}
+          source={item.image}
           style={styles.productImage}
         />
 
       </View>
 
-      {/* DETAIL SECTION */}
+      {/* DETAILS */}
 
-      <View style={styles.detailContainer}>
+      <View style={styles.detailsContainer}>
 
         <View style={styles.titleRow}>
 
-          <Text style={styles.title}>
-            {item.name || item.title}
-          </Text>
+          {/* LEFT */}
 
-          <View style={styles.quantityRow}>
+          <View style={styles.leftContent}>
 
-            <Text style={styles.quantityIcon}>
-              +
+            <Text style={styles.title}>
+              {item.name || item.title}
             </Text>
+
+            <View style={styles.priceRow}>
+
+              <Text style={styles.price}>
+                {item.price || '$10.99'}
+              </Text>
+
+              <Text style={styles.rating}>
+                4.8
+              </Text>
+
+            </View>
+
+          </View>
+
+          {/* RIGHT */}
+
+          <View style={styles.quantityBox}>
+
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.qtyButton}>
+
+              <Ionicons
+                name="add"
+                size={15}
+                color="#040404"
+              />
+
+            </TouchableOpacity>
 
             <Text style={styles.quantityText}>
               1
             </Text>
 
-            <Ionicons
-              name="trash-outline"
-              size={18}
-              color="#111"
-            />
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.qtyButton}>
+
+              <Ionicons
+                name="trash-outline"
+                size={14}
+                color="#040404"
+              />
+
+            </TouchableOpacity>
 
           </View>
 
         </View>
 
-        <View style={styles.priceRow}>
-
-          <Text style={styles.price}>
-            {item.price || '$10.99'}
-          </Text>
-
-          <Text style={styles.rating}>
-            4.8
-          </Text>
-
-        </View>
+        {/* DESCRIPTION */}
 
         <Text style={styles.description}>
           Indulge in the Bacon Bliss Bombshell, a
           mouthwatering burger sensation that
-          Readmore
+          satisfies every craving perfectly.
         </Text>
 
       </View>
@@ -122,24 +181,32 @@ export default function ProductDetailScreen({
         <FlatList
           horizontal
           data={addOnsData}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) =>
+            item.id.toString()
+          }
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.addOnList}
           renderItem={({ item }) => (
 
             <View style={styles.addOnCard}>
 
-              <Image
-                source={{ uri: item.image }}
-                style={styles.addOnImage}
-              />
+              <View style={styles.addOnImageBox}>
 
-              <TouchableOpacity style={styles.plusButton}>
+                <Image
+                  source={item.image}
+                  style={styles.addOnImage}
+                />
+
+              </View>
+
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={styles.plusButton}>
 
                 <Ionicons
                   name="add"
-                  size={14}
-                  color="#fff"
+                  size={11}
+                  color="#FFFFFF"
                 />
 
               </TouchableOpacity>
@@ -153,7 +220,20 @@ export default function ProductDetailScreen({
 
       {/* BUTTON */}
 
-      <TouchableOpacity style={styles.cartButton}>
+      <TouchableOpacity
+        activeOpacity={0.9}
+        style={[
+          styles.cartButton,
+          {
+            marginBottom:
+              insets.bottom > 0
+                ? insets.bottom + 8
+                : 18,
+          },
+        ]}
+        onPress={() =>
+          navigation.navigate('BookingScreen')
+        }>
 
         <Text style={styles.cartButtonText}>
           Add to cart
@@ -161,7 +241,7 @@ export default function ProductDetailScreen({
 
       </TouchableOpacity>
 
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -172,158 +252,267 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
 
-  imageSection: {
-    width: SCREEN_WIDTH,
-    height: 401,
+  /* TOP SECTION */
+
+  topSection: {
+    width: width,
+    height: height * 0.47,
+
     backgroundColor: '#F7F7F7',
+
+    alignItems: 'center',
+  },
+
+  header: {
+    width: width - 40,
+
+    marginTop:
+      Platform.OS === 'ios'
+        ? 6
+        : 10,
+
+    flexDirection: 'row',
+
+    justifyContent: 'space-between',
+
+    alignItems: 'center',
+  },
+
+  iconButton: {
+    width: 32,
+    height: 32,
+
     justifyContent: 'center',
     alignItems: 'center',
   },
 
-  backButton: {
-    position: 'absolute',
-    top: 58,
-    left: 20,
-    zIndex: 10,
-  },
-
-  searchButton: {
-    position: 'absolute',
-    top: 58,
-    right: 20,
-    zIndex: 10,
-  },
-
   productImage: {
-    width: 320,
-    height: 320,
+    width: width * 0.84,
+    height: width * 0.84,
+
     resizeMode: 'contain',
+
+    marginTop: height * 0.015,
   },
 
-  detailContainer: {
-    width: 354,
-    height: 140,
-    marginTop: 26,
+  /* DETAILS */
+
+  detailsContainer: {
+    width: width - 40,
+
     alignSelf: 'center',
+
+    marginTop: 22,
   },
 
   titleRow: {
     flexDirection: 'row',
+
     justifyContent: 'space-between',
+
     alignItems: 'flex-start',
   },
 
+  leftContent: {
+    width: '68%',
+  },
+
   title: {
-    width: 210,
-    fontSize: 22,
-    lineHeight: 28,
-    fontWeight: '600',
-    color: '#111',
-  },
+    fontFamily: 'Montserrat-Bold',
 
-  quantityRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 2,
-  },
+    fontSize: moderateScale(24),
 
-  quantityIcon: {
-    fontSize: 24,
-    color: '#111',
-    marginRight: 10,
-  },
+    lineHeight: 29,
 
-  quantityText: {
-    fontSize: 21,
-    color: '#111',
-    marginRight: 10,
+    letterSpacing: -0.24,
+
+    color: '#040404',
   },
 
   priceRow: {
     flexDirection: 'row',
+
     alignItems: 'center',
-    marginTop: 12,
+
+    marginTop: 6,
   },
 
   price: {
-    fontSize: 16,
-    color: '#111',
-    fontWeight: '500',
+    fontFamily: 'Montserrat-Medium',
+
+    fontSize: moderateScale(16),
+
+    lineHeight: 20,
+
+    letterSpacing: -0.24,
+
+    color: '#040404',
   },
 
   rating: {
+    marginLeft: 8,
+
+    fontFamily: 'Montserrat-Medium',
+
+    fontSize: moderateScale(16),
+
+    lineHeight: 20,
+
+    letterSpacing: -0.24,
+
+    color: '#040404',
+  },
+
+  quantityBox: {
+    width: 92,
+    height: 34,
+
+    borderRadius: 6,
+
+    backgroundColor: '#F2F2F1',
+
+    flexDirection: 'row',
+
+    alignItems: 'center',
+
+    justifyContent: 'space-between',
+
+    paddingHorizontal: 10,
+
+    marginTop: 4,
+  },
+
+  qtyButton: {
+    width: 18,
+    height: 18,
+
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  quantityText: {
+    fontFamily: 'Inter-Regular',
+
     fontSize: 16,
-    color: '#111',
-    marginLeft: 10,
+
+    lineHeight: 19,
+
+    letterSpacing: -0.24,
+
+    color: '#040404',
   },
 
   description: {
-    fontSize: 14,
-    lineHeight: 21,
-    color: '#777',
+    width: '88%',
+
     marginTop: 18,
-    width: 320,
+
+    fontFamily: 'Inter-Regular',
+
+    fontSize: moderateScale(14),
+
+    lineHeight: 20,
+
+    letterSpacing: -0.24,
+
+    color: '#696969',
   },
 
+  /* ADD ONS */
+
   addOnContainer: {
-    width: 245,
-    height: 101,
-    marginTop: 8,
+    marginTop: 22,
+
     marginLeft: 20,
   },
 
   addOnTitle: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#111',
+    fontFamily: 'Montserrat-Medium',
+
+    fontSize: moderateScale(16),
+
+    lineHeight: 20,
+
+    letterSpacing: -0.24,
+
+    color: '#040404',
   },
 
   addOnList: {
-    marginTop: 14,
+    paddingTop: 16,
   },
 
   addOnCard: {
-    width: 57,
-    height: 57,
-    borderRadius: 8,
-    backgroundColor: '#F2F2F2',
+    width: 71,
+    height: 65,
+
     marginRight: 16,
+  },
+
+  addOnImageBox: {
+    width: 60,
+    height: 60,
+
+    borderRadius: 6,
+
+    backgroundColor: '#D9D9D9',
+
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   addOnImage: {
-    width: 46,
-    height: 46,
+    width: 44,
+    height: 44,
+
     resizeMode: 'contain',
   },
 
   plusButton: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: '#000',
+    width: 24,
+    height: 24,
+
+    borderRadius: 12,
+
+    backgroundColor: '#040404',
+
     position: 'absolute',
-    bottom: -4,
-    right: -4,
+
+    right: 0,
+    bottom: 0,
+
     justifyContent: 'center',
     alignItems: 'center',
   },
 
+  /* BUTTON */
+
   cartButton: {
-    width: 351,
+    width: width - 42,
     height: 44,
+
     borderRadius: 20,
+
     backgroundColor: '#040404',
-    marginTop: 78,
-    alignSelf: 'center',
+
     justifyContent: 'center',
     alignItems: 'center',
+
+    alignSelf: 'center',
+
+    marginTop: 'auto',
   },
 
   cartButtonText: {
+    fontFamily: 'Montserrat-Medium',
+
+    fontSize: moderateScale(16),
+
+    lineHeight: 20,
+
+    letterSpacing: -0.24,
+
     color: '#FFFFFF',
-    fontSize: 18,
-    fontWeight: '500',
   },
+
 });

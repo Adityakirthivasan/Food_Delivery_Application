@@ -6,8 +6,9 @@ export const bestSellerData = [
     discount: '10% off',
     time: '30 min',
     rating: '1.2k',
-    image:
-      'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
+
+    image: require('../assets/images/home/categories/Burger.png'),
+
     newArrived: true,
   },
 
@@ -18,8 +19,8 @@ export const bestSellerData = [
     discount: '',
     time: '30 min',
     rating: '1.2k',
-    image:
-      'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd',
+
+    image: require('../assets/images/home/categories/ColdDrinks.png'),
   },
 
   {
@@ -29,8 +30,8 @@ export const bestSellerData = [
     discount: '10% off',
     time: '30 min',
     rating: '1.2k',
-    image:
-      'https://images.unsplash.com/photo-1551024601-bec78aea704b',
+
+    image: require('../assets/images/home/categories/Dessert.png'),
   },
 
   {
@@ -40,8 +41,8 @@ export const bestSellerData = [
     discount: '10% off',
     time: '30 min',
     rating: '1.2k',
-    image:
-      'https://images.unsplash.com/photo-1563379091339-03246963d96c',
+
+    image: require('../assets/images/home/categories/ChickenBiriyani.png'),
   },
 
   {
@@ -51,8 +52,8 @@ export const bestSellerData = [
     discount: '10% off',
     time: '30 min',
     rating: '1.2k',
-    image:
-      'https://images.unsplash.com/photo-1513104890138-7c749659a591',
+
+    image: require('../assets/images/home/categories/Pizza.png'),
   },
 
   {
@@ -62,7 +63,7 @@ export const bestSellerData = [
     discount: '',
     time: '30 min',
     rating: '1.2k',
-    image:
-      'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd',
+
+    image: require('../assets/images/home/categories/ColdDrinks.png'),
   },
 ];

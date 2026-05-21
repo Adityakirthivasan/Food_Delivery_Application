@@ -6,15 +6,19 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
+  Dimensions,
 } from 'react-native';
 
 import Feather from '@react-native-vector-icons/feather';
 import MaterialCommunityIcons from '@react-native-vector-icons/material-design-icons';
 
+const { width } = Dimensions.get('window');
+
+const scale = width / 393;
+
 interface Props {
   showVegToggle?: boolean;
   dark?: boolean;
-
   showMic?: boolean;
   placeholder?: string;
 }
@@ -30,8 +34,6 @@ export default function SearchBar({
 
     <View style={styles.searchRow}>
 
-      {/* SEARCH BOX */}
-
       <View
         style={[
           styles.searchBar,
@@ -40,15 +42,11 @@ export default function SearchBar({
           },
         ]}>
 
-        {/* SEARCH ICON */}
-
         <Feather
           name="search"
-          size={18}
+          size={18 * scale}
           color="#111111"
         />
-
-        {/* INPUT */}
 
         <TextInput
           placeholder={placeholder}
@@ -56,29 +54,23 @@ export default function SearchBar({
           style={styles.input}
         />
 
-        {/* MIC */}
-
         {showMic && (
           <>
-
             <View style={styles.divider} />
 
             <View style={styles.micContainer}>
 
               <MaterialCommunityIcons
                 name="microphone"
-                size={20}
+                size={20 * scale}
                 color="#E95322"
               />
 
             </View>
-
           </>
         )}
 
       </View>
-
-      {/* VEG BUTTON */}
 
       {showVegToggle && (
 
@@ -86,21 +78,13 @@ export default function SearchBar({
 
           <View style={styles.vegInnerContainer}>
 
-            {/* VEG TEXT */}
-
             <Text style={styles.vegText}>
               Veg
             </Text>
 
-            {/* TOGGLE */}
-
             <View style={styles.toggleTrack}>
 
-              {/* GREEN OUTER BOX */}
-
               <View style={styles.vegToggleOuter}>
-
-                {/* GREEN INNER CIRCLE */}
 
                 <View style={styles.vegToggleInner} />
 
@@ -120,79 +104,58 @@ export default function SearchBar({
 
 const styles = StyleSheet.create({
 
-  /* SEARCH ROW */
-
   searchRow: {
     flexDirection: 'row',
-    marginTop: 18,
+    marginTop: 18 * scale,
     alignItems: 'center',
   },
-
-  /* SEARCH BAR */
 
   searchBar: {
     flex: 1,
 
-    height: 50,
+    height: 50 * scale,
 
-    borderRadius: 10,
+    borderRadius: 12 * scale,
 
-    paddingHorizontal: 18,
+    paddingHorizontal: 18 * scale,
 
     flexDirection: 'row',
     alignItems: 'center',
-
-    backgroundColor: '#FFFFFF',
   },
-
-  /* INPUT */
 
   input: {
     flex: 1,
 
-    marginLeft: 13,
+    marginLeft: 12 * scale,
 
-    fontFamily: 'Inter-Regular',
-    fontWeight: '400',
+    fontFamily: 'Montserrat-Regular',
 
-    fontSize: 14,
-    lineHeight: 14,
+    fontSize: 14 * scale,
 
-    letterSpacing: -0.24,
-
-    color: '#696969',
+    color: '#111',
   },
-
-  /* DIVIDER */
 
   divider: {
     width: 1,
-    height: 20,
+    height: 20 * scale,
 
     backgroundColor: '#D9D9D9',
 
-    marginHorizontal: 14,
+    marginHorizontal: 14 * scale,
   },
 
-  /* MIC CONTAINER */
-
   micContainer: {
-    width: 24,
-    height: 24,
-
     justifyContent: 'center',
     alignItems: 'center',
   },
 
-  /* VEG BUTTON */
-
   vegButton: {
-    width: 50,
-    height: 50,
+    width: 50 * scale,
+    height: 50 * scale,
 
-    marginLeft: 6,
+    marginLeft: 8 * scale,
 
-    borderRadius: 10,
+    borderRadius: 12 * scale,
 
     backgroundColor: '#FFFFFF',
 
@@ -200,50 +163,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  /* INNER VEG CONTAINER */
-
   vegInnerContainer: {
-    width: 19,
-    height: 24,
-
-    justifyContent: 'space-between',
     alignItems: 'center',
   },
 
-  /* VEG TEXT */
-
   vegText: {
-    fontFamily: 'Inter-Bold',
-    fontWeight: '700',
+    fontFamily: 'Montserrat-Bold',
 
-    fontSize: 10,
-    lineHeight: 10,
-
-    letterSpacing: -0.24,
+    fontSize: 10 * scale,
 
     color: '#696969',
   },
 
-  /* TOGGLE TRACK */
-
   toggleTrack: {
-    width: 17,
-    height: 8,
+    width: 17 * scale,
+    height: 8 * scale,
 
     borderRadius: 10,
 
     backgroundColor: '#D9D9D9',
+
+    marginTop: 4 * scale,
 
     justifyContent: 'center',
 
     paddingLeft: 1,
   },
 
-  /* OUTER GREEN BOX */
-
   vegToggleOuter: {
-    width: 8,
-    height: 8,
+    width: 8 * scale,
+    height: 8 * scale,
 
     borderRadius: 2,
 
@@ -256,11 +205,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  /* INNER GREEN CIRCLE */
-
   vegToggleInner: {
-    width: 4.8,
-    height: 4.8,
+    width: 4.5 * scale,
+    height: 4.5 * scale,
 
     borderRadius: 10,
 

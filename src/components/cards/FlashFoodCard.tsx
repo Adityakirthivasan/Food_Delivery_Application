@@ -7,14 +7,22 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 
 import Ionicons from '@react-native-vector-icons/ionicons';
+
 import { useNavigation } from '@react-navigation/native';
 
 import RatingBadge from '../common/RatingBadge';
 import FoodTypeBadge from '../common/FoodTypeBadge';
 import AddButton from '../buttons/AddButton';
+
+const { width } = Dimensions.get('window');
+
+const guidelineBaseWidth = 393;
+
+const scale = width / guidelineBaseWidth;
 
 interface Props {
   item: any;
@@ -23,8 +31,11 @@ interface Props {
 export default function FlashFoodCard({
   item,
 }: Props) {
-    const navigation = useNavigation<any>();
+
+  const navigation = useNavigation<any>();
+
   return (
+
     <View style={styles.card}>
 
       {/* HEADER */}
@@ -59,8 +70,8 @@ export default function FlashFoodCard({
 
           <Ionicons
             name="chevron-forward"
-            size={14}
-            color="#999"
+            size={12 * scale}
+            color="#A0A0A0"
           />
 
         </TouchableOpacity>
@@ -71,37 +82,54 @@ export default function FlashFoodCard({
 
       <ScrollView
         horizontal
-        showsHorizontalScrollIndicator={false}>
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContainer}>
 
         {item.foods.map((food: any) => (
-<TouchableOpacity
-  key={food.id}
-  style={styles.foodCard}
-  activeOpacity={0.95}
-  onPress={() =>
-    navigation.navigate('ProductDetailScreen', {
-      item: food,
-    })
-  }>
+
+          <TouchableOpacity
+            key={food.id}
+            activeOpacity={0.95}
+            style={styles.foodCard}
+            onPress={() =>
+              navigation.navigate(
+                'ProductDetailScreen',
+                {
+                  item: food,
+                },
+              )
+            }>
+
+            {/* IMAGE */}
 
             <View>
 
               <Image
-                source={{ uri: food.image }}
+                source={
+                  typeof food.image === 'string'
+                    ? { uri: food.image }
+                    : food.image
+                }
                 style={styles.foodImage}
               />
 
-              <TouchableOpacity style={styles.heartButton}>
+              {/* HEART */}
+
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={styles.heartButton}>
 
                 <Ionicons
                   name="heart-outline"
-                  size={22}
-                  color="#fff"
+                  size={18 * scale}
+                  color="#FFFFFF"
                 />
 
               </TouchableOpacity>
 
             </View>
+
+            {/* CONTENT */}
 
             <View style={styles.foodContent}>
 
@@ -111,7 +139,7 @@ export default function FlashFoodCard({
               />
 
               <Text
-                numberOfLines={1}
+                numberOfLines={2}
                 style={styles.foodName}>
 
                 {food.name}
@@ -143,97 +171,141 @@ export default function FlashFoodCard({
 const styles = StyleSheet.create({
 
   card: {
-    width: '92%',
-    height: 299,
-    borderRadius: 12,
-    backgroundColor: '#fff',
-    alignSelf: 'center',
-    marginTop: 16,
-    padding: 14,
+    width: width - (16 * scale),
 
-    shadowColor: '#000',
+    backgroundColor: '#FFFFFF',
+
+    borderRadius: 16 * scale,
+
+    alignSelf: 'center',
+
+    marginTop: 16 * scale,
+
+    paddingTop: 14 * scale,
+    paddingBottom: 16 * scale,
+
+    shadowColor: '#000000',
+
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 2,
     },
-    shadowOpacity: 0.12,
-    shadowRadius: 7,
+
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+
     elevation: 3,
   },
 
   header: {
+    paddingHorizontal: 14 * scale,
+
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'flex-start',
   },
 
-hotelName: {
-  fontSize: 18,
-  fontWeight: '700',
-  color: '#111',
-},
+  hotelName: {
+    fontFamily: 'Montserrat-Bold',
+
+    fontSize: 16 * scale,
+    lineHeight: 20 * scale,
+
+    color: '#040404',
+  },
 
   infoRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 4,
+
+    marginTop: 4 * scale,
   },
 
-infoText: {
-  fontSize: 11,
-  color: '#111',
-  fontWeight: '700',
-  marginLeft: 4,
-},
+  infoText: {
+    marginLeft: 4 * scale,
+
+    fontFamily: 'Inter-Bold',
+
+    fontSize: 9.5 * scale,
+    lineHeight: 12 * scale,
+
+    color: '#040404',
+  },
 
   seeAllRow: {
     flexDirection: 'row',
     alignItems: 'center',
+
+    marginTop: 2 * scale,
   },
 
   seeAllText: {
-    color: '#999',
-    fontSize: 13,
+    fontFamily: 'Inter-Regular',
+
+    fontSize: 10 * scale,
+
+    color: '#B0B0B0',
   },
 
-foodCard: {
-  width: 132,
-  marginTop: 18,
-  marginRight: 12,
-},
+  scrollContainer: {
+    paddingLeft: 14 * scale,
+    paddingRight: 2 * scale,
+  },
 
-foodImage: {
-  width: '100%',
-  height: 120,
-  borderRadius: 12,
-},
+  foodCard: {
+    width: 118 * scale,
+
+    marginTop: 16 * scale,
+    marginRight: 10 * scale,
+  },
+
+  foodImage: {
+    width: 118 * scale,
+    height: 118 * scale,
+
+    borderRadius: 12 * scale,
+
+    resizeMode: 'cover',
+
+    backgroundColor: '#EDEDED',
+  },
 
   heartButton: {
     position: 'absolute',
-    top: 8,
-    right: 8,
+
+    top: 8 * scale,
+    right: 8 * scale,
   },
 
   foodContent: {
-    marginTop: 8,
+    marginTop: 8 * scale,
   },
 
-foodName: {
-  fontSize: 14,
-  color: '#333',
-  marginTop: 4,
-},
+  foodName: {
+    marginTop: 4 * scale,
 
+    fontFamily: 'Inter-Regular',
 
-bottomRow: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  marginTop: 8,
-},
+    fontSize: 12 * scale,
+    lineHeight: 15 * scale,
 
-price: {
-  fontSize: 15,
-  fontWeight: '700',
-  color: '#111',
-},
+    color: '#2C2C2C',
+  },
+
+  bottomRow: {
+    marginTop: 8 * scale,
+
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  price: {
+    fontFamily: 'Montserrat-Bold',
+
+    fontSize: 15 * scale,
+
+    color: '#040404',
+  },
+
 });

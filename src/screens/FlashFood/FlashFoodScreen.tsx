@@ -5,12 +5,18 @@ import {
   Text,
   ScrollView,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
+
+import {
+  SafeAreaView,
+} from 'react-native-safe-area-context';
 
 import Feather from '@react-native-vector-icons/feather';
 import Ionicons from '@react-native-vector-icons/ionicons';
 
 import HeroHeader from '../../components/headers/HeroHeader';
+
 import CategoryCard from '../../components/cards/CategoryCard';
 import FlashFoodCard from '../../components/cards/FlashFoodCard';
 
@@ -24,26 +30,40 @@ import {
   flashFoodData,
 } from '../../data/flashFoodData';
 
+const { width } = Dimensions.get('window');
+
+const guidelineBaseWidth = 393;
+
+const scale = width / guidelineBaseWidth;
+
 export default function FlashFoodScreen() {
+
   return (
-    <View style={styles.container}>
+
+    <SafeAreaView
+      edges={['top']}
+      style={styles.container}>
 
       <ScrollView
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}>
 
-        {/* HERO SECTION */}
+        {/* HERO */}
 
         <HeroHeader
           title="Flash Foods"
           subtitle="Food in 10 mins"
           buttonText="Order now"
+
           image="https://cdn-icons-png.flaticon.com/512/706/706164.png"
+
           showIcon
 
           titleStyle={styles.heroTitle}
           subtitleStyle={styles.heroSubtitle}
           imageStyle={styles.heroImage}
           contentStyle={styles.heroContent}
+          containerStyle={styles.heroContainer}
         />
 
         {/* CATEGORY */}
@@ -73,7 +93,7 @@ export default function FlashFoodScreen() {
 
         </View>
 
-        {/* FILTERS */}
+        {/* FILTER */}
 
         <ScrollView
           horizontal
@@ -85,8 +105,8 @@ export default function FlashFoodScreen() {
             icon={
               <Feather
                 name="sliders"
-                size={16}
-                color="#000"
+                size={14 * scale}
+                color="#040404"
               />
             }
           />
@@ -96,15 +116,15 @@ export default function FlashFoodScreen() {
             icon={
               <Ionicons
                 name="chevron-down"
-                size={16}
-                color="#000"
+                size={14 * scale}
+                color="#040404"
               />
             }
           />
 
         </ScrollView>
 
-        {/* FLASH FOOD CARDS */}
+        {/* CARDS */}
 
         <View style={styles.flashFoodContainer}>
 
@@ -121,7 +141,7 @@ export default function FlashFoodScreen() {
 
       </ScrollView>
 
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -129,55 +149,99 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
   },
 
-  heroTitle: {
-    fontSize: 38,
-    width: 260,
+  scrollContent: {
+    paddingBottom: 120 * scale,
   },
 
-  heroSubtitle: {
-    fontSize: 18,
-    marginTop: 5,
-  },
+  heroContainer: {
+    width: width,
+    height: 205 * scale,
 
-  heroImage: {
-    width: 240,
-    height: 240,
-    position: 'absolute',
-    right: -40,
-    bottom: -95,
+    borderBottomLeftRadius: 30 * scale,
+    borderBottomRightRadius: 30 * scale,
+
+    overflow: 'hidden',
   },
 
   heroContent: {
-    paddingTop: 38,
+    paddingTop: 28 * scale,
+    paddingLeft: 16 * scale,
+
     alignItems: 'flex-start',
   },
 
+  heroTitle: {
+    width: 180 * scale,
+
+    fontFamily: 'Montserrat-Bold',
+
+    fontSize: 28 * scale,
+    lineHeight: 34 * scale,
+
+    letterSpacing: -0.24,
+
+    color: '#FFFFFF',
+  },
+
+  heroSubtitle: {
+    marginTop: 2 * scale,
+
+    fontFamily: 'Montserrat-SemiBold',
+
+    fontSize: 14 * scale,
+    lineHeight: 18 * scale,
+
+    letterSpacing: -0.24,
+
+    color: '#FFFFFF',
+  },
+
+  heroImage: {
+    width: 170 * scale,
+    height: 170 * scale,
+
+    position: 'absolute',
+
+    right: -4 * scale,
+    bottom: -18 * scale,
+
+    resizeMode: 'contain',
+  },
+
   categorySection: {
-    marginTop: 28,
-    paddingLeft: 16,
+    marginTop: 12 * scale,
   },
 
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    marginLeft: 16 * scale,
+
+    fontFamily: 'Montserrat-SemiBold',
+
+    fontSize: 20 * scale,
+    lineHeight: 24 * scale,
+
+    color: '#040404',
   },
 
   categoryScroll: {
-    marginTop: 18,
-    paddingRight: 16,
+    paddingLeft: 12 * scale,
+    paddingRight: 8 * scale,
+
+    paddingTop: 14 * scale,
   },
 
   filterContainer: {
-    paddingLeft: 16,
-    marginTop: 22,
-    paddingRight: 16,
+    paddingLeft: 12 * scale,
+    paddingRight: 12 * scale,
+
+    marginTop: 16 * scale,
   },
 
   flashFoodContainer: {
-    paddingBottom: 40,
-    marginTop: 8,
+    marginTop: 6 * scale,
   },
+
 });

@@ -5,11 +5,16 @@ import {
   Text,
   Image,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
+
+const { width } = Dimensions.get('window');
+
+const scale = width / 393;
 
 interface Props {
   title: string;
-  image: string;
+  image: any;
 }
 
 export default function CategoryCard({
@@ -21,14 +26,10 @@ export default function CategoryCard({
 
     <View style={styles.categoryItem}>
 
-      {/* IMAGE */}
-
       <Image
-        source={{ uri: image }}
+        source={image}
         style={styles.categoryImage}
       />
-
-      {/* TEXT */}
 
       <Text style={styles.categoryText}>
         {title}
@@ -41,32 +42,29 @@ export default function CategoryCard({
 const styles = StyleSheet.create({
 
   categoryItem: {
-    width: 82.43,
-    height: 70,
+    width: 82 * scale,
 
-    marginRight: 16,
+    marginRight: 16 * scale,
 
     alignItems: 'center',
-    justifyContent: 'space-between',
   },
 
   categoryImage: {
-    width: 56,
-    height: 56,
+    width: 58 * scale,
+    height: 58 * scale,
 
-    borderRadius: 56,
-
-    resizeMode: 'cover',
+    resizeMode: 'contain',
   },
 
   categoryText: {
-    fontFamily: 'Inter-Regular',
-    fontWeight: '400',
+    marginTop: 8 * scale,
 
-    fontSize: 14,
-    lineHeight: 14,
+    fontFamily: 'Montserrat-Medium',
 
-    letterSpacing: -0.24,
+    fontSize: 12 * scale,
+    lineHeight: 16 * scale,
+
+    letterSpacing: -0.2,
 
     textAlign: 'center',
 

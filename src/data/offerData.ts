@@ -5,7 +5,8 @@ export const offerData = [
     subtitle: 'Special price on our family meal bundle!',
     code: 'JI5G250',
     discount: '50%',
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
+
+    image: require('../assets/images/home/categories/Burger.png'),
   },
 
   {
@@ -14,7 +15,8 @@ export const offerData = [
     subtitle: 'Free coffee with any breakfast item!',
     code: 'JI5G250',
     discount: '47%',
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
+
+    image: require('../assets/images/home/categories/Dessert.png'),
   },
 
   {
@@ -23,7 +25,8 @@ export const offerData = [
     subtitle: '0% off on all healthy salads and smoothies!',
     code: 'JI5G250',
     discount: '25%',
-    image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
+
+    image: require('../assets/images/home/categories/Meat.png'),
   },
 
   {
@@ -32,6 +35,7 @@ export const offerData = [
     subtitle: 'Buy 2 desserts, get the 3rd free!',
     code: 'JI5G250',
     discount: '30%',
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
+
+    image: require('../assets/images/home/categories/Biriyani.png'),
   },
 ];

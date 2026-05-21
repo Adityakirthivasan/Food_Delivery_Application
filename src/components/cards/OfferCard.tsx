@@ -8,7 +8,11 @@ import {
   Dimensions,
 } from 'react-native';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+const { width } = Dimensions.get('window');
+
+const guidelineWidth = 393;
+
+const scale = width / guidelineWidth;
 
 interface Props {
   item: any;
@@ -17,26 +21,34 @@ interface Props {
 export default function OfferCard({
   item,
 }: Props) {
+
   return (
+
     <View style={styles.card}>
 
-      <View style={styles.leftContent}>
+      {/* LEFT SECTION */}
 
-        <Text
-          numberOfLines={1}
-          style={styles.title}>
+      <View style={styles.leftSection}>
 
-          {item.title}
+        <View>
 
-        </Text>
+          <Text
+            numberOfLines={1}
+            style={styles.title}>
 
-        <Text
-          numberOfLines={2}
-          style={styles.subtitle}>
+            {item.title}
 
-          {item.subtitle}
+          </Text>
 
-        </Text>
+          <Text
+            numberOfLines={2}
+            style={styles.subtitle}>
+
+            {item.subtitle}
+
+          </Text>
+
+        </View>
 
         <View style={styles.couponBox}>
 
@@ -48,20 +60,31 @@ export default function OfferCard({
 
       </View>
 
-      <View style={styles.imageSection}>
+      {/* RIGHT SECTION */}
+
+      <View style={styles.rightSection}>
 
         <Image
-          source={{ uri: item.image }}
-          style={styles.foodImage}
+          source={item.image}
+          style={[
+            styles.image,
+
+            item.id === 1 && styles.burgerImage,
+            item.id === 2 && styles.dessertImage,
+            item.id === 3 && styles.meatImage,
+            item.id === 4 && styles.biriyaniImage,
+          ]}
         />
 
-        <View style={styles.discountBadge}>
+        {/* BADGE */}
 
-          <Text style={styles.discountText}>
+        <View style={styles.badge}>
+
+          <Text style={styles.discount}>
             {item.discount}
           </Text>
 
-          <Text style={styles.offText}>
+          <Text style={styles.off}>
             Off!
           </Text>
 
@@ -76,93 +99,184 @@ export default function OfferCard({
 const styles = StyleSheet.create({
 
   card: {
-    width: SCREEN_WIDTH - 40,
+    width: width - 40,
     height: 145,
-    borderRadius: 20,
-    backgroundColor: '#F5F5F5',
-    marginBottom: 13,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    overflow: 'hidden',
+
     alignSelf: 'center',
-    paddingLeft: 20,
-    paddingTop: 18,
+
+    backgroundColor: '#FFFFFF',
+
+    borderRadius: 20,
+
+    marginBottom: 14,
+
+    flexDirection: 'row',
+
+    overflow: 'hidden',
+
+    shadowColor: '#000',
+
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+
+    shadowOpacity: 0.1,
+    shadowRadius: 7,
+
+    elevation: 4,
   },
 
-  leftContent: {
-    width: 165,
+  /* LEFT */
+
+  leftSection: {
+    width: '52%',
+
+    paddingLeft: 20,
+    paddingTop: 18,
+    paddingBottom: 18,
+
+    justifyContent: 'space-between',
   },
 
   title: {
-    fontSize: 19,
-    fontWeight: '700',
-    color: '#111',
+    fontFamily: 'Montserrat-SemiBold',
+
+    fontSize: 20 * scale,
+    lineHeight: 24 * scale,
+
+    letterSpacing: -0.24,
+
+    color: '#040404',
   },
 
   subtitle: {
-    marginTop: 7,
-    fontSize: 12,
-    lineHeight: 17,
-    color: '#666',
-    width: 150,
+    width: 155,
+
+    marginTop: 8,
+
+    fontFamily: 'Inter-Regular',
+
+    fontSize: 14 * scale,
+    lineHeight: 17 * scale,
+
+    letterSpacing: -0.24,
+
+    color: '#696969',
   },
 
   couponBox: {
-    width: 76,
-    height: 28,
+    width: 61,
+    height: 22,
+
     borderWidth: 1,
     borderStyle: 'dashed',
-    borderColor: '#444',
+    borderColor: '#000',
+
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 12,
   },
 
   couponText: {
+    fontFamily: 'Inter-Regular',
+
     fontSize: 10,
-    color: '#111',
-    fontWeight: '500',
+
+    color: '#000',
   },
 
-  imageSection: {
-    width: 160,
-    height: '100%',
+  /* RIGHT */
+
+  rightSection: {
+    flex: 1,
+
+    position: 'relative',
+
     justifyContent: 'center',
     alignItems: 'center',
   },
 
-  foodImage: {
-    width: 150,
-    height: 150,
+  image: {
     resizeMode: 'contain',
+
     position: 'absolute',
-    bottom: -10,
-    right: -10,
   },
 
-  discountBadge: {
-    width: 68,
-    height: 68,
-    borderRadius: 34,
-    backgroundColor: '#F15A24',
+  /* IMAGE FIXES */
+
+  burgerImage: {
+    width: 160,
+    height: 118,
+
+    right: -6,
+    top: 16,
+  },
+
+  dessertImage: {
+    width: 128,
+    height: 118,
+
+    right: 8,
+    top: 14,
+  },
+
+  meatImage: {
+    width: 145,
+    height: 92,
+
+    right: -2,
+    top: 34,
+  },
+
+  biriyaniImage: {
+    width: 160,
+    height: 160,
+
+    right: -8,
+    top: -6,
+  },
+
+  /* BADGE */
+
+  badge: {
+    width: 57,
+    height: 57,
+
+    borderRadius: 57,
+
+    backgroundColor: '#E95322',
+
+    position: 'absolute',
+
+    top: 12,
+    right: 18,
+
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
-    top: 10,
-    right: 14,
+
+    zIndex: 20,
   },
 
-  discountText: {
-    color: '#fff',
-    fontSize: 24,
-    fontWeight: '700',
-    lineHeight: 26,
+  discount: {
+    fontFamily: 'Montserrat-SemiBold',
+
+    fontSize: 20,
+
+    lineHeight: 22,
+
+    color: '#FFFFFF',
   },
 
-  offText: {
-    color: '#fff',
+  off: {
+    fontFamily: 'Montserrat-Medium',
+
     fontSize: 12,
-    fontWeight: '600',
+
+    lineHeight: 14,
+
+    color: '#FFFFFF',
+
     marginTop: -2,
   },
+
 });

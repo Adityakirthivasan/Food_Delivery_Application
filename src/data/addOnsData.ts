@@ -1,19 +1,19 @@
 export const addOnsData = [
   {
     id: 1,
-    image:
-      'https://images.unsplash.com/photo-1551024601-bec78aea704b',
+
+    image: require('../assets/images/home/categories/Dessert.png'),
   },
 
   {
     id: 2,
-    image:
-      'https://images.unsplash.com/photo-1562967914-608f82629710',
+
+    image: require('../assets/images/home/categories/ColdDrinks.png'),
   },
 
   {
     id: 3,
-    image:
-      'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd',
+
+    image: require('../assets/images/home/categories/Burger.png'),
   },
 ];

@@ -62,7 +62,15 @@ export default function HomeScreen() {
 
           {/* SEARCH */}
 
-          <SearchBar showVegToggle />
+          <TouchableOpacity
+  activeOpacity={0.95}
+  onPress={() =>
+    navigation.navigate('SearchScreen')
+  }>
+
+  <SearchBar showVegToggle />
+
+</TouchableOpacity>
 
           {/* OFFER TITLE */}
 

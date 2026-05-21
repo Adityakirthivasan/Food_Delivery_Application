@@ -10,15 +10,19 @@ import OfferScreen from '../screens/Offers/OfferScreen';
 import BestSellerScreen from '../screens/BestSeller/BestSellerScreen';
 import MyOrdersScreen from '../screens/Orders/OrderHistoryScreen';
 import RestaurantScreen from '../screens/Restaurant/RestaurantScreen';
-
 import ProductDetailScreen from '../screens/ProductDetail/ProductDetailScreen';
+import SearchScreen from '../screens/Search/SearchScreen';
+import BookingScreen from '../screens/Booking/BookingScreen';
 
 import { RootStackParamList } from './types';
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack =
+  createNativeStackNavigator<RootStackParamList>();
 
 export default function AppNavigator() {
+
   return (
+
     <NavigationContainer>
 
       <Stack.Navigator
@@ -46,10 +50,25 @@ export default function AppNavigator() {
           component={MyOrdersScreen}
         />
 
-<Stack.Screen
-  name="RestaurantScreen"
-  component={RestaurantScreen}
-/>
+        <Stack.Screen
+          name="RestaurantScreen"
+          component={RestaurantScreen}
+        />
+
+        <Stack.Screen
+          name="ProductDetailScreen"
+          component={ProductDetailScreen}
+        />
+
+        <Stack.Screen
+          name="SearchScreen"
+          component={SearchScreen}
+        />
+
+        <Stack.Screen
+          name="BookingScreen"
+          component={BookingScreen}
+        />
 
       </Stack.Navigator>
 
