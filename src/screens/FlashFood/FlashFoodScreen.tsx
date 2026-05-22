@@ -5,7 +5,7 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  Dimensions,
+  StatusBar,
 } from 'react-native';
 
 import {
@@ -17,131 +17,143 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 
 import HeroHeader from '../../components/headers/HeroHeader';
 
-import CategoryCard from '../../components/cards/CategoryCard';
 import FlashFoodCard from '../../components/cards/FlashFoodCard';
 
 import FilterChip from '../../components/buttons/FilterChip';
 
 import {
-  categoryData,
-} from '../../data/homeData';
-
-import {
   flashFoodData,
+  flashFoodCategoryData,
 } from '../../data/flashFoodData';
 
-const { width } = Dimensions.get('window');
-
-const guidelineBaseWidth = 393;
-
-const scale = width / guidelineBaseWidth;
+import {
+  scale,
+  width,
+} from '../../utils/responsive';
 
 export default function FlashFoodScreen() {
 
   return (
 
-    <SafeAreaView
-      edges={['top']}
-      style={styles.container}>
+    <View style={styles.container}>
 
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}>
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle="light-content"
+      />
 
-        {/* HERO */}
+      <SafeAreaView
+        edges={['top']}
+        style={styles.safeArea}>
 
-        <HeroHeader
-          title="Flash Foods"
-          subtitle="Food in 10 mins"
-          buttonText="Order now"
+        <ScrollView
+          bounces={false}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}>
 
-          image="https://cdn-icons-png.flaticon.com/512/706/706164.png"
+          {/* HERO */}
 
-          showIcon
+          <HeroHeader
+            title="Flash Foods"
+            subtitle="Food in 10 mins"
+            buttonText="Order now"
 
-          titleStyle={styles.heroTitle}
-          subtitleStyle={styles.heroSubtitle}
-          imageStyle={styles.heroImage}
-          contentStyle={styles.heroContent}
-          containerStyle={styles.heroContainer}
-        />
+            image={require('../../assets/images/flash/amico.png')}
 
-        {/* CATEGORY */}
+            showIcon
 
-        <View style={styles.categorySection}>
+            titleStyle={styles.heroTitle}
+            subtitleStyle={styles.heroSubtitle}
+            imageStyle={styles.heroImage}
+            containerStyle={styles.heroContainer}
+            contentStyle={styles.heroContent}
+          />
 
-          <Text style={styles.sectionTitle}>
-            What you like to have?
-          </Text>
+          {/* CATEGORY */}
 
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.categoryScroll}>
+          <View style={styles.categorySection}>
 
-            {categoryData.map((item) => (
+            <Text style={styles.sectionTitle}>
+              What you like to have?
+            </Text>
 
-              <CategoryCard
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.categoryScroll}>
+
+              {flashFoodCategoryData.map((item) => (
+
+                <FlashFoodCard
+                  key={item.id}
+                  type="category"
+                  title={item.title}
+                  image={item.image}
+                />
+
+              ))}
+
+            </ScrollView>
+
+          </View>
+
+          {/* FILTER */}
+
+          <View style={styles.filterWrapper}>
+
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.filterContainer}>
+
+              <FilterChip
+                title="Filter"
+                icon={
+                  <Feather
+                    name="sliders"
+                    size={scale(14)}
+                    color="#040404"
+                  />
+                }
+              />
+
+              <FilterChip
+                title="Sort By"
+                icon={
+                  <Ionicons
+                    name="chevron-down"
+                    size={scale(14)}
+                    color="#040404"
+                  />
+                }
+              />
+
+            </ScrollView>
+
+          </View>
+
+          {/* FLASH FOOD */}
+
+          <View style={styles.flashFoodContainer}>
+
+            {flashFoodData.map((item) => (
+
+              <FlashFoodCard
                 key={item.id}
-                title={item.title}
-                image={item.image}
+                item={item}
               />
 
             ))}
 
-          </ScrollView>
-
-        </View>
-
-        {/* FILTER */}
-
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.filterContainer}>
-
-          <FilterChip
-            title="Filter"
-            icon={
-              <Feather
-                name="sliders"
-                size={14 * scale}
-                color="#040404"
-              />
-            }
-          />
-
-          <FilterChip
-            title="Sort By"
-            icon={
-              <Ionicons
-                name="chevron-down"
-                size={14 * scale}
-                color="#040404"
-              />
-            }
-          />
+          </View>
 
         </ScrollView>
 
-        {/* CARDS */}
+      </SafeAreaView>
 
-        <View style={styles.flashFoodContainer}>
+    </View>
 
-          {flashFoodData.map((item) => (
-
-            <FlashFoodCard
-              key={item.id}
-              item={item}
-            />
-
-          ))}
-
-        </View>
-
-      </ScrollView>
-
-    </SafeAreaView>
   );
 }
 
@@ -149,50 +161,63 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
+
     backgroundColor: '#FFFFFF',
   },
 
+  safeArea: {
+    flex: 1,
+
+    backgroundColor: '#FF8340',
+  },
+
   scrollContent: {
-    paddingBottom: 120 * scale,
+    paddingBottom: scale(120),
+
+    backgroundColor: '#FFFFFF',
   },
 
   heroContainer: {
     width: width,
-    height: 205 * scale,
 
-    borderBottomLeftRadius: 30 * scale,
-    borderBottomRightRadius: 30 * scale,
+    height: scale(280),
+
+    marginTop: -1,
+
+    borderBottomLeftRadius: scale(30),
+    borderBottomRightRadius: scale(30),
 
     overflow: 'hidden',
   },
 
   heroContent: {
-    paddingTop: 28 * scale,
-    paddingLeft: 16 * scale,
-
-    alignItems: 'flex-start',
+    paddingTop: 0,
   },
 
   heroTitle: {
-    width: 180 * scale,
+    width: scale(250),
 
-    fontFamily: 'Montserrat-Bold',
+    fontFamily: 'Montserrat',
+    fontWeight:'bold',
+    
+    fontSize: scale(40),
+    lineHeight: scale(44),
 
-    fontSize: 28 * scale,
-    lineHeight: 34 * scale,
+    letterSpacing: -0.5,
 
-    letterSpacing: -0.24,
+    marginTop: scale(4),
 
     color: '#FFFFFF',
   },
 
   heroSubtitle: {
-    marginTop: 2 * scale,
+    marginTop: scale(6),
 
-    fontFamily: 'Montserrat-SemiBold',
+    fontFamily: 'Montserrat-Bold',
+    fontWeight:'bold',
 
-    fontSize: 14 * scale,
-    lineHeight: 18 * scale,
+    fontSize: scale(18),
+    lineHeight: scale(22),
 
     letterSpacing: -0.24,
 
@@ -200,48 +225,50 @@ const styles = StyleSheet.create({
   },
 
   heroImage: {
-    width: 170 * scale,
-    height: 170 * scale,
+    width: scale(260),
+    height: scale(260),
 
-    position: 'absolute',
-
-    right: -4 * scale,
-    bottom: -18 * scale,
-
-    resizeMode: 'contain',
+    right: scale(-10),
+    bottom: scale(-30),
   },
 
   categorySection: {
-    marginTop: 12 * scale,
+    marginTop: scale(20),
+
+    paddingBottom: scale(8),
   },
 
   sectionTitle: {
-    marginLeft: 16 * scale,
+    marginLeft: scale(16),
 
     fontFamily: 'Montserrat-SemiBold',
 
-    fontSize: 20 * scale,
-    lineHeight: 24 * scale,
+    fontSize: scale(20),
+    lineHeight: scale(24),
 
     color: '#040404',
   },
 
   categoryScroll: {
-    paddingLeft: 12 * scale,
-    paddingRight: 8 * scale,
+    paddingLeft: scale(12),
+    paddingRight: scale(8),
 
-    paddingTop: 14 * scale,
+    paddingTop: scale(14),
+  },
+
+  filterWrapper: {
+    marginTop: scale(2),
+
+    marginBottom: scale(10),
   },
 
   filterContainer: {
-    paddingLeft: 12 * scale,
-    paddingRight: 12 * scale,
-
-    marginTop: 16 * scale,
+    paddingLeft: scale(12),
+    paddingRight: scale(12),
   },
 
   flashFoodContainer: {
-    marginTop: 6 * scale,
+    paddingTop: scale(2),
   },
 
 });

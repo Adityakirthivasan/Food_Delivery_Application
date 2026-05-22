@@ -4,7 +4,12 @@ import {
   View,
   Text,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
+
+const { width } = Dimensions.get('window');
+
+const scale = width / 393;
 
 interface Props {
   veg?: boolean;
@@ -12,44 +17,45 @@ interface Props {
 }
 
 export default function FoodTypeBadge({
-  veg = true,
+  veg,
   title,
 }: Props) {
+
   return (
+
     <View style={styles.row}>
 
       <View
         style={[
-          styles.outer,
+          styles.dotBox,
+
           {
-            borderColor: veg ? '#34C759' : '#FF6B35',
+            borderColor: veg
+              ? '#46A72C'
+              : '#E95322',
           },
         ]}>
 
         <View
           style={[
-            styles.inner,
+            styles.dot,
+
             {
-              backgroundColor: veg ? '#34C759' : '#FF6B35',
+              backgroundColor: veg
+                ? '#46A72C'
+                : '#E95322',
             },
           ]}
         />
 
       </View>
 
-      <Text
-        style={[
-          styles.text,
-          {
-            color: veg ? '#34C759' : '#FF6B35',
-          },
-        ]}>
-
+      <Text style={styles.text}>
         {title}
-
       </Text>
 
     </View>
+
   );
 }
 
@@ -60,23 +66,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  outer: {
-    width: 12,
-    height: 12,
-    borderWidth: 1,
+  dotBox: {
+    width: 11 * scale,
+    height: 11 * scale,
+
+    borderWidth: 1 * scale,
+
+    borderRadius: 2 * scale,
+
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 4,
   },
 
-  inner: {
-    width: 6,
-    height: 6,
-    borderRadius: 10,
+  dot: {
+    width: 5 * scale,
+    height: 5 * scale,
+
+    borderRadius: 5 * scale,
   },
 
   text: {
-    fontSize: 12,
-    fontWeight: '500',
+    marginLeft: 4 * scale,
+
+    fontFamily: 'Inter-Regular',
+
+    fontSize: 10 * scale,
+    lineHeight: 12 * scale,
+
+    color: '#E95322',
   },
+
 });

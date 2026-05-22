@@ -4,16 +4,15 @@ import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
 } from 'react-native';
 
 import Ionicons from '@react-native-vector-icons/ionicons';
 
 import ProfileButton from '../buttons/ProfileButton';
 
-const { width } = Dimensions.get('window');
-
-const scale = width / 393;
+import {
+  scale,
+} from '../../utils/responsive';
 
 interface Props {
   title: string;
@@ -33,21 +32,21 @@ export default function LocationHeader({
 
     <View style={styles.locationRow}>
 
-      <View>
+      <View style={styles.leftSection}>
 
         <View style={styles.locationTitleRow}>
 
           <Ionicons
             name="location-sharp"
-            size={18 * scale}
-            color={dark ? '#111' : '#fff'}
+            size={scale(17)}
+            color={dark ? '#111' : '#FFFFFF'}
           />
 
           <Text
             style={[
               styles.locationTitle,
               {
-                color: dark ? '#111' : '#fff',
+                color: dark ? '#111' : '#FFFFFF',
               },
             ]}>
 
@@ -57,8 +56,8 @@ export default function LocationHeader({
 
           <Ionicons
             name="chevron-down"
-            size={18 * scale}
-            color={dark ? '#111' : '#fff'}
+            size={scale(17)}
+            color={dark ? '#111' : '#FFFFFF'}
           />
 
         </View>
@@ -68,7 +67,9 @@ export default function LocationHeader({
           style={[
             styles.locationSub,
             {
-              color: dark ? '#777' : '#FFFFFFBF',
+              color: dark
+                ? '#777'
+                : 'rgba(255,255,255,0.78)',
             },
           ]}>
 
@@ -81,15 +82,22 @@ export default function LocationHeader({
       <ProfileButton onPress={onProfilePress} />
 
     </View>
+
   );
 }
 
 const styles = StyleSheet.create({
 
   locationRow: {
+    width: '100%',
+
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+  },
+
+  leftSection: {
+    width: '74%',
   },
 
   locationTitleRow: {
@@ -98,20 +106,26 @@ const styles = StyleSheet.create({
   },
 
   locationTitle: {
-    fontFamily: 'Inter-SemiBold',
-    fontSize: 16 * scale,
-    lineHeight: 16 * scale,
+    marginHorizontal: scale(4),
+
+    fontFamily: 'Inter-Bold',
+
+    fontSize: scale(16),
+    lineHeight: scale(20),
+
     letterSpacing: -0.24,
-    marginHorizontal: 4 * scale,
+
+    color: '#FFFFFF',
   },
 
   locationSub: {
-    width: 168 * scale,
-    marginTop: 6 * scale,
+    marginTop: scale(3),
 
     fontFamily: 'Montserrat-Light',
-    fontSize: 12 * scale,
-    lineHeight: 12 * scale,
+
+    fontSize: scale(12),
+    lineHeight: scale(15),
+
     letterSpacing: -0.24,
   },
 

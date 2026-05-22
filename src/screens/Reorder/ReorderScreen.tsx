@@ -28,8 +28,8 @@ const historyData = [
     name: 'Burger king',
     location: 'HSR, Bangalore',
     amount: '$200',
-    image:
-      'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
+
+    image: require('../../assets/images/reorder/Dish.png'),
   },
 
   {
@@ -37,8 +37,8 @@ const historyData = [
     name: 'Burger king',
     location: 'HSR, Bangalore',
     amount: '$200',
-    image:
-      'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
+
+    image: require('../../assets/images/reorder/Dish.png'),
   },
 
   {
@@ -46,8 +46,8 @@ const historyData = [
     name: 'Burger king',
     location: 'HSR, Bangalore',
     amount: '$200',
-    image:
-      'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
+
+    image: require('../../assets/images/reorder/Dish.png'),
   },
 
   {
@@ -55,8 +55,8 @@ const historyData = [
     name: 'Burger king',
     location: 'HSR, Bangalore',
     amount: '$200',
-    image:
-      'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
+
+    image: require('../../assets/images/reorder/Dish.png'),
   },
 ];
 
@@ -70,7 +70,8 @@ export default function ReorderScreen() {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        bounces={false}>
+        bounces={false}
+        contentContainerStyle={styles.scrollContent}>
 
         {/* TOP */}
 
@@ -91,9 +92,7 @@ export default function ReorderScreen() {
         <View style={styles.deliveryCard}>
 
           <Image
-            source={{
-              uri: 'https://images.unsplash.com/photo-1524661135-423995f22d0b',
-            }}
+            source={require('../../assets/images/reorder/Location.png')}
             style={styles.mapImage}
           />
 
@@ -101,7 +100,7 @@ export default function ReorderScreen() {
 
             <View style={styles.deliveryTopRow}>
 
-              <View style={{ flex: 1 }}>
+              <View style={styles.deliveryTextContainer}>
 
                 <Text style={styles.deliveryTitle}>
                   Order out for delivery
@@ -116,7 +115,11 @@ export default function ReorderScreen() {
               <View style={styles.timeBox}>
 
                 <Text style={styles.timeText}>
-                  4{'\n'}min
+                  4
+                </Text>
+
+                <Text style={styles.minText}>
+                  min
                 </Text>
 
               </View>
@@ -190,7 +193,7 @@ export default function ReorderScreen() {
               {/* IMAGE */}
 
               <Image
-                source={{ uri: item.image }}
+                source={item.image}
                 style={styles.foodImage}
               />
 
@@ -202,10 +205,14 @@ export default function ReorderScreen() {
 
                 <View style={styles.cardTopRow}>
 
-                  <View>
+                  <View style={styles.topLeftContent}>
 
-                    <Text style={styles.foodName}>
+                    <Text
+                      numberOfLines={1}
+                      style={styles.foodName}>
+
                       {item.name}
+
                     </Text>
 
                     <Text style={styles.locationText}>
@@ -220,7 +227,7 @@ export default function ReorderScreen() {
 
                       <Ionicons
                         name="chevron-forward"
-                        size={10 * scale}
+                        size={9 * scale}
                         color="#E95322"
                       />
 
@@ -228,11 +235,12 @@ export default function ReorderScreen() {
 
                   </View>
 
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.moreButton}>
 
                     <Ionicons
                       name="ellipsis-horizontal"
-                      size={22 * scale}
+                      size={20 * scale}
                       color="#000"
                     />
 
@@ -244,10 +252,18 @@ export default function ReorderScreen() {
 
                 <View style={styles.itemRow}>
 
-                  <View style={styles.vegDot} />
+                  <View style={styles.vegDot}>
 
-                  <Text style={styles.itemText}>
+                    <View style={styles.vegInnerDot} />
+
+                  </View>
+
+                  <Text
+                    numberOfLines={1}
+                    style={styles.itemText}>
+
                     5 x Crispy Chicken + Crispy Chicken.
+
                   </Text>
 
                 </View>
@@ -256,8 +272,12 @@ export default function ReorderScreen() {
 
                 <View style={styles.orderInfoRow}>
 
-                  <Text style={styles.orderPlaced}>
+                  <Text
+                    numberOfLines={1}
+                    style={styles.orderPlaced}>
+
                     Order placed on 23 oct, 5:08 PM
+
                   </Text>
 
                   <Text style={styles.delivered}>
@@ -297,6 +317,7 @@ export default function ReorderScreen() {
       </ScrollView>
 
     </SafeAreaView>
+
   );
 }
 
@@ -304,13 +325,20 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+
+    backgroundColor: '#F8F8F8',
+  },
+
+  scrollContent: {
+    paddingBottom: 120 * scale,
   },
 
   topSection: {
     paddingHorizontal: 16 * scale,
     paddingTop: 10 * scale,
-    paddingBottom: 24 * scale,
+    paddingBottom: 20 * scale,
+
+    backgroundColor: '#F8F8F8',
   },
 
   /* DELIVERY */
@@ -318,7 +346,7 @@ const styles = StyleSheet.create({
   deliveryCard: {
     width: width - (32 * scale),
 
-    borderRadius: 12 * scale,
+    borderRadius: 18 * scale,
 
     backgroundColor: '#FFFFFF',
 
@@ -329,18 +357,20 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 2,
     },
 
-    shadowOpacity: 0.12,
-    shadowRadius: 7,
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
 
-    elevation: 4,
+    elevation: 3,
   },
 
   mapImage: {
     width: '100%',
-    height: 155 * scale,
+    height: 170 * scale,
+
+    resizeMode: 'cover',
   },
 
   deliveryContent: {
@@ -349,38 +379,45 @@ const styles = StyleSheet.create({
 
   deliveryTopRow: {
     flexDirection: 'row',
+
     justifyContent: 'space-between',
+
+    alignItems: 'flex-start',
+  },
+
+  deliveryTextContainer: {
+    flex: 1,
+
+    paddingRight: 10 * scale,
   },
 
   deliveryTitle: {
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'Inter',
+    fontWeight: '700',
 
-    fontSize: 16 * scale,
+    fontSize: 17 * scale,
     lineHeight: 24 * scale,
-
-    letterSpacing: -0.24,
 
     color: '#000000',
   },
 
   deliverySub: {
-    width: 225 * scale,
-
     marginTop: 2 * scale,
 
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'Inter',
+    fontWeight: '400',
 
     fontSize: 12 * scale,
-    lineHeight: 16 * scale,
+    lineHeight: 17 * scale,
 
     color: '#000000',
   },
 
   timeBox: {
-    width: 55 * scale,
-    height: 52 * scale,
+    width: 58 * scale,
+    height: 58 * scale,
 
-    borderRadius: 12 * scale,
+    borderRadius: 14 * scale,
 
     backgroundColor: '#32D623',
 
@@ -389,12 +426,20 @@ const styles = StyleSheet.create({
   },
 
   timeText: {
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'Inter',
+    fontWeight: '700',
 
-    fontSize: 18 * scale,
-    lineHeight: 20 * scale,
+    fontSize: 20 * scale,
+    lineHeight: 22 * scale,
 
-    textAlign: 'center',
+    color: '#FFFFFF',
+  },
+
+  minText: {
+    fontFamily: 'Inter',
+    fontWeight: '500',
+
+    fontSize: 11 * scale,
 
     color: '#FFFFFF',
   },
@@ -403,21 +448,23 @@ const styles = StyleSheet.create({
 
   actionRow: {
     flexDirection: 'row',
-    marginTop: 16 * scale,
+
     alignItems: 'center',
+
+    marginTop: 18 * scale,
   },
 
   instructionButton: {
     flex: 1,
 
-    height: 44 * scale,
+    height: 48 * scale,
 
-    borderRadius: 12 * scale,
+    borderRadius: 14 * scale,
 
     borderWidth: 1,
-    borderColor: '#D9D9D9',
+    borderColor: '#E2E2E2',
 
-    backgroundColor: '#F6F6F6',
+    backgroundColor: '#FAFAFA',
 
     flexDirection: 'row',
     alignItems: 'center',
@@ -429,26 +476,26 @@ const styles = StyleSheet.create({
   instructionText: {
     marginLeft: 6 * scale,
 
-    fontFamily: 'Inter-Medium',
+    fontFamily: 'Inter',
+    fontWeight: '500',
 
     fontSize: 14 * scale,
-    lineHeight: 17 * scale,
 
     color: '#000000',
   },
 
   iconButton: {
-    width: 44 * scale,
-    height: 44 * scale,
+    width: 48 * scale,
+    height: 48 * scale,
 
     marginLeft: 10 * scale,
 
-    borderRadius: 12 * scale,
+    borderRadius: 14 * scale,
 
     borderWidth: 1,
-    borderColor: '#D9D9D9',
+    borderColor: '#E2E2E2',
 
-    backgroundColor: '#F6F6F6',
+    backgroundColor: '#FAFAFA',
 
     justifyContent: 'center',
     alignItems: 'center',
@@ -458,30 +505,29 @@ const styles = StyleSheet.create({
 
   historySection: {
     paddingHorizontal: 16 * scale,
-    paddingTop: 24 * scale,
-    paddingBottom: 40 * scale,
+    paddingTop: 28 * scale,
   },
 
   historyTitle: {
-    fontFamily: 'Montserrat-SemiBold',
+    fontFamily: 'Inter',
+    fontWeight: '700',
 
-    fontSize: 20 * scale,
-    lineHeight: 24 * scale,
+    fontSize: 22 * scale,
+    lineHeight: 28 * scale,
 
-    letterSpacing: -0.24,
-
-    color: '#040404',
+    color: '#000000',
   },
 
-  /* CARD */
+  /* HISTORY CARD */
 
   historyCard: {
     width: '100%',
-    height: 150 * scale,
 
-    marginTop: 16 * scale,
+    minHeight: 158 * scale,
 
-    borderRadius: 12 * scale,
+    marginTop: 18 * scale,
+
+    borderRadius: 18 * scale,
 
     backgroundColor: '#FFFFFF',
 
@@ -492,40 +538,52 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 2,
     },
 
-    shadowOpacity: 0.12,
-    shadowRadius: 7,
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
 
-    elevation: 4,
+    elevation: 3,
   },
 
   foodImage: {
-    width: 119 * scale,
+    width: 124 * scale,
+
     height: '100%',
+
+    resizeMode: 'cover',
   },
 
   cardContent: {
     flex: 1,
 
-    paddingHorizontal: 10 * scale,
-    paddingTop: 12 * scale,
-    paddingBottom: 12 * scale,
+    paddingHorizontal: 14 * scale,
+    paddingVertical: 12 * scale,
+
+    justifyContent: 'space-between',
   },
 
   cardTopRow: {
     flexDirection: 'row',
+
     justifyContent: 'space-between',
+
+    alignItems: 'flex-start',
+  },
+
+  topLeftContent: {
+    flex: 1,
+
+    paddingRight: 8 * scale,
   },
 
   foodName: {
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'Inter',
+    fontWeight: '700',
 
     fontSize: 16 * scale,
     lineHeight: 24 * scale,
-
-    letterSpacing: -0.24,
 
     color: '#000000',
   },
@@ -533,7 +591,8 @@ const styles = StyleSheet.create({
   locationText: {
     marginTop: 1 * scale,
 
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'Inter',
+    fontWeight: '400',
 
     fontSize: 12 * scale,
     lineHeight: 16 * scale,
@@ -545,109 +604,143 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
 
-    marginTop: 2 * scale,
+    marginTop: 3 * scale,
   },
 
   viewMenu: {
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'Inter',
+    fontWeight: '400',
 
-    fontSize: 8 * scale,
-    lineHeight: 10 * scale,
+    fontSize: 9 * scale,
+    lineHeight: 12 * scale,
 
     color: '#E95322',
   },
 
+  moreButton: {
+    paddingLeft: 4 * scale,
+  },
+
   itemRow: {
     flexDirection: 'row',
+
     alignItems: 'center',
 
-    marginTop: 4 * scale,
+    marginTop: 5 * scale,
   },
 
   vegDot: {
-    width: 10 * scale,
-    height: 10 * scale,
+    width: 12 * scale,
+    height: 12 * scale,
+
+    borderWidth: 1.4 * scale,
+    borderColor: '#C64500',
 
     borderRadius: 2 * scale,
 
-    backgroundColor: '#C64500',
+    justifyContent: 'center',
+    alignItems: 'center',
 
     marginRight: 6 * scale,
   },
 
+  vegInnerDot: {
+    width: 6 * scale,
+    height: 6 * scale,
+
+    borderRadius: 6 * scale,
+
+    backgroundColor: '#C64500',
+  },
+
   itemText: {
-    fontFamily: 'Inter-Regular',
+    flex: 1,
+
+    fontFamily: 'Inter',
+    fontWeight: '400',
 
     fontSize: 10 * scale,
-    lineHeight: 16 * scale,
+    lineHeight: 15 * scale,
 
-    color: '#0000008A',
+    color: '#8A8A8A',
   },
 
   orderInfoRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+
+    alignItems: 'center',
 
     marginTop: 10 * scale,
   },
 
   orderPlaced: {
-    fontFamily: 'Inter-Medium',
+    flexShrink: 1,
+
+    fontFamily: 'Inter',
+    fontWeight: '500',
 
     fontSize: 10 * scale,
-    lineHeight: 16 * scale,
+    lineHeight: 15 * scale,
 
     color: '#000000',
   },
 
   delivered: {
-    fontFamily: 'Inter-Bold',
+    marginLeft: 5 * scale,
+
+    fontFamily: 'Inter',
+    fontWeight: '700',
 
     fontSize: 10 * scale,
-    lineHeight: 16 * scale,
+    lineHeight: 15 * scale,
 
     color: '#000000',
   },
 
   bottomRow: {
     flexDirection: 'row',
+
     justifyContent: 'space-between',
+
     alignItems: 'center',
 
-    marginTop: 8 * scale,
+    marginTop: 12 * scale,
   },
 
   amount: {
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'Inter',
+    fontWeight: '700',
 
-    fontSize: 16 * scale,
-    lineHeight: 21 * scale,
-
-    letterSpacing: -0.32,
+    fontSize: 17 * scale,
+    lineHeight: 24 * scale,
 
     color: '#000000',
   },
 
   reorderButton: {
-    width: 125 * scale,
-    height: 30 * scale,
+    minWidth: 118 * scale,
 
-    borderRadius: 6 * scale,
+    height: 42 * scale,
+
+    paddingHorizontal: 18 * scale,
+
+    borderRadius: 10 * scale,
 
     borderWidth: 1,
     borderColor: '#D9D9D9',
 
     justifyContent: 'center',
     alignItems: 'center',
+
+    backgroundColor: '#FFFFFF',
   },
 
   reorderText: {
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'Inter',
+    fontWeight: '700',
 
-    fontSize: 14 * scale,
-    lineHeight: 21 * scale,
-
-    letterSpacing: -0.32,
+    fontSize: 15 * scale,
+    lineHeight: 20 * scale,
 
     color: '#000000',
   },

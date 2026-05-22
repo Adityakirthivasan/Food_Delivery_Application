@@ -6,15 +6,15 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
-  Dimensions,
 } from 'react-native';
 
 import Feather from '@react-native-vector-icons/feather';
+
 import MaterialCommunityIcons from '@react-native-vector-icons/material-design-icons';
 
-const { width } = Dimensions.get('window');
-
-const scale = width / 393;
+import {
+  scale,
+} from '../../utils/responsive';
 
 interface Props {
   showVegToggle?: boolean;
@@ -38,13 +38,15 @@ export default function SearchBar({
         style={[
           styles.searchBar,
           {
-            backgroundColor: dark ? '#F3F3F3' : '#FFFFFF',
+            backgroundColor: dark
+              ? '#F3F3F3'
+              : '#FFFFFF',
           },
         ]}>
 
         <Feather
           name="search"
-          size={18 * scale}
+          size={scale(18)}
           color="#111111"
         />
 
@@ -62,7 +64,7 @@ export default function SearchBar({
 
               <MaterialCommunityIcons
                 name="microphone"
-                size={20 * scale}
+                size={scale(20)}
                 color="#E95322"
               />
 
@@ -74,7 +76,9 @@ export default function SearchBar({
 
       {showVegToggle && (
 
-        <TouchableOpacity style={styles.vegButton}>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          style={styles.vegButton}>
 
           <View style={styles.vegInnerContainer}>
 
@@ -99,25 +103,30 @@ export default function SearchBar({
       )}
 
     </View>
+
   );
 }
 
 const styles = StyleSheet.create({
 
   searchRow: {
+    width: '100%',
+
     flexDirection: 'row',
-    marginTop: 18 * scale,
+
     alignItems: 'center',
+
+    marginTop: scale(14),
   },
 
   searchBar: {
     flex: 1,
 
-    height: 50 * scale,
+    height: scale(50),
 
-    borderRadius: 12 * scale,
+    borderRadius: scale(10),
 
-    paddingHorizontal: 18 * scale,
+    paddingHorizontal: scale(16),
 
     flexDirection: 'row',
     alignItems: 'center',
@@ -126,22 +135,22 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
 
-    marginLeft: 12 * scale,
+    marginLeft: scale(10),
 
     fontFamily: 'Montserrat-Regular',
 
-    fontSize: 14 * scale,
+    fontSize: scale(14),
 
-    color: '#111',
+    color: '#111111',
   },
 
   divider: {
     width: 1,
-    height: 20 * scale,
+    height: scale(20),
 
     backgroundColor: '#D9D9D9',
 
-    marginHorizontal: 14 * scale,
+    marginHorizontal: scale(12),
   },
 
   micContainer: {
@@ -150,12 +159,12 @@ const styles = StyleSheet.create({
   },
 
   vegButton: {
-    width: 50 * scale,
-    height: 50 * scale,
+    width: scale(50),
+    height: scale(50),
 
-    marginLeft: 8 * scale,
+    marginLeft: scale(8),
 
-    borderRadius: 12 * scale,
+    borderRadius: scale(10),
 
     backgroundColor: '#FFFFFF',
 
@@ -170,20 +179,20 @@ const styles = StyleSheet.create({
   vegText: {
     fontFamily: 'Montserrat-Bold',
 
-    fontSize: 10 * scale,
+    fontSize: scale(10),
 
     color: '#696969',
   },
 
   toggleTrack: {
-    width: 17 * scale,
-    height: 8 * scale,
+    width: scale(17),
+    height: scale(8),
 
-    borderRadius: 10,
+    borderRadius: scale(10),
 
     backgroundColor: '#D9D9D9',
 
-    marginTop: 4 * scale,
+    marginTop: scale(4),
 
     justifyContent: 'center',
 
@@ -191,10 +200,10 @@ const styles = StyleSheet.create({
   },
 
   vegToggleOuter: {
-    width: 8 * scale,
-    height: 8 * scale,
+    width: scale(8),
+    height: scale(8),
 
-    borderRadius: 2,
+    borderRadius: scale(2),
 
     borderWidth: 1,
     borderColor: '#228B22',
@@ -206,10 +215,10 @@ const styles = StyleSheet.create({
   },
 
   vegToggleInner: {
-    width: 4.5 * scale,
-    height: 4.5 * scale,
+    width: scale(4.5),
+    height: scale(4.5),
 
-    borderRadius: 10,
+    borderRadius: scale(10),
 
     backgroundColor: '#228B22',
   },

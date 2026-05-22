@@ -7,7 +7,6 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  Dimensions,
 } from 'react-native';
 
 import Ionicons from '@react-native-vector-icons/ionicons';
@@ -18,21 +17,51 @@ import RatingBadge from '../common/RatingBadge';
 import FoodTypeBadge from '../common/FoodTypeBadge';
 import AddButton from '../buttons/AddButton';
 
-const { width } = Dimensions.get('window');
-
-const guidelineBaseWidth = 393;
-
-const scale = width / guidelineBaseWidth;
+import {
+  scale,
+} from '../../utils/responsive';
 
 interface Props {
-  item: any;
+
+  item?: any;
+
+  type?: 'category';
+
+  title?: string;
+
+  image?: any;
 }
 
 export default function FlashFoodCard({
   item,
+  type,
+  title,
+  image,
 }: Props) {
 
   const navigation = useNavigation<any>();
+
+  // CATEGORY CARD
+
+  if (type === 'category') {
+
+    return (
+
+      <View style={styles.categoryItem}>
+
+        <Image
+          source={image}
+          style={styles.categoryImage}
+        />
+
+        <Text style={styles.categoryText}>
+          {title}
+        </Text>
+
+      </View>
+
+    );
+  }
 
   return (
 
@@ -70,15 +99,15 @@ export default function FlashFoodCard({
 
           <Ionicons
             name="chevron-forward"
-            size={12 * scale}
-            color="#A0A0A0"
+            size={scale(12)}
+            color="#B5B5B5"
           />
 
         </TouchableOpacity>
 
       </View>
 
-      {/* FOOD ITEMS */}
+      {/* FOODS */}
 
       <ScrollView
         horizontal
@@ -105,15 +134,9 @@ export default function FlashFoodCard({
             <View>
 
               <Image
-                source={
-                  typeof food.image === 'string'
-                    ? { uri: food.image }
-                    : food.image
-                }
+                source={food.image}
                 style={styles.foodImage}
               />
-
-              {/* HEART */}
 
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -121,7 +144,7 @@ export default function FlashFoodCard({
 
                 <Ionicons
                   name="heart-outline"
-                  size={18 * scale}
+                  size={scale(20)}
                   color="#FFFFFF"
                 />
 
@@ -170,35 +193,70 @@ export default function FlashFoodCard({
 
 const styles = StyleSheet.create({
 
+  // CATEGORY
+
+  categoryItem: {
+    width: scale(82),
+
+    marginRight: scale(16),
+
+    alignItems: 'center',
+  },
+
+  categoryImage: {
+    width: scale(58),
+    height: scale(58),
+
+    resizeMode: 'contain',
+  },
+
+  categoryText: {
+    marginTop: scale(8),
+
+    fontFamily: 'Montserrat-Medium',
+
+    fontSize: scale(12),
+    lineHeight: scale(16),
+
+    letterSpacing: -0.2,
+
+    textAlign: 'center',
+
+    color: '#040404',
+  },
+
+  // MAIN CARD
+
   card: {
-    width: width - (16 * scale),
-
-    backgroundColor: '#FFFFFF',
-
-    borderRadius: 16 * scale,
+    width: scale(361),
 
     alignSelf: 'center',
 
-    marginTop: 16 * scale,
+    marginTop: scale(16),
 
-    paddingTop: 14 * scale,
-    paddingBottom: 16 * scale,
+    backgroundColor: '#FFFFFF',
 
-    shadowColor: '#000000',
+    borderRadius: scale(12),
+
+    paddingTop: scale(14),
+    paddingBottom: scale(16),
+
+    shadowColor: '#000',
 
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 1,
     },
 
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
+    shadowOpacity: 0.12,
 
-    elevation: 3,
+    shadowRadius: 7,
+
+    elevation: 4,
   },
 
   header: {
-    paddingHorizontal: 14 * scale,
+    paddingHorizontal: scale(16),
 
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -208,8 +266,10 @@ const styles = StyleSheet.create({
   hotelName: {
     fontFamily: 'Montserrat-Bold',
 
-    fontSize: 16 * scale,
-    lineHeight: 20 * scale,
+    fontSize: scale(15),
+    lineHeight: scale(20),
+
+    letterSpacing: -0.24,
 
     color: '#040404',
   },
@@ -218,16 +278,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
 
-    marginTop: 4 * scale,
+    marginTop: scale(4),
   },
 
   infoText: {
-    marginLeft: 4 * scale,
+    marginLeft: scale(4),
 
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'Inter-SemiBold',
 
-    fontSize: 9.5 * scale,
-    lineHeight: 12 * scale,
+    fontSize: scale(10),
+    lineHeight: scale(12),
 
     color: '#040404',
   },
@@ -236,64 +296,65 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
 
-    marginTop: 2 * scale,
+    marginTop: scale(2),
   },
 
   seeAllText: {
     fontFamily: 'Inter-Regular',
 
-    fontSize: 10 * scale,
+    fontSize: scale(11),
+    lineHeight: scale(14),
 
-    color: '#B0B0B0',
+    color: '#B5B5B5',
   },
 
   scrollContainer: {
-    paddingLeft: 14 * scale,
-    paddingRight: 2 * scale,
+    paddingLeft: scale(16),
+    paddingRight: scale(6),
   },
 
   foodCard: {
-    width: 118 * scale,
+    width: scale(124),
 
-    marginTop: 16 * scale,
-    marginRight: 10 * scale,
+    marginTop: scale(16),
+    marginRight: scale(12),
   },
 
   foodImage: {
-    width: 118 * scale,
-    height: 118 * scale,
+    width: scale(124),
+    height: scale(128),
 
-    borderRadius: 12 * scale,
+    borderRadius: scale(12),
 
     resizeMode: 'cover',
 
-    backgroundColor: '#EDEDED',
+    backgroundColor: '#EFEFEF',
   },
 
   heartButton: {
     position: 'absolute',
 
-    top: 8 * scale,
-    right: 8 * scale,
+    top: scale(8),
+    right: scale(8),
   },
 
   foodContent: {
-    marginTop: 8 * scale,
+    marginTop: scale(8),
   },
 
   foodName: {
-    marginTop: 4 * scale,
+    marginTop: scale(4),
 
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'Inter-Medium',
 
-    fontSize: 12 * scale,
-    lineHeight: 15 * scale,
+    fontSize: scale(13),
+    lineHeight: scale(17),
 
-    color: '#2C2C2C',
+    color: '#2A2A2A',
   },
 
   bottomRow: {
-    marginTop: 8 * scale,
+    marginTop: scale(8),
 
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -303,7 +364,8 @@ const styles = StyleSheet.create({
   price: {
     fontFamily: 'Montserrat-Bold',
 
-    fontSize: 15 * scale,
+    fontSize: scale(15),
+    lineHeight: scale(20),
 
     color: '#040404',
   },

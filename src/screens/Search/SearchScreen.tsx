@@ -3,17 +3,15 @@ import React from 'react';
 import {
   View,
   Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
   Image,
-  TextInput,
+  TouchableOpacity,
+  StyleSheet,
   Dimensions,
+  ScrollView,
+  TextInput,
 } from 'react-native';
 
 import Ionicons from '@react-native-vector-icons/ionicons';
-
-import LinearGradient from 'react-native-linear-gradient';
 
 import {
   useNavigation,
@@ -23,42 +21,6 @@ const {
   width: SCREEN_WIDTH,
   height: SCREEN_HEIGHT,
 } = Dimensions.get('window');
-
-const topImage =
-  'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200';
-
-const noodle =
-  'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=1200';
-
-const pancake =
-  'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200';
-
-const restaurantCards = [
-  {
-    id: 1,
-    name: 'Burger king',
-    image:
-      'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200',
-  },
-  {
-    id: 2,
-    name: 'Kfc, Fried chicken',
-    image:
-      'https://images.unsplash.com/photo-1513639776629-7b61b0ac49cb?q=80&w=1200',
-  },
-  {
-    id: 3,
-    name: 'Pizza Hut',
-    image:
-      'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200',
-  },
-  {
-    id: 4,
-    name: 'Burger king',
-    image:
-      'https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=1200',
-  },
-];
 
 export default function SearchScreen() {
 
@@ -71,7 +33,7 @@ export default function SearchScreen() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingBottom: SCREEN_HEIGHT * 0.04,
+          paddingBottom: SCREEN_HEIGHT * 0.05,
         }}>
 
         {/* HEADER */}
@@ -86,7 +48,7 @@ export default function SearchScreen() {
 
             <Ionicons
               name="arrow-back"
-              size={SCREEN_WIDTH * 0.065}
+              size={24}
               color="#000"
             />
 
@@ -106,7 +68,7 @@ export default function SearchScreen() {
 
             <Ionicons
               name="search"
-              size={SCREEN_WIDTH * 0.045}
+              size={20}
               color="#111111"
             />
 
@@ -120,7 +82,7 @@ export default function SearchScreen() {
 
             <Ionicons
               name="mic"
-              size={SCREEN_WIDTH * 0.055}
+              size={22}
               color="#E95322"
             />
 
@@ -149,7 +111,7 @@ export default function SearchScreen() {
 
         </View>
 
-        {/* TOP IMAGE */}
+        {/* RUCHIBE CARD */}
 
         <TouchableOpacity
           activeOpacity={0.95}
@@ -161,56 +123,49 @@ export default function SearchScreen() {
           }>
 
           <Image
-            source={{ uri: topImage }}
+            source={require('../../assets/images/search/Rest.png')}
             style={styles.bannerImage}
           />
 
-          <LinearGradient
-            colors={[
-              'rgba(0,0,0,0)',
-              'rgba(0,0,0,0.55)',
-            ]}
-            style={styles.bannerOverlay}>
+          <View style={styles.overlay} />
 
-            <View style={styles.newArrived}>
+          <View style={styles.newArrived}>
 
-              <Text style={styles.newArrivedText}>
-                New Arrived
-              </Text>
+            <Text style={styles.newArrivedText}>
+              New Arrived
+            </Text>
 
-            </View>
+          </View>
 
-            <View style={styles.bannerBottom}>
+          <View style={styles.bannerBottom}>
 
-              <Text style={styles.bannerTitle}>
-                Ruchibe (guru Restaurant)
-              </Text>
+            <Text style={styles.bannerTitle}>
+              Ruchibe (guru Restaurant)
+            </Text>
 
-              <View style={styles.bannerMetaRow}>
+            <View style={styles.bannerMetaRow}>
 
-                <View style={styles.starBox}>
+              <View style={styles.ratingBoxBanner}>
 
-                  <Ionicons
-                    name="star"
-                    size={SCREEN_WIDTH * 0.016}
-                    color="#FFFFFF"
-                  />
-
-                </View>
-
-                <Text style={styles.bannerMeta}>
-                  3.3 (1.4k+) • 10-15 mins
-                </Text>
+                <Ionicons
+                  name="star"
+                  size={7}
+                  color="#20C400"
+                />
 
               </View>
 
+              <Text style={styles.bannerMeta}>
+                3.3 (1.4k+) • 10-15 mins
+              </Text>
+
             </View>
 
-          </LinearGradient>
+          </View>
 
         </TouchableOpacity>
 
-        {/* HOTEL */}
+        {/* HOTEL SHREE */}
 
         <View style={styles.hotelContainer}>
 
@@ -222,19 +177,19 @@ export default function SearchScreen() {
                 Hotel Shree Bhavan
               </Text>
 
-              <View style={styles.bannerMetaRow}>
+              <View style={styles.metaRow}>
 
-                <View style={styles.starBox}>
+                <View style={styles.ratingBox}>
 
                   <Ionicons
                     name="star"
-                    size={SCREEN_WIDTH * 0.016}
-                    color="#FFFFFF"
+                    size={8}
+                    color="#20C400"
                   />
 
                 </View>
 
-                <Text style={styles.hotelMeta}>
+                <Text style={styles.metaText}>
                   3.3 (1.4k+) • 10-15 mins • 2.0 km
                 </Text>
 
@@ -251,19 +206,21 @@ export default function SearchScreen() {
 
               <Ionicons
                 name="chevron-forward"
-                size={SCREEN_WIDTH * 0.035}
-                color="#9A9A9A"
+                size={14}
+                color="#B5B5B5"
               />
 
             </TouchableOpacity>
 
           </View>
 
+          {/* FOODS */}
+
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{
-              paddingRight: SCREEN_WIDTH * 0.04,
+              paddingRight: 16,
             }}>
 
             {[1, 2, 3].map((item) => (
@@ -272,21 +229,43 @@ export default function SearchScreen() {
                 key={item}
                 activeOpacity={0.95}
                 style={styles.foodCard}
-                onPress={() =>
-                  navigation.navigate(
-                    'ProductDetailScreen',
-                  )
-                }>
+onPress={() =>
+  navigation.navigate(
+    'ProductDetailScreen',
+    {
+      item: {
+        name:
+          item % 2 === 0
+            ? 'Hanoi Pancake Shop'
+            : 'Rammen Noodel',
+
+        price: '$200',
+
+        image:
+          item % 2 === 0
+            ? require('../../assets/images/flash/Pancake.png')
+            : require('../../assets/images/flash/Noodles.png'),
+
+        rating: '3.3',
+
+        deliveryTime: '10-15 mins',
+
+        distance: '2.0 km',
+      },
+    },
+  )
+}>
+
+                {/* IMAGE */}
 
                 <View>
 
                   <Image
-                    source={{
-                      uri:
-                        item % 2 === 0
-                          ? pancake
-                          : noodle,
-                    }}
+                    source={
+                      item % 2 === 0
+                        ? require('../../assets/images/flash/Pancake.png')
+                        : require('../../assets/images/flash/Noodles.png')
+                    }
                     style={styles.foodImage}
                   />
 
@@ -295,13 +274,15 @@ export default function SearchScreen() {
 
                     <Ionicons
                       name="heart-outline"
-                      size={SCREEN_WIDTH * 0.06}
+                      size={22}
                       color="#FFFFFF"
                     />
 
                   </TouchableOpacity>
 
                 </View>
+
+                {/* CONTENT */}
 
                 <View style={styles.foodContent}>
 
@@ -319,10 +300,14 @@ export default function SearchScreen() {
 
                   </View>
 
-                  <Text style={styles.foodTitle}>
+                  <Text
+                    numberOfLines={2}
+                    style={styles.foodTitle}>
+
                     {item % 2 === 0
                       ? 'Hanoi Pancake Shop'
                       : 'Rammen Noodel'}
+
                   </Text>
 
                   <View style={styles.priceRow}>
@@ -332,7 +317,32 @@ export default function SearchScreen() {
                     </Text>
 
                     <TouchableOpacity
-                      style={styles.addButton}>
+onPress={() =>
+  navigation.navigate(
+    'ProductDetailScreen',
+    {
+      item: {
+        name:
+          item % 2 === 0
+            ? 'Hanoi Pancake Shop'
+            : 'Rammen Noodel',
+
+        price: '$200',
+
+        image:
+          item % 2 === 0
+            ? require('../../assets/images/flash/Pancake.png')
+            : require('../../assets/images/flash/Noodles.png'),
+
+        rating: '3.3',
+
+        deliveryTime: '10-15 mins',
+
+        distance: '2.0 km',
+      },
+    },
+  )
+}>
 
                       <Text style={styles.addText}>
                         ADD
@@ -352,61 +362,86 @@ export default function SearchScreen() {
 
         </View>
 
-        {/* MORE */}
+        {/* MORE WITH US */}
 
         <Text style={styles.moreTitle}>
           More with us
         </Text>
 
-        {restaurantCards.map((item) => (
+        {[1, 2, 3, 4].map((item) => (
 
           <TouchableOpacity
-            key={item.id}
+            key={item}
             activeOpacity={0.95}
-            style={styles.restaurantCard}>
+            style={styles.restaurantCard}
+            onPress={() =>
+              navigation.navigate(
+                'RestaurantScreen',
+              )
+            }>
 
             <Image
-              source={{ uri: item.image }}
+              source={require('../../assets/images/search/Rest.png')}
               style={styles.restaurantImage}
             />
 
             <View style={styles.restaurantContent}>
 
               <Text style={styles.restaurantName}>
-                {item.name}
+                Burger king
               </Text>
 
               <Text style={styles.restaurantLocation}>
                 HSR, Bangalore
               </Text>
 
-              <Text style={styles.viewMenu}>
-                View Menu
-              </Text>
+              <View style={styles.viewMenuRow}>
 
-              <View style={styles.bannerMetaRow}>
+                <Text style={styles.viewMenu}>
+                  View Menu
+                </Text>
 
-                <View style={styles.starBox}>
+                <Ionicons
+                  name="chevron-forward"
+                  size={15}
+                  color="#F36A21"
+                />
+
+              </View>
+
+              <View style={styles.metaRow}>
+
+                <View style={styles.ratingBox}>
 
                   <Ionicons
                     name="star"
-                    size={SCREEN_WIDTH * 0.016}
-                    color="#FFFFFF"
+                    size={8}
+                    color="#20C400"
                   />
 
                 </View>
 
-                <Text style={styles.hotelMeta}>
+                <Text style={styles.metaText}>
                   3.3 (1.4k+) • 10-15 mins
                 </Text>
 
               </View>
 
-              <Text style={styles.smallText}>
-                🍔 Snacks, Fast Food
-              </Text>
+              <View style={styles.foodTypeRow}>
 
-              <Text style={styles.smallText}>
+                <View style={styles.orangeVegBox}>
+
+                  <View style={styles.orangeVegInner} />
+
+                </View>
+
+                <Text style={styles.foodTypeText}>
+                  Snacks, Fast Food
+                </Text>
+
+              </View>
+
+              <Text style={styles.addressText}>
                 Bangalore, HSR Layout
               </Text>
 
@@ -417,7 +452,7 @@ export default function SearchScreen() {
 
               <Ionicons
                 name="ellipsis-horizontal"
-                size={SCREEN_WIDTH * 0.05}
+                size={20}
                 color="#000"
               />
 
@@ -450,33 +485,37 @@ const styles = StyleSheet.create({
   },
 
   headerTitle: {
-    marginLeft: SCREEN_WIDTH * 0.18,
+    marginLeft: SCREEN_WIDTH * 0.11,
 
-    fontFamily: 'Montserrat-SemiBold',
+    fontFamily: 'Inter-SemiBold',
 
-    fontSize: SCREEN_WIDTH * 0.03,
+    fontSize: 12,
 
-    color: '#000',
+    lineHeight: 15,
+
+    letterSpacing: -0.24,
+
+    color: '#000000',
   },
 
   searchRow: {
-    marginTop: SCREEN_HEIGHT * 0.025,
+    marginTop: 20,
 
     flexDirection: 'row',
     alignItems: 'center',
 
-    paddingHorizontal: SCREEN_WIDTH * 0.04,
+    paddingHorizontal: 16,
   },
 
   searchContainer: {
     width: SCREEN_WIDTH * 0.78,
-    height: SCREEN_HEIGHT * 0.065,
+    height: 48,
 
-    borderRadius: SCREEN_WIDTH * 0.03,
+    borderRadius: 12,
 
     backgroundColor: '#FFFFFF',
 
-    paddingHorizontal: SCREEN_WIDTH * 0.04,
+    paddingHorizontal: 16,
 
     flexDirection: 'row',
     alignItems: 'center',
@@ -485,51 +524,51 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
 
-    marginLeft: SCREEN_WIDTH * 0.03,
+    marginLeft: 10,
 
     fontFamily: 'Montserrat-Regular',
 
-    fontSize: SCREEN_WIDTH * 0.038,
+    fontSize: 15,
 
     color: '#000',
   },
 
   searchDivider: {
     width: 1,
-    height: SCREEN_HEIGHT * 0.03,
+    height: 24,
 
     backgroundColor: '#D9D9D9',
 
-    marginRight: SCREEN_WIDTH * 0.03,
+    marginRight: 12,
   },
 
   vegContainer: {
-    width: SCREEN_WIDTH * 0.12,
-    height: SCREEN_HEIGHT * 0.065,
+    width: 52,
+    height: 48,
 
-    borderRadius: SCREEN_WIDTH * 0.03,
+    borderRadius: 12,
 
     backgroundColor: '#FFFFFF',
 
-    marginLeft: SCREEN_WIDTH * 0.02,
+    marginLeft: 8,
 
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   vegText: {
-    fontSize: SCREEN_WIDTH * 0.018,
+    fontSize: 11,
 
     fontFamily: 'Montserrat-Medium',
 
     color: '#6F6F6F',
 
-    marginBottom: SCREEN_HEIGHT * 0.004,
+    marginBottom: 3,
   },
 
   toggleTrack: {
-    width: SCREEN_WIDTH * 0.06,
-    height: SCREEN_HEIGHT * 0.015,
+    width: 26,
+    height: 10,
 
     borderRadius: 999,
 
@@ -541,8 +580,8 @@ const styles = StyleSheet.create({
   },
 
   toggleSquare: {
-    width: SCREEN_WIDTH * 0.03,
-    height: SCREEN_WIDTH * 0.03,
+    width: 10,
+    height: 10,
 
     borderRadius: 2,
 
@@ -556,73 +595,83 @@ const styles = StyleSheet.create({
   },
 
   toggleCircle: {
-    width: SCREEN_WIDTH * 0.015,
-    height: SCREEN_WIDTH * 0.015,
+    width: 5,
+    height: 5,
 
     borderRadius: 999,
 
     backgroundColor: '#1F7500',
   },
 
+  // BANNER
+
   bannerContainer: {
     width: SCREEN_WIDTH * 0.92,
-    aspectRatio: 361 / 182,
+    height: 182,
+
+    borderRadius: 16,
+
+    overflow: 'hidden',
 
     alignSelf: 'center',
 
-    marginTop: SCREEN_HEIGHT * 0.025,
+    marginTop: 22,
 
-    borderRadius: SCREEN_WIDTH * 0.03,
+    backgroundColor: '#FFFFFF',
 
-    overflow: 'hidden',
+    elevation: 4,
   },
 
   bannerImage: {
     width: '100%',
     height: '100%',
+
+    resizeMode: 'cover',
   },
 
-  bannerOverlay: {
+  overlay: {
     position: 'absolute',
 
     width: '100%',
     height: '100%',
 
-    justifyContent: 'space-between',
+    backgroundColor: 'rgba(0,0,0,0.18)',
   },
 
   newArrived: {
-    width: SCREEN_WIDTH * 0.20,
-    height: SCREEN_HEIGHT * 0.04,
+    position: 'absolute',
 
-    borderRadius: SCREEN_WIDTH * 0.03,
+    top: 14,
+    left: 0,
 
-    backgroundColor: '#FF7A2F',
+    backgroundColor: '#F36A21',
 
-    marginTop: SCREEN_HEIGHT * 0.02,
-    marginLeft: SCREEN_WIDTH * 0.04,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
 
-    justifyContent: 'center',
-    alignItems: 'center',
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
   },
 
   newArrivedText: {
     fontFamily: 'Montserrat-Bold',
 
-    fontSize: SCREEN_WIDTH * 0.028,
+    fontSize: 12,
 
     color: '#FFFFFF',
   },
 
   bannerBottom: {
-    paddingHorizontal: SCREEN_WIDTH * 0.04,
-    paddingBottom: SCREEN_HEIGHT * 0.018,
+    position: 'absolute',
+
+    bottom: 12,
+    left: 14,
   },
 
   bannerTitle: {
-    fontFamily: 'Montserrat-SemiBold',
+    fontFamily: 'Montserrat-Bold',
 
-    fontSize: SCREEN_WIDTH * 0.042,
+    fontSize: 22,
 
     color: '#FFFFFF',
   },
@@ -631,59 +680,101 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
 
-    marginTop: SCREEN_HEIGHT * 0.004,
+    marginTop: 4,
   },
 
-  starBox: {
-    width: SCREEN_WIDTH * 0.03,
-    height: SCREEN_WIDTH * 0.03,
+  ratingBoxBanner: {
+    width: 14,
+    height: 14,
 
     borderRadius: 2,
 
-    backgroundColor: '#2FE922',
+    backgroundColor: '#FFFFFF',
+
+    borderWidth: 1,
+    borderColor: '#20C400',
 
     justifyContent: 'center',
     alignItems: 'center',
 
-    marginRight: SCREEN_WIDTH * 0.01,
+    marginRight: 6,
   },
 
   bannerMeta: {
-    fontFamily: 'Montserrat-SemiBold',
+    fontFamily: 'Inter-Bold',
 
-    fontSize: SCREEN_WIDTH * 0.026,
+    fontSize: 11,
 
     color: '#FFFFFF',
   },
 
-  hotelContainer: {
-    marginTop: SCREEN_HEIGHT * 0.024,
+  // HOTEL
 
-    paddingLeft: SCREEN_WIDTH * 0.04,
+  hotelContainer: {
+    width: SCREEN_WIDTH * 0.92,
+
+    alignSelf: 'center',
+
+    marginTop: 18,
+
+    backgroundColor: '#FFFFFF',
+
+    borderRadius: 16,
+
+    paddingVertical: 16,
+
+    borderWidth: 1,
+    borderColor: '#ECECEC',
+
+    elevation: 3,
   },
 
   hotelHeader: {
-    width: SCREEN_WIDTH * 0.88,
+    paddingHorizontal: 16,
 
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
 
-    marginBottom: SCREEN_HEIGHT * 0.016,
+    marginBottom: 12,
   },
 
   hotelTitle: {
-    fontFamily: 'Montserrat-SemiBold',
+    fontFamily: 'Montserrat-Bold',
 
-    fontSize: SCREEN_WIDTH * 0.055,
+    fontSize: 17,
 
     color: '#000',
   },
 
-  hotelMeta: {
-    fontFamily: 'Montserrat-Medium',
+  metaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
 
-    fontSize: SCREEN_WIDTH * 0.025,
+    marginTop: 6,
+  },
+
+  ratingBox: {
+    width: 14,
+    height: 14,
+
+    borderRadius: 2,
+
+    backgroundColor: '#FFFFFF',
+
+    borderWidth: 1,
+    borderColor: '#20C400',
+
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    marginRight: 6,
+  },
+
+  metaText: {
+    fontFamily: 'Inter-ExtraBold',
+
+    fontSize: 12,
 
     color: '#000',
   },
@@ -694,33 +785,35 @@ const styles = StyleSheet.create({
   },
 
   seeAllText: {
-    fontSize: SCREEN_WIDTH * 0.03,
+    fontSize: 12,
 
-    color: '#9A9A9A',
+    color: '#B5B5B5',
   },
 
   foodCard: {
-    width: SCREEN_WIDTH * 0.40,
+    width: 140,
 
-    marginRight: SCREEN_WIDTH * 0.04,
+    marginLeft: 16,
   },
 
   foodImage: {
-    width: '100%',
-    aspectRatio: 171 / 140,
+    width: 140,
+    height: 140,
 
-    borderRadius: SCREEN_WIDTH * 0.03,
+    borderRadius: 12,
+
+    resizeMode: 'cover',
   },
 
   heartBtn: {
     position: 'absolute',
 
-    top: SCREEN_HEIGHT * 0.012,
-    right: SCREEN_WIDTH * 0.025,
+    top: 8,
+    right: 8,
   },
 
   foodContent: {
-    marginTop: SCREEN_HEIGHT * 0.01,
+    marginTop: 8,
   },
 
   bestSellerRow: {
@@ -729,8 +822,8 @@ const styles = StyleSheet.create({
   },
 
   vegMini: {
-    width: SCREEN_WIDTH * 0.05,
-    height: SCREEN_WIDTH * 0.05,
+    width: 14,
+    height: 14,
 
     borderRadius: 2,
 
@@ -742,12 +835,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
 
-    marginRight: SCREEN_WIDTH * 0.01,
+    marginRight: 6,
   },
 
   vegMiniInner: {
-    width: SCREEN_WIDTH * 0.024,
-    height: SCREEN_WIDTH * 0.024,
+    width: 6,
+    height: 6,
 
     borderRadius: 999,
 
@@ -757,23 +850,23 @@ const styles = StyleSheet.create({
   bestSellerText: {
     fontFamily: 'Montserrat-Regular',
 
-    fontSize: SCREEN_WIDTH * 0.028,
+    fontSize: 12,
 
     color: '#E95322',
   },
 
   foodTitle: {
-    marginTop: SCREEN_HEIGHT * 0.006,
+    marginTop: 4,
 
-    fontFamily: 'Montserrat-SemiBold',
+    fontFamily: 'Inter-SemiBold',
 
-    fontSize: SCREEN_WIDTH * 0.043,
+    fontSize: 14,
 
     color: '#343434',
   },
 
   priceRow: {
-    marginTop: SCREEN_HEIGHT * 0.012,
+    marginTop: 8,
 
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -783,16 +876,16 @@ const styles = StyleSheet.create({
   price: {
     fontFamily: 'Montserrat-Bold',
 
-    fontSize: SCREEN_WIDTH * 0.045,
+    fontSize: 17,
 
     color: '#000',
   },
 
   addButton: {
-    width: SCREEN_WIDTH * 0.16,
-    height: SCREEN_HEIGHT * 0.045,
+    width: 58,
+    height: 32,
 
-    borderRadius: SCREEN_WIDTH * 0.025,
+    borderRadius: 8,
 
     borderWidth: 1,
     borderColor: '#D9D9D9',
@@ -806,97 +899,148 @@ const styles = StyleSheet.create({
   addText: {
     fontFamily: 'Montserrat-Bold',
 
-    fontSize: SCREEN_WIDTH * 0.04,
+    fontSize: 15,
 
     color: '#000',
   },
 
+  // MORE WITH US
+
   moreTitle: {
-    marginTop: SCREEN_HEIGHT * 0.03,
-    marginLeft: SCREEN_WIDTH * 0.04,
-    marginBottom: SCREEN_HEIGHT * 0.02,
+    marginTop: 28,
+    marginLeft: 16,
+    marginBottom: 16,
 
-    fontFamily: 'Montserrat-SemiBold',
+    fontFamily: 'Montserrat-Bold',
 
-    fontSize: SCREEN_WIDTH * 0.06,
+    fontSize: 24,
 
     color: '#000',
   },
 
   restaurantCard: {
     width: SCREEN_WIDTH * 0.92,
-    height: SCREEN_HEIGHT * 0.18,
+    height: 170,
 
-    borderRadius: SCREEN_WIDTH * 0.035,
+    borderRadius: 18,
 
     backgroundColor: '#FFFFFF',
 
     alignSelf: 'center',
 
-    marginBottom: SCREEN_HEIGHT * 0.018,
+    marginBottom: 16,
 
     overflow: 'hidden',
 
     flexDirection: 'row',
 
-    elevation: 3,
+    borderWidth: 1,
+    borderColor: '#E6E6E6',
   },
 
   restaurantImage: {
-    width: SCREEN_WIDTH * 0.30,
+    width: 126,
     height: '100%',
+
+    resizeMode: 'cover',
   },
 
   restaurantContent: {
     flex: 1,
 
-    paddingHorizontal: SCREEN_WIDTH * 0.035,
-    paddingTop: SCREEN_HEIGHT * 0.018,
+    paddingHorizontal: 14,
+    paddingTop: 16,
   },
 
   restaurantName: {
     fontFamily: 'Montserrat-Bold',
 
-    fontSize: SCREEN_WIDTH * 0.045,
+    fontSize: 23,
 
     color: '#000',
   },
 
   restaurantLocation: {
-    marginTop: SCREEN_HEIGHT * 0.002,
+    marginTop: 1,
 
-    fontFamily: 'Montserrat-Medium',
+    fontFamily: 'Inter-Regular',
 
-    fontSize: SCREEN_WIDTH * 0.032,
+    fontSize: 15,
 
-    color: '#666',
+    color: '#4D4D4D',
+  },
+
+  viewMenuRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+
+    marginTop: 5,
   },
 
   viewMenu: {
-    marginTop: SCREEN_HEIGHT * 0.004,
-
     fontFamily: 'Montserrat-SemiBold',
 
-    fontSize: SCREEN_WIDTH * 0.032,
+    fontSize: 14,
 
-    color: '#E95322',
+    color: '#F36A21',
   },
 
-  smallText: {
-    marginTop: SCREEN_HEIGHT * 0.002,
+  foodTypeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
 
-    fontFamily: 'Montserrat-Regular',
+    marginTop: 8,
+  },
 
-    fontSize: SCREEN_WIDTH * 0.026,
+  orangeVegBox: {
+    width: 14,
+    height: 14,
 
-    color: '#777',
+    borderRadius: 2,
+
+    borderWidth: 1,
+    borderColor: '#F36A21',
+
+    backgroundColor: '#FFFFFF',
+
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    marginRight: 7,
+  },
+
+  orangeVegInner: {
+    width: 7,
+    height: 7,
+
+    borderRadius: 999,
+
+    backgroundColor: '#F36A21',
+  },
+
+  foodTypeText: {
+    fontFamily: 'Inter-Regular',
+
+    fontSize: 13,
+
+    color: '#777777',
+  },
+
+  addressText: {
+    marginTop: 5,
+
+    fontFamily: 'Inter-Regular',
+
+    fontSize: 13,
+
+    color: '#777777',
   },
 
   dotBtn: {
     position: 'absolute',
 
-    top: SCREEN_HEIGHT * 0.02,
-    right: SCREEN_WIDTH * 0.03,
+    top: 14,
+    right: 10,
   },
 
 });

@@ -8,6 +8,10 @@ import {
 
 import Ionicons from '@react-native-vector-icons/ionicons';
 
+import {
+  scale,
+} from '../../utils/responsive';
+
 interface Props {
   rating: string;
   small?: boolean;
@@ -17,8 +21,10 @@ export default function RatingBadge({
   rating,
   small,
 }: Props) {
+
   return (
-    <View style={styles.row}>
+
+    <View style={styles.wrapper}>
 
       <View
         style={[
@@ -28,8 +34,8 @@ export default function RatingBadge({
 
         <Ionicons
           name="star"
-          size={small ? 6 : 8}
-          color="#fff"
+          size={small ? scale(8) : scale(10)}
+          color="#43D12D"
         />
 
       </View>
@@ -50,34 +56,44 @@ export default function RatingBadge({
 
 const styles = StyleSheet.create({
 
-  row: {
+  wrapper: {
     flexDirection: 'row',
     alignItems: 'center',
   },
 
   box: {
-    width: 12,
-    height: 12,
-    borderRadius: 2,
-    backgroundColor: '#34C759',
+    width: scale(16),
+    height: scale(16),
+
+    borderWidth: scale(1.5),
+    borderColor: '#43D12D',
+
+    borderRadius: scale(2),
+
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 6,
-  },
 
-  text: {
-    fontSize: 13,
-    color: '#111',
-    fontWeight: '700',
+    backgroundColor: '#FFFFFF',
   },
 
   smallBox: {
-    width: 10,
-    height: 10,
+    width: scale(14),
+    height: scale(14),
+  },
+
+  text: {
+    marginLeft: scale(4),
+
+    fontFamily: 'Inter-Bold',
+
+    fontSize: scale(10),
+    lineHeight: scale(12),
+
+    color: '#040404',
   },
 
   smallText: {
-    fontSize: 12,
-    color: '#444',
+    fontSize: scale(9),
   },
+
 });

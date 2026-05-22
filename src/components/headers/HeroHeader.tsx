@@ -6,15 +6,26 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  ImageSourcePropType,
+  Platform,
 } from 'react-native';
 
+import LinearGradient from 'react-native-linear-gradient';
+
 import Ionicons from '@react-native-vector-icons/ionicons';
+
+import {
+  scale,
+  width,
+} from '../../utils/responsive';
 
 interface Props {
   title: string;
   subtitle: string;
   buttonText: string;
-  image: string;
+
+  image: string | ImageSourcePropType;
+
   showIcon?: boolean;
 
   titleStyle?: any;
@@ -37,30 +48,64 @@ export default function HeroHeader({
   containerStyle,
   contentStyle,
 }: Props) {
+
   return (
-    <View style={[styles.topSection, containerStyle]}>
 
-      <View style={[styles.offerContainer, contentStyle]}>
+    <LinearGradient
+      colors={[
+        '#FF8340',
+        '#C64500',
+      ]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0, y: 1 }}
+      style={[
+        styles.topSection,
+        containerStyle,
+      ]}>
 
-        <View>
+      <View
+        style={[
+          styles.offerContainer,
+          contentStyle,
+        ]}>
 
-          <Text style={[styles.offerTitle, titleStyle]}>
+        {/* LEFT CONTENT */}
+
+        <View style={styles.leftContent}>
+
+          <Text
+            style={[
+              styles.offerTitle,
+              titleStyle,
+            ]}>
+
             {title}
+
           </Text>
 
-          <Text style={[styles.offerSub, subtitleStyle]}>
+          <Text
+            style={[
+              styles.offerSub,
+              subtitleStyle,
+            ]}>
+
             {subtitle}
+
           </Text>
 
-          <TouchableOpacity style={styles.orderButton}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            style={styles.orderButton}>
 
             {showIcon && (
+
               <Ionicons
                 name="flash-outline"
-                size={16}
-                color="#fff"
-                style={{ marginRight: 6 }}
+                size={13}
+                color="#FFFFFF"
+                style={styles.flashIcon}
               />
+
             )}
 
             <Text style={styles.orderButtonText}>
@@ -71,72 +116,132 @@ export default function HeroHeader({
 
         </View>
 
+        {/* IMAGE */}
+
         <Image
-          source={{ uri: image }}
-          style={[styles.offerImage, imageStyle]}
+          source={
+            typeof image === 'string'
+              ? { uri: image }
+              : image
+          }
+          style={[
+            styles.offerImage,
+            imageStyle,
+          ]}
         />
 
       </View>
 
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
 
   topSection: {
-    width: '100%',
-    minHeight: 355,
-    paddingHorizontal: 16,
-    paddingTop: 50,
-    paddingBottom: 28,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    backgroundColor: '#F97316',
+    width: width,
+
+    height: width * 0.72,
+
+    minHeight: 276,
+    maxHeight: 286,
+
+    borderBottomLeftRadius: scale(30),
+    borderBottomRightRadius: scale(30),
+
+    overflow: 'hidden',
   },
 
   offerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginTop: 24,
+    flex: 1,
   },
 
+leftContent: {
+  paddingTop: scale(42),
+  paddingHorizontal: scale(16),
+
+  width: '56%',
+
+  zIndex: 20,
+},
+
   offerTitle: {
-    color: '#fff',
-    fontSize: 26,
-    fontWeight: '800',
-    width: 220,
+    width: scale(190),
+
+    marginTop: scale(16),
+
+    fontFamily: 'Montserrat-Bold',
+
+    fontSize: 20,
+    lineHeight: 24,
+
+    letterSpacing: -0.3,
+
+    color: '#FFFFFF',
+
+    includeFontPadding: false,
   },
 
   offerSub: {
-    color: '#fff',
-    fontSize: 15,
-    width: 170,
-    marginTop: 8,
-    lineHeight: 20,
+    width: scale(180),
+
+    marginTop: scale(7),
+
+    fontFamily: 'Montserrat-SemiBold',
+
+    fontSize: 12,
+    lineHeight: 16,
+
+    letterSpacing: -0.2,
+
+    color: '#FFFFFF',
+
+    includeFontPadding: false,
   },
 
   orderButton: {
-    height: 44,
-    borderRadius: 14,
-    backgroundColor: '#000',
+    width: scale(84),
+    height: scale(31),
+
+    marginTop: scale(18),
+
+    borderRadius: scale(10),
+
+    backgroundColor: '#040404',
+
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 18,
+
     flexDirection: 'row',
-    paddingHorizontal: 16,
-    alignSelf: 'flex-start',
+  },
+
+  flashIcon: {
+    marginRight: scale(4),
   },
 
   orderButtonText: {
-    color: '#fff',
-    fontWeight: '600',
+    fontFamily: 'Montserrat-Bold',
+
+    fontSize: 12,
+    lineHeight: 12,
+
+    letterSpacing: -0.2,
+
+    color: '#FFFFFF',
+
+    includeFontPadding: false,
   },
 
   offerImage: {
-    width: 180,
-    height: 180,
+    width: scale(164),
+    height: scale(164),
+
+    position: 'absolute',
+
+    right: scale(-1),
+    bottom: scale(-3),
+
     resizeMode: 'contain',
   },
+
 });

@@ -1,195 +1,212 @@
-import React from 'react';
+// import React from 'react';
 
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+// import {
+//   View,
+//   Text,
+//   Image,
+//   TouchableOpacity,
+//   StyleSheet,
+//   Dimensions,
+// } from 'react-native';
 
-import Ionicons from '@react-native-vector-icons/ionicons';
-import Feather from '@react-native-vector-icons/feather';
+// import Ionicons from '@react-native-vector-icons/ionicons';
+// import Feather from '@react-native-vector-icons/feather';
 
-import RatingBadge from '../common/RatingBadge';
-import { useNavigation } from '@react-navigation/native';
+// import RatingBadge from '../common/RatingBadge';
 
-const CARD_WIDTH = Dimensions.get('window').width * 0.37;
+// import { useNavigation } from '@react-navigation/native';
 
-interface Props {
-  item: {
-    category: string;
-    rating: string;
-    name: string;
-    time: string;
-    distance: string;
-    image: string;
-  };
-}
+// const CARD_WIDTH =
+//   Dimensions.get('window').width * 0.37;
 
-export default function TopPickCard({
-  item,
-}: Props) {
+// interface Props {
+//   item: {
+//     id: number;
+//     title: string;
+//     category: string;
+//     rating: string;
+//     time: string;
+//     distance: string;
+//     image: any;
+//   };
+// }
 
-  const navigation = useNavigation<any>();
-  return (
-    <TouchableOpacity
-  style={styles.card}
-  activeOpacity={0.9}
-  onPress={() =>
-    navigation.navigate('ProductDetailScreen', {
-      item,
-    })
-  }>
+// export default function TopPickCard({
+//   item,
+// }: Props) {
 
-      <View>
+//   const navigation = useNavigation<any>();
 
-        <Image
-          source={{uri: item.image}}
-          style={styles.image}
-        />
+//   return (
 
-        <TouchableOpacity style={styles.heartButton}>
+//     <TouchableOpacity
+//       style={styles.card}
+//       activeOpacity={0.9}
+//       onPress={() =>
+//         navigation.navigate(
+//           'ProductDetailScreen',
+//           {
+//             item,
+//           },
+//         )
+//       }>
 
-          <Ionicons
-            name="heart-outline"
-            size={22}
-            color="#fff"
-          />
+//       {/* IMAGE */}
 
-        </TouchableOpacity>
+//       <View>
 
-      </View>
+//         <Image
+//           source={item.image}
+//           style={styles.image}
+//         />
 
-      <View style={styles.foodTypeRow}>
+//         {/* HEART */}
 
-        <Text style={styles.foodType}>
-          {item.category}
-        </Text>
+//         <TouchableOpacity
+//           style={styles.heartButton}>
 
-        <RatingBadge
-          rating={item.rating}
-          small
-        />
+//           <Ionicons
+//             name="heart-outline"
+//             size={22}
+//             color="#FFFFFF"
+//           />
 
-      </View>
+//         </TouchableOpacity>
 
-      <Text numberOfLines={1} style={styles.restaurantName}>
-        {item.name}
-      </Text>
+//       </View>
 
-      <View style={styles.foodInfoRow}>
+//       {/* CATEGORY + RATING */}
 
-        <View style={styles.infoItem}>
+//       <View style={styles.foodTypeRow}>
 
-          <Feather
-            name="clock"
-            size={13}
-            color="#8A8A8A"
-          />
+//         <Text style={styles.foodType}>
+//           {item.category}
+//         </Text>
 
-          <Text style={styles.foodInfo}>
-            {item.time}
-          </Text>
+//         <RatingBadge
+//           rating={item.rating}
+//           small
+//         />
 
-        </View>
+//       </View>
 
-        <View style={styles.infoItem}>
+//       {/* TITLE */}
 
-          <Ionicons
-            name="paper-plane-outline"
-            size={13}
-            color="#8A8A8A"
-          />
+//       <Text
+//         numberOfLines={1}
+//         style={styles.restaurantName}>
 
-          <Text style={styles.foodInfo}>
-            {item.distance}
-          </Text>
+//         {item.title}
 
-        </View>
+//       </Text>
 
-      </View>
+//       {/* INFO */}
 
-    </TouchableOpacity>
-  );
-}
+//       <View style={styles.foodInfoRow}>
 
-const styles = StyleSheet.create({
+//         <View style={styles.infoItem}>
 
-  card: {
-    width: CARD_WIDTH,
-    marginTop: 18,
-    marginRight: 14,
-  },
+//           <Feather
+//             name="clock"
+//             size={13}
+//             color="#8A8A8A"
+//           />
 
-  image: {
-    width: '100%',
-    height: 170,
-    borderRadius: 16,
-  },
+//           <Text style={styles.foodInfo}>
+//             {item.time}
+//           </Text>
 
-  heartButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-  },
+//         </View>
 
-  foodTypeRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 10,
-  },
+//         <View style={styles.infoItem}>
 
-  foodType: {
-    fontSize: 14,
-    color: '#444',
-  },
+//           <Ionicons
+//             name="paper-plane-outline"
+//             size={13}
+//             color="#8A8A8A"
+//           />
 
-  // smallRatingContainer: {
-  //   flexDirection: 'row',
-  //   alignItems: 'center',
-  //   marginTop: 2,
-  // },
+//           <Text style={styles.foodInfo}>
+//             {item.distance}
+//           </Text>
 
-  // smallRatingBox: {
-  //   width: 10,
-  //   height: 10,
-  //   borderRadius: 2,
-  //   backgroundColor: '#FF6B35',
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   marginRight: 4,
-  // },
+//         </View>
 
-  // smallRatingText: {
-  //   fontSize: 12,
-  //   color: '#444',
-  // },
+//       </View>
 
-  restaurantName: {
-    fontSize: 15,
-    fontWeight: '400',
-    marginTop: 6,
-    color: '#3A3A3A',
-  },
+//     </TouchableOpacity>
+//   );
+// }
 
-  foodInfoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 6,
-  },
+// const styles = StyleSheet.create({
 
-  infoItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 14,
-  },
+//   card: {
+//     width: CARD_WIDTH,
 
-  foodInfo: {
-    color: '#777',
-    fontSize: 12,
-    marginLeft: 4,
-  },
-});
+//     marginTop: 18,
+//     marginRight: 14,
+//   },
+
+//   image: {
+//     width: '100%',
+//     height: 170,
+
+//     borderRadius: 16,
+
+//     resizeMode: 'cover',
+//   },
+
+//   heartButton: {
+//     position: 'absolute',
+
+//     top: 10,
+//     right: 10,
+//   },
+
+//   foodTypeRow: {
+//     flexDirection: 'row',
+
+//     justifyContent: 'space-between',
+//     alignItems: 'center',
+
+//     marginTop: 10,
+//   },
+
+//   foodType: {
+//     fontSize: 14,
+
+//     color: '#444444',
+//   },
+
+//   restaurantName: {
+//     fontSize: 15,
+//     fontWeight: '400',
+
+//     marginTop: 6,
+
+//     color: '#3A3A3A',
+//   },
+
+//   foodInfoRow: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+
+//     marginTop: 6,
+//   },
+
+//   infoItem: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+
+//     marginRight: 14,
+//   },
+
+//   foodInfo: {
+//     color: '#777777',
+
+//     fontSize: 12,
+
+//     marginLeft: 4,
+//   },
+
+// });

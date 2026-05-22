@@ -1,239 +1,205 @@
-import React from 'react';
+// import React from 'react';
 
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+// import {
+//   View,
+//   Text,
+//   StyleSheet,
+//   TouchableOpacity,
+//   Image,
+// } from 'react-native';
 
-export default function HomePromoBanner() {
+// export default function HomePromoBanner() {
 
-  return (
+//   return (
 
-    <View style={styles.container}>
+//     <View style={styles.container}>
 
-      {/* TITLE */}
+//       {/* TITLE */}
 
-      <Text style={styles.title}>
-        Get extra $50 OFF!
-      </Text>
+//       <Text style={styles.title}>
+//         Get extra $50 OFF!
+//       </Text>
 
-      {/* SUBTITLE */}
+//       {/* SUBTITLE */}
 
-      <Text style={styles.subtitle}>
-        Win today, eat for less tomorrow.
-      </Text>
+//       <Text style={styles.subtitle}>
+//         Win today, eat for less tomorrow.
+//       </Text>
 
-      {/* BUTTON */}
+//       {/* BUTTON */}
 
-      <TouchableOpacity style={styles.orderButton}>
+//       <TouchableOpacity style={styles.orderButton}>
 
-        <Text style={styles.orderText}>
-          Order now
-        </Text>
+//         <Text style={styles.orderText}>
+//           Order now
+//         </Text>
 
-      </TouchableOpacity>
+//       </TouchableOpacity>
 
-      {/* IMAGE SECTION */}
+//       {/* IMAGE SECTION */}
 
-      <View style={styles.imageContainer}>
+//       <View style={styles.imageContainer}>
 
-        {/* SPEECH BUBBLE */}
+//         <Image
+//           source={require('../../assets/images/home/promo/amico.png')}
+//           style={styles.amico}
+//         />
 
-        <Image
-          source={require('../../assets/images/home/promo/Speech-bubble.png')}
-          style={styles.speechBubble}
-        />
+//         <Image
+//           source={require('../../assets/images/home/promo/Burger.png')}
+//           style={styles.burger}
+//         />
 
-        {/* COMBO TEXT */}
+//         <Image
+//           source={require('../../assets/images/home/promo/Character.png')}
+//           style={styles.character}
+//         />
 
-        <Image
-          source={require('../../assets/images/home/promo/Combo-bubble.png')}
-          style={styles.comboBubble}
-        />
+//         <Image
+//           source={require('../../assets/images/home/promo/Drink.png')}
+//           style={styles.drink}
+//         />
 
-        {/* BURGER */}
+//       </View>
 
-        <Image
-          source={require('../../assets/images/home/promo/Burger.png')}
-          style={styles.burger}
-        />
+//     </View>
+//   );
+// }
 
-        {/* CHARACTER */}
+// const styles = StyleSheet.create({
 
-        <Image
-          source={require('../../assets/images/home/promo/Character.png')}
-          style={styles.character}
-        />
+//   container: {
+//     width: 393,
+//     height: 170,
+//     marginTop: 18,
+//     position: 'relative',
+//   },
 
-        {/* DRINK */}
+// title: {
+//   position: 'absolute',
+//   width: 190,
+//   height: 24,
 
-        <Image
-          source={require('../../assets/images/home/promo/Drink.png')}
-          style={styles.drink}
-        />
+//   top: 20,
+//   left: 0,
 
-        {/* FRIES */}
+//   fontFamily: 'Montserrat-Bold',
+//   fontSize: 20,
+//   lineHeight: 24,
+//   letterSpacing: -0.24,
 
-        <Image
-          source={require('../../assets/images/home/promo/Fries.png')}
-          style={styles.fries}
-        />
+//   color: '#FFFFFF',
+// },
 
-      </View>
+// subtitle: {
+//   position: 'absolute',
+//   width: 190,
+//   height: 30,
 
-    </View>
-  );
-}
+//   top: 58,
+//   left: 0,
 
-const styles = StyleSheet.create({
+//   fontFamily: 'Montserrat-SemiBold',
+//   fontSize: 12,
+//   lineHeight: 15,
+//   letterSpacing: -0.24,
 
-  container: {
-    width: 393,
-    height: 170,
-    marginTop: 18,
-    position: 'relative',
-  },
+//   color: '#FFFFFF',
+// },
 
-title: {
-  position: 'absolute',
-  width: 190,
-  height: 24,
+//   orderButton: {
+//     position: 'absolute',
 
-  top: 20,
-  left: 0,
+//     width: 83,
+//     height: 31,
 
-  fontFamily: 'Montserrat-Bold',
-  fontSize: 20,
-  lineHeight: 24,
-  letterSpacing: -0.24,
+//     top: 106,
+//     left: 0,
 
-  color: '#FFFFFF',
-},
+//     borderRadius: 10,
+//     backgroundColor: '#000',
 
-subtitle: {
-  position: 'absolute',
-  width: 190,
-  height: 30,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
 
-  top: 58,
-  left: 0,
+//  orderText: {
+//   fontFamily: 'Montserrat-Bold',
+//   fontSize: 12,
+//   lineHeight: 15,
+//   letterSpacing: -0.24,
 
-  fontFamily: 'Montserrat-SemiBold',
-  fontSize: 12,
-  lineHeight: 15,
-  letterSpacing: -0.24,
+//   color: '#FFFFFF',
+// },
 
-  color: '#FFFFFF',
-},
+//   imageContainer: {
+//     position: 'absolute',
 
-  orderButton: {
-    position: 'absolute',
+//     width: 165.22,
+//     height: 164.79,
 
-    width: 83,
-    height: 31,
+//     top: 10,
+//     left: 212,
+//   },
 
-    top: 106,
-    left: 0,
+//   speechBubble: {
+//     position: 'absolute',
 
-    borderRadius: 10,
-    backgroundColor: '#000',
+//     width: 165.22,
+//     height: 164.79,
 
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+//     top: 0,
+//     left: 0,
 
- orderText: {
-  fontFamily: 'Montserrat-Bold',
-  fontSize: 12,
-  lineHeight: 15,
-  letterSpacing: -0.24,
+//     resizeMode: 'contain',
+//   },
 
-  color: '#FFFFFF',
-},
+//   burger: {
+//     position: 'absolute',
 
-  imageContainer: {
-    position: 'absolute',
+//     width: 75.55,
+//     height: 63.61,
 
-    width: 165.22,
-    height: 164.79,
+//     top: 49,
+//     left: 0,
 
-    top: 10,
-    left: 212,
-  },
+//     resizeMode: 'contain',
+//   },
 
-  speechBubble: {
-    position: 'absolute',
+//   character: {
+//     position: 'absolute',
 
-    width: 61.95,
-    height: 41.61,
+//     width: 60.97,
+//     height: 147.82,
 
-    top: 0,
-    left: 0,
+//     top: -2,
+//     left: 62,
 
-    resizeMode: 'contain',
-  },
+//     resizeMode: 'contain',
+//   },
 
-  comboBubble: {
-    position: 'absolute',
+//   drink: {
+//     position: 'absolute',
 
-    width: 51.06,
-    height: 25.29,
+//     width: 46.24,
+//     height: 95.47,
 
-    top: 8,
-    left: 5,
+//     top: 20,
+//     left: 119,
 
-    resizeMode: 'contain',
-  },
+//     resizeMode: 'contain',
+//   },
 
-  burger: {
-    position: 'absolute',
+//   amico: {
+//     position: 'absolute',
 
-    width: 75.55,
-    height: 63.61,
+//     width: 165.22,
+//     height: 164.79,
 
-    top: 49,
-    left: 0,
+//     top: 0,
+//     left: 0,
 
-    resizeMode: 'contain',
-  },
+//     resizeMode: 'contain',
+//   },
 
-  character: {
-    position: 'absolute',
-
-    width: 60.97,
-    height: 147.82,
-
-    top: -2,
-    left: 62,
-
-    resizeMode: 'contain',
-  },
-
-  drink: {
-    position: 'absolute',
-
-    width: 46.24,
-    height: 95.47,
-
-    top: 20,
-    left: 119,
-
-    resizeMode: 'contain',
-  },
-
-  fries: {
-    position: 'absolute',
-
-    width: 34.5,
-    height: 56.79,
-
-    top: 63,
-    left: 98,
-
-    resizeMode: 'contain',
-  },
-
-});
+// });

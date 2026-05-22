@@ -1,281 +1,351 @@
-import React from 'react';
+// import React, {
+//   useRef,
+//   useState,
+// } from 'react';
+
+// import {
+//   View,
+//   Text,
+//   Image,
+//   TouchableOpacity,
+//   StyleSheet,
+//   Dimensions,
+//   ScrollView,
+//   NativeSyntheticEvent,
+//   NativeScrollEvent,
+// } from 'react-native';
+
+// import Ionicons from '@react-native-vector-icons/ionicons';
+
+// import RatingBadge from '../common/RatingBadge';
+
+// import { useNavigation } from '@react-navigation/native';
+
+// const SCREEN_WIDTH =
+//   Dimensions.get('window').width;
+
+// interface Props {
+//   item: any;
+//   onPress?: () => void;
+// }
+
+// export default function RestaurantCard({
+//   item,
+//   onPress,
+// }: Props) {
+
+//   const navigation = useNavigation<any>();
+
+//   const [activeIndex, setActiveIndex] =
+//     useState(0);
+
+//   const scrollRef =
+//     useRef<ScrollView>(null);
+
+//   const onScrollHandler = (
+//     event: NativeSyntheticEvent<NativeScrollEvent>,
+//   ) => {
 
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+//     const slide = Math.round(
+//       event.nativeEvent.contentOffset.x /
+//         (SCREEN_WIDTH - 32),
+//     );
 
-import Ionicons from '@react-native-vector-icons/ionicons';
+//     setActiveIndex(slide);
+//   };
 
-import RatingBadge from '../common/RatingBadge';
+//   return (
 
-import { useNavigation } from '@react-navigation/native';
+//     <TouchableOpacity
+//       style={styles.card}
+//       activeOpacity={0.95}
+//       onPress={
+//         onPress
+//           ? onPress
+//           : () =>
+//               navigation.navigate(
+//                 'RestaurantScreen',
+//                 {
+//                   item,
+//                 },
+//               )
+//       }>
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+//       {/* IMAGE SLIDER */}
 
-interface Props {
-  item: any;
-  onPress?: () => void;
-}
+//       <View>
 
-export default function RestaurantCard({
-  item,
-}: Props) {
+//         <ScrollView
+//           ref={scrollRef}
+//           horizontal
+//           pagingEnabled
+//           showsHorizontalScrollIndicator={false}
+//           onScroll={onScrollHandler}
+//           scrollEventThrottle={16}>
 
-  const navigation = useNavigation<any>();
+//           {item.images.map(
+//             (
+//               img: any,
+//               index: number,
+//             ) => (
 
-  return (
+//               <Image
+//                 key={index}
+//                 source={img}
+//                 style={styles.image}
+//               />
 
-    <TouchableOpacity
-      style={styles.card}
-      activeOpacity={0.95}
-      onPress={() =>
-        navigation.navigate('RestaurantScreen', {
-          item,
-        })
-      }>
+//             ),
+//           )}
 
-      {/* IMAGE SECTION */}
+//         </ScrollView>
 
-      <View>
+//         {/* HEART */}
 
-        <Image
-          source={{ uri: item.image }}
-          style={styles.image}
-        />
+//         <TouchableOpacity
+//           style={styles.heart}>
 
-        {/* HEART */}
+//           <Ionicons
+//             name="heart-outline"
+//             size={24}
+//             color="#FFFFFF"
+//           />
 
-        <TouchableOpacity style={styles.heart}>
+//         </TouchableOpacity>
 
-          <Ionicons
-            name="heart-outline"
-            size={28}
-            color="#fff"
-          />
+//         {/* DOTS */}
 
-        </TouchableOpacity>
+//         <View
+//           style={styles.dotsContainer}>
 
-        {/* SLIDER */}
+//           {item.images.map(
+//             (
+//               _: any,
+//               index: number,
+//             ) => (
 
-        <View style={styles.sliderContainer}>
+//               <View
+//                 key={index}
+//                 style={[
+//                   styles.dot,
 
-          <View style={styles.sliderBase}>
+//                   activeIndex === index &&
+//                     styles.activeDot,
+//                 ]}
+//               />
 
-            <View style={styles.sliderActive} />
+//             ),
+//           )}
 
-          </View>
+//         </View>
 
-        </View>
+//       </View>
 
-      </View>
+//       {/* CONTENT */}
 
-      {/* CONTENT */}
+//       <View style={styles.content}>
 
-      <View style={styles.content}>
+//         <Text style={styles.flashText}>
+//           Flash food in 10 min
+//         </Text>
 
-        <Text style={styles.flashText}>
-          Flash food in 10 min
-        </Text>
+//         <Text style={styles.name}>
+//           {item.name}
+//         </Text>
 
-        <Text style={styles.name}>
-          {item.name}
-        </Text>
+//         <View style={styles.ratingRow}>
 
-        <View style={styles.ratingRow}>
+//           <RatingBadge
+//             rating={item.rating}
+//           />
 
-          <RatingBadge rating={item.rating} />
+//           <Text style={styles.info}>
+//             (1.4k+) • {item.deliveryTime}
+//             {' • '}
+//             {item.distance}
+//           </Text>
 
-          <Text style={styles.info}>
-            (1.4k+) • {item.deliveryTime} • {item.distance}
-          </Text>
+//         </View>
 
-        </View>
+//         <Text style={styles.cuisine}>
+//           {item.cuisine}
+//         </Text>
 
-        <Text style={styles.cuisine}>
-          {item.cuisine}
-        </Text>
+//         <Text style={styles.location}>
+//           {item.location}
+//         </Text>
 
-        <Text style={styles.location}>
-          {item.location}
-        </Text>
+//         {/* TAGS */}
 
-        {/* TAGS */}
+//         <View style={styles.tagRow}>
 
-        <View style={styles.tagRow}>
+//           <View style={styles.tag}>
 
-          <View style={styles.tag}>
+//             <Text style={styles.tagText}>
+//               Last 100 orders without
+//               complaints
+//             </Text>
 
-            <Text style={styles.tagText}>
-              Last 100 orders without complaints
-            </Text>
+//           </View>
 
-          </View>
+//           <View style={styles.tag}>
 
-          <View style={styles.tag}>
+//             <Text style={styles.tagText}>
+//               Frequently reordered
+//             </Text>
 
-            <Text style={styles.tagText}>
-              Frequently reordered
-            </Text>
+//           </View>
 
-          </View>
+//         </View>
 
-        </View>
+//       </View>
 
-      </View>
+//     </TouchableOpacity>
+//   );
+// }
 
-    </TouchableOpacity>
-  );
-}
+// const styles = StyleSheet.create({
 
-const styles = StyleSheet.create({
+//   card: {
+//     width: SCREEN_WIDTH - 32,
 
-  card: {
-    width: SCREEN_WIDTH - 32,
+//     borderRadius: 16,
 
-    borderRadius: 16,
+//     borderWidth: 1,
+//     borderColor: '#E9E9E9',
 
-    borderWidth: 1,
-    borderColor: '#E9E9E9',
+//     backgroundColor: '#FFFFFF',
 
-    backgroundColor: '#FFFFFF',
+//     marginTop: 18,
 
-    marginTop: 18,
+//     overflow: 'hidden',
 
-    overflow: 'hidden',
+//     alignSelf: 'center',
+//   },
 
-    alignSelf: 'center',
-  },
+//   image: {
+//     width: SCREEN_WIDTH - 32,
 
-  image: {
-    width: '100%',
-    height: 205,
+//     height: 205,
 
-    backgroundColor: '#E7CBC4',
-  },
+//     resizeMode: 'cover',
 
-  heart: {
-    position: 'absolute',
+//     backgroundColor: '#E7CBC4',
+//   },
 
-    top: 12,
-    right: 12,
-  },
+//   heart: {
+//     position: 'absolute',
 
-  /* SLIDER */
+//     top: 12,
+//     right: 12,
 
-  sliderContainer: {
-    position: 'absolute',
+//     zIndex: 10,
+//   },
 
-    bottom: 14,
-    right: 14,
-  },
+//   dotsContainer: {
+//     position: 'absolute',
 
-  sliderBase: {
-    width: 25,
-    height: 5,
+//     bottom: 14,
+//     right: 14,
 
-    borderRadius: 10,
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//   },
 
-    backgroundColor: '#00000033',
+//   dot: {
+//     width: 6,
+//     height: 6,
 
-    overflow: 'hidden',
+//     borderRadius: 6,
 
-    justifyContent: 'center',
-  },
+//     backgroundColor: '#FFFFFF80',
 
-  sliderActive: {
-    width: 11,
-    height: 5,
+//     marginHorizontal: 3,
+//   },
 
-    borderRadius: 10,
+//   activeDot: {
+//     width: 18,
 
-    backgroundColor: '#000000',
-  },
+//     backgroundColor: '#FFFFFF',
+//   },
 
-  /* CONTENT */
+//   content: {
+//     paddingHorizontal: 14,
+//     paddingTop: 10,
+//     paddingBottom: 14,
+//   },
 
-  content: {
-    paddingHorizontal: 14,
-    paddingTop: 10,
-    paddingBottom: 14,
-  },
+//   flashText: {
+//     fontFamily: 'Inter-Regular',
 
-  flashText: {
-    fontFamily: 'Inter-Regular',
-    fontWeight: '400',
+//     fontSize: 13,
 
-    fontSize: 13,
+//     color: '#555555',
+//   },
 
-    color: '#555555',
-  },
+//   name: {
+//     fontFamily: 'Montserrat-Bold',
 
-  name: {
-    fontFamily: 'Montserrat-Bold',
-    fontWeight: '700',
+//     fontSize: 22,
 
-    fontSize: 22,
+//     marginTop: 4,
 
-    marginTop: 4,
+//     color: '#000000',
+//   },
 
-    color: '#000000',
-  },
+//   ratingRow: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
 
-  ratingRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+//     marginTop: 6,
+//   },
 
-    marginTop: 6,
-  },
+//   info: {
+//     fontFamily: 'Inter-Bold',
 
-  info: {
-    fontFamily: 'Inter-Bold',
-    fontWeight: '700',
+//     fontSize: 13,
 
-    fontSize: 13,
+//     color: '#111111',
 
-    color: '#111111',
-  },
+//     marginLeft: 4,
+//   },
 
-  cuisine: {
-    marginTop: 6,
+//   cuisine: {
+//     marginTop: 6,
 
-    color: '#666666',
-  },
+//     color: '#666666',
+//   },
 
-  location: {
-    marginTop: 4,
+//   location: {
+//     marginTop: 4,
 
-    color: '#777777',
-  },
+//     color: '#777777',
+//   },
 
-  tagRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+//   tagRow: {
+//     flexDirection: 'row',
+//     flexWrap: 'wrap',
 
-    marginTop: 14,
-  },
+//     marginTop: 14,
+//   },
 
-  tag: {
-    backgroundColor: '#F1F1F1',
+//   tag: {
+//     backgroundColor: '#F1F1F1',
 
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+//     paddingHorizontal: 10,
+//     paddingVertical: 6,
 
-    borderRadius: 8,
+//     borderRadius: 8,
 
-    marginRight: 8,
-  },
+//     marginRight: 8,
+//   },
 
-  tagText: {
-    fontSize: 11,
+//   tagText: {
+//     fontSize: 11,
 
-    color: '#444444',
+//     color: '#444444',
 
-    fontWeight: '500',
-  },
+//     fontWeight: '500',
+//   },
 
-});
+// });
