@@ -225,11 +225,11 @@ const styles = StyleSheet.create({
   },
 
   heroImage: {
-    width: scale(260),
-    height: scale(260),
+    width: scale(240),
+    height: scale(240),
 
-    right: scale(-10),
-    bottom: scale(-30),
+    right: scale(-0),
+    bottom: scale(-24),
   },
 
   categorySection: {

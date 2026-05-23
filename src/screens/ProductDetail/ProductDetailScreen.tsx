@@ -19,6 +19,7 @@ import {
 import Ionicons from '@react-native-vector-icons/ionicons';
 
 import { addOnsData } from '../../data/addOnsData';
+const BURGER_IMAGE = require('../../assets/images/product/Burger.png');
 
 const { width, height } = Dimensions.get('window');
 
@@ -88,11 +89,10 @@ export default function ProductDetailScreen({
         </View>
 
         {/* PRODUCT IMAGE */}
-
-        <Image
-          source={item.image}
-          style={styles.productImage}
-        />
+<Image
+  source={BURGER_IMAGE}
+  style={styles.productImage}
+/>
 
       </View>
 
@@ -106,15 +106,17 @@ export default function ProductDetailScreen({
 
           <View style={styles.leftContent}>
 
-            <Text style={styles.title}>
-              {item.name || item.title}
-            </Text>
+<Text style={styles.title}>
+  Bacon Bliss
+  {'\n'}
+  Bombshell
+</Text>
 
             <View style={styles.priceRow}>
 
-              <Text style={styles.price}>
-                {item.price || '$10.99'}
-              </Text>
+<Text style={styles.price}>
+  $10.99
+</Text>
 
               <Text style={styles.rating}>
                 4.8
@@ -162,11 +164,13 @@ export default function ProductDetailScreen({
 
         {/* DESCRIPTION */}
 
-        <Text style={styles.description}>
-          Indulge in the Bacon Bliss Bombshell, a
-          mouthwatering burger sensation that
-          satisfies every craving perfectly.
-        </Text>
+<Text style={styles.description}>
+  Indulge in the Bacon Bliss Bombshell, a
+  mouthwatering burger sensation that{' '}
+  <Text style={styles.readMore}>
+    Readmore
+  </Text>
+</Text>
 
       </View>
 
@@ -222,15 +226,15 @@ export default function ProductDetailScreen({
 
       <TouchableOpacity
         activeOpacity={0.9}
-        style={[
-          styles.cartButton,
-          {
-            marginBottom:
-              insets.bottom > 0
-                ? insets.bottom + 8
-                : 18,
-          },
-        ]}
+style={[
+  styles.cartButton,
+  {
+    bottom:
+      insets.bottom > 0
+        ? insets.bottom + 8
+        : 18,
+  },
+]}
         onPress={() =>
           navigation.navigate('BookingScreen')
         }>
@@ -254,14 +258,14 @@ const styles = StyleSheet.create({
 
   /* TOP SECTION */
 
-  topSection: {
-    width: width,
-    height: height * 0.47,
+topSection: {
+  width: width,
+  height: scale(401),
 
-    backgroundColor: '#F7F7F7',
+  backgroundColor: '#F7F7F7',
 
-    alignItems: 'center',
-  },
+  alignItems: 'center',
+},
 
   header: {
     width: width - 40,
@@ -286,24 +290,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  productImage: {
-    width: width * 0.84,
-    height: width * 0.84,
+productImage: {
+  width: scale(309),
+  height: scale(229),
 
-    resizeMode: 'contain',
+  resizeMode: 'contain',
 
-    marginTop: height * 0.015,
-  },
+  marginTop: scale(28),
+},
 
   /* DETAILS */
+detailsContainer: {
+  width: scale(354),
 
-  detailsContainer: {
-    width: width - 40,
+  alignSelf: 'center',
 
-    alignSelf: 'center',
-
-    marginTop: 22,
-  },
+  marginTop: scale(25),
+},
 
   titleRow: {
     flexDirection: 'row',
@@ -317,17 +320,17 @@ const styles = StyleSheet.create({
     width: '68%',
   },
 
-  title: {
-    fontFamily: 'Montserrat-Bold',
+title: {
+  fontFamily: 'Montserrat-SemiBold',
 
-    fontSize: moderateScale(24),
+  fontSize: moderateScale(24),
 
-    lineHeight: 29,
+  lineHeight: moderateScale(24),
 
-    letterSpacing: -0.24,
+  letterSpacing: -0.24,
 
-    color: '#040404',
-  },
+  color: '#040404',
+},
 
   priceRow: {
     flexDirection: 'row',
@@ -337,50 +340,50 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
 
-  price: {
-    fontFamily: 'Montserrat-Medium',
+price: {
+  fontFamily: 'Montserrat-Medium',
 
-    fontSize: moderateScale(16),
+  fontSize: moderateScale(16),
 
-    lineHeight: 20,
+  lineHeight: moderateScale(20),
 
-    letterSpacing: -0.24,
+  letterSpacing: -0.24,
 
-    color: '#040404',
-  },
+  color: '#040404',
+},
 
-  rating: {
-    marginLeft: 8,
+rating: {
+  marginLeft: scale(10),
 
-    fontFamily: 'Montserrat-Medium',
+  fontFamily: 'Montserrat-Medium',
 
-    fontSize: moderateScale(16),
+  fontSize: moderateScale(16),
 
-    lineHeight: 20,
+  lineHeight: moderateScale(20),
 
-    letterSpacing: -0.24,
+  letterSpacing: -0.24,
 
-    color: '#040404',
-  },
+  color: '#040404',
+},
 
-  quantityBox: {
-    width: 92,
-    height: 34,
+quantityBox: {
+  width: scale(70),
+  height: scale(25),
 
-    borderRadius: 6,
+  borderRadius: scale(5),
 
-    backgroundColor: '#F2F2F1',
+  backgroundColor: '#ffffff',
 
-    flexDirection: 'row',
+  flexDirection: 'row',
 
-    alignItems: 'center',
+  alignItems: 'center',
 
-    justifyContent: 'space-between',
+  justifyContent: 'space-between',
 
-    paddingHorizontal: 10,
+  paddingHorizontal: scale(6),
 
-    marginTop: 4,
-  },
+  marginTop: scale(4),
+},
 
   qtyButton: {
     width: 18,
@@ -390,41 +393,45 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  quantityText: {
-    fontFamily: 'Inter-Regular',
+quantityText: {
+  fontFamily: 'Inter',
+  fontWeight:'regular',
 
-    fontSize: 16,
+  fontSize: moderateScale(16),
 
-    lineHeight: 19,
+  letterSpacing: -0.24,
 
-    letterSpacing: -0.24,
+  color: '#000000',
+},
+description: {
+  width: scale(324),
 
-    color: '#040404',
-  },
+  marginTop: scale(18),
 
-  description: {
-    width: '88%',
+  fontFamily: 'Inter',
+  fontWeight:'semibold',
+  fontSize: moderateScale(14),
 
-    marginTop: 18,
+  lineHeight: scale(18),
 
-    fontFamily: 'Inter-Regular',
+  letterSpacing: -0.24,
 
-    fontSize: moderateScale(14),
-
-    lineHeight: 20,
-
-    letterSpacing: -0.24,
-
-    color: '#696969',
-  },
+  color: '#696969',
+},
+readMore: {
+  fontFamily: 'Inter-Regular',
+  color: '#040404',
+},
 
   /* ADD ONS */
 
-  addOnContainer: {
-    marginTop: 22,
+addOnContainer: {
+  width: scale(245),
 
-    marginLeft: 20,
-  },
+  marginTop: scale(24),
+
+  marginLeft: scale(20),
+},
 
   addOnTitle: {
     fontFamily: 'Montserrat-Medium',
@@ -487,21 +494,23 @@ const styles = StyleSheet.create({
 
   /* BUTTON */
 
-  cartButton: {
-    width: width - 42,
-    height: 44,
+cartButton: {
+  width: scale(351),
+  height: scale(44),
 
-    borderRadius: 20,
+  borderRadius: scale(20),
 
-    backgroundColor: '#040404',
+  backgroundColor: '#040404',
 
-    justifyContent: 'center',
-    alignItems: 'center',
+  justifyContent: 'center',
+  alignItems: 'center',
 
-    alignSelf: 'center',
+  alignSelf: 'center',
 
-    marginTop: 'auto',
-  },
+  position: 'absolute',
+
+  bottom: Platform.OS === 'ios' ? 34 : 18,
+},
 
   cartButtonText: {
     fontFamily: 'Montserrat-Medium',

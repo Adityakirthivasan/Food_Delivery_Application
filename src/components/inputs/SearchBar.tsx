@@ -116,21 +116,23 @@ const styles = StyleSheet.create({
 
     alignItems: 'center',
 
-    marginTop: scale(14),
+    marginTop: scale(24),
   },
 
-  searchBar: {
-    flex: 1,
+searchBar: {
+  width: scale(303),
+  height: scale(50),
 
-    height: scale(50),
+  borderRadius: scale(10),
 
-    borderRadius: scale(10),
+  backgroundColor: '#FFFFFF',
 
-    paddingHorizontal: scale(16),
+  paddingHorizontal: scale(16),
+  
 
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+  flexDirection: 'row',
+  alignItems: 'center',
+},
 
   input: {
     flex: 1,
@@ -177,8 +179,8 @@ const styles = StyleSheet.create({
   },
 
   vegText: {
-    fontFamily: 'Montserrat-Bold',
-
+    fontFamily: 'Montserrat',
+    fontWeight:'bold',
     fontSize: scale(10),
 
     color: '#696969',

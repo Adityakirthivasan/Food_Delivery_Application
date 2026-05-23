@@ -602,8 +602,8 @@ const styles = StyleSheet.create({
   // EXACT TITLE
 
   name: {
-    fontFamily: 'Montserrat-ExtraBold',
-
+    fontFamily: 'Inter',
+    fontWeight:'bold',
     fontSize: 22,
 
     marginTop: 4,
@@ -621,8 +621,8 @@ const styles = StyleSheet.create({
   },
 
   info: {
-    fontFamily: 'Inter-ExtraBold',
-
+    fontFamily: 'Inter',
+    fontWeight:'bold',
     fontSize: 13,
 
     color: '#111111',
@@ -633,8 +633,8 @@ const styles = StyleSheet.create({
   cuisine: {
     marginTop: 8,
 
-    fontFamily: 'Inter-Regular',
-
+    fontFamily: 'Inter',
+    fontWeight:'regular',
     fontSize: 13,
 
     color: '#444444',
@@ -698,7 +698,7 @@ const styles = StyleSheet.create({
   tagText: {
     fontFamily: 'Inter-Regular',
 
-    fontSize: 10,
+    fontSize: 11,
     lineHeight: 21,
 
     letterSpacing: -0.32,

@@ -105,28 +105,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  locationTitle: {
-    marginHorizontal: scale(4),
+locationTitle: {
+  marginHorizontal: scale(5),
 
-    fontFamily: 'Inter-Bold',
+  fontFamily: 'Inter-SemiBold',
 
-    fontSize: scale(16),
-    lineHeight: scale(20),
+  fontSize: scale(16),
+  lineHeight: scale(19),
 
-    letterSpacing: -0.24,
+  letterSpacing: -0.24,
 
-    color: '#FFFFFF',
-  },
+  color: '#FFFFFF',
 
-  locationSub: {
-    marginTop: scale(3),
+  includeFontPadding: false,
+},
 
-    fontFamily: 'Montserrat-Light',
+locationSub: {
+  marginTop: scale(2),
 
-    fontSize: scale(12),
-    lineHeight: scale(15),
+  fontFamily: 'Montserrat-Light',
 
-    letterSpacing: -0.24,
-  },
+  fontSize: scale(12),
+  lineHeight: scale(15),
+
+  letterSpacing: -0.24,
+
+  color: 'rgba(255,255,255,0.75)',
+
+  includeFontPadding: false,
+},
 
 });

@@ -383,69 +383,67 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
 
-  topSection: {
-    width: width,
+topSection: {
+  width: width,
 
-    height: scale(286),
+  height: scale(300),
 
-    borderBottomLeftRadius: scale(30),
-    borderBottomRightRadius: scale(30),
+  borderBottomLeftRadius: scale(30),
+  borderBottomRightRadius: scale(30),
 
-    overflow: 'hidden',
-  },
+  overflow: 'hidden',
+},
 
-  headerWrapper: {
-    paddingHorizontal: scale(16),
+ headerWrapper: {
+  paddingHorizontal: scale(16),
 
-    paddingTop: scale(15),
-  },
+  paddingTop: scale(15),
+},
 
-  offerContent: {
-    marginTop: scale(8),
+offerContent: {
+  marginTop: scale(24),
 
-    paddingHorizontal: scale(16),
+  paddingHorizontal: scale(16),
 
-    width: '52%',
+  width: scale(190),
 
-    zIndex: 20,
-  },
+  zIndex: 20,
+},
 
-  offerTitle: {
-    width: scale(210),
+ offerTitle: {
+  width: scale(190),
 
-    fontFamily: 'Montserrat',
-    fontWeight: 'bold',
+  fontFamily: 'Montserrat',
+  fontWeight:'bold',
+  fontSize: scale(22),
+  lineHeight: scale(24),
 
-    fontSize: 20,
-    lineHeight: 24,
+  letterSpacing: -0.24,
 
-    letterSpacing: -0.3,
+  color: '#FFFFFF',
 
-    color: '#FFFFFF',
+  includeFontPadding: false,
+},
 
-    includeFontPadding: false,
-  },
+offerSubtitle: {
+  width: scale(190),
 
-  offerSubtitle: {
-    width: scale(158),
+  marginTop: scale(6),
 
-    marginTop: scale(8),
+  fontFamily: 'Montserrat',
+  fontWeight:'semibold',
+  fontSize: scale(15),
+  lineHeight: scale(15),
 
-    fontFamily: 'Montserrat',
-    fontWeight: 'bold',
+  letterSpacing: -0.24,
 
-    fontSize: 12,
-    lineHeight: 16,
+  color: '#FFFFFF',
 
-    letterSpacing: -0.2,
-
-    color: '#FFFFFF',
-
-    includeFontPadding: false,
-  },
+  includeFontPadding: false,
+},
 
   orderButton: {
-    width: scale(84),
+    width: scale(83),
     height: scale(31),
 
     marginTop: scale(18),
@@ -458,30 +456,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  orderButtonText: {
-    fontFamily: 'Montserrat-ExtraBold',
+orderButtonText: {
+  fontFamily: 'Montserrat',
+  fontWeight:'bold',
+  fontSize: scale(12),
+  lineHeight: scale(15),
 
-    fontSize: 12,
-    lineHeight: 12,
+  letterSpacing: -0.24,
 
-    letterSpacing: -0.2,
+  textAlign: 'center',
 
-    color: '#FFFFFF',
+  color: '#FFFFFF',
 
-    includeFontPadding: false,
-  },
+  includeFontPadding: false,
+},
 
-  amico: {
-    width: scale(156),
-    height: scale(156),
+amico: {
+  width: width * 0.48,
+  height: width * 0.48,
 
-    position: 'absolute',
+  position: 'absolute',
 
-    right: scale(7),
-    bottom: scale(-17),
+  right: width * 0.010,
 
-    resizeMode: 'contain',
-  },
+  bottom: -scale(20),
+
+  resizeMode: 'contain',
+},
 
   categorySection: {
     marginTop: scale(28),
@@ -489,9 +490,9 @@ const styles = StyleSheet.create({
   },
 
   sectionTitle: {
-    fontFamily: 'Montserrat-Bold',
-
-    fontSize: scale(20),
+    fontFamily: 'Montserrat',
+    fontWeight:'bold',
+    fontSize: scale(22),
 
     color: '#040404',
   },
@@ -515,7 +516,8 @@ const styles = StyleSheet.create({
   },
 
   topPickTitle: {
-    fontFamily: 'Montserrat-Bold',
+    fontFamily: 'Inter',
+    fontWeight:'bold',
 
     fontSize: scale(20),
 
@@ -541,8 +543,8 @@ const styles = StyleSheet.create({
   },
 
   moreTitle: {
-    fontFamily: 'Montserrat-Bold',
-
+    fontFamily: 'Inter',
+    fontWeight:'bold',
     fontSize: scale(20),
 
     color: '#040404',
@@ -608,8 +610,8 @@ const styles = StyleSheet.create({
   },
 
   restaurantTitle: {
-    fontFamily: 'Montserrat-Bold',
-
+    fontFamily: 'Inter',
+    fontWeight:'semibold',
     fontSize: scale(20),
 
     color: '#040404',

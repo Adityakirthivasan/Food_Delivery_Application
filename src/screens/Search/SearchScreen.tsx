@@ -316,39 +316,42 @@ onPress={() =>
                       $200
                     </Text>
 
-                    <TouchableOpacity
-onPress={() =>
-  navigation.navigate(
-    'ProductDetailScreen',
-    {
-      item: {
-        name:
-          item % 2 === 0
-            ? 'Hanoi Pancake Shop'
-            : 'Rammen Noodel',
+                   <TouchableOpacity
+  style={styles.addButton}
+  onPress={() =>
+    navigation.navigate(
+      'ProductDetailScreen',
+      {
+        item: {
+          name:
+            item % 2 === 0
+              ? 'Hanoi Pancake Shop'
+              : 'Rammen Noodel',
 
-        price: '$200',
+          price: '$200',
 
-        image:
-          item % 2 === 0
-            ? require('../../assets/images/flash/Pancake.png')
-            : require('../../assets/images/flash/Noodles.png'),
+          image:
+            item % 2 === 0
+              ? require('../../assets/images/flash/Pancake.png')
+              : require('../../assets/images/flash/Noodles.png'),
 
-        rating: '3.3',
+          rating: '3.3',
 
-        deliveryTime: '10-15 mins',
+          deliveryTime: '10-15 mins',
 
-        distance: '2.0 km',
+          distance: '2.0 km',
+        },
       },
-    },
-  )
-}>
+    )
+  }>
 
-                      <Text style={styles.addText}>
-                        ADD
-                      </Text>
+  <Text style={styles.addText}>
+    ADD
+  </Text>
 
-                    </TouchableOpacity>
+</TouchableOpacity>
+
+                    
 
                   </View>
 
@@ -485,15 +488,16 @@ const styles = StyleSheet.create({
   },
 
   headerTitle: {
-    marginLeft: SCREEN_WIDTH * 0.11,
+    marginLeft: SCREEN_WIDTH * 0.17,
 
-    fontFamily: 'Inter-SemiBold',
+    fontFamily: 'Inter',
+    fontWeight:'semibold',
 
-    fontSize: 12,
+    fontSize: 15,
 
     lineHeight: 15,
 
-    letterSpacing: -0.24,
+    letterSpacing: -0.29,
 
     color: '#000000',
   },
@@ -668,13 +672,18 @@ const styles = StyleSheet.create({
     left: 14,
   },
 
-  bannerTitle: {
-    fontFamily: 'Montserrat-Bold',
+ bannerTitle: {
+  fontFamily: 'SF-Pro',
+  fontWeight: 'bold',
 
-    fontSize: 22,
+  fontSize: 20,
 
-    color: '#FFFFFF',
-  },
+  lineHeight: 28,
+
+  letterSpacing: -0.08,
+
+  color: '#FFFFFF',
+},
 
   bannerMetaRow: {
     flexDirection: 'row',
@@ -689,7 +698,7 @@ const styles = StyleSheet.create({
 
     borderRadius: 2,
 
-    backgroundColor: '#FFFFFF',
+    //backgroundColor: '#FFFFFF',
 
     borderWidth: 1,
     borderColor: '#20C400',
@@ -739,13 +748,16 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
 
-  hotelTitle: {
-    fontFamily: 'Montserrat-Bold',
+hotelTitle: {
+  fontFamily: 'Inter',
+  fontWeight:'bold',
+  fontSize: 16,
+  lineHeight: 24,
 
-    fontSize: 17,
+  letterSpacing: -0.24,
 
-    color: '#000',
-  },
+  color: '#000000',
+},
 
   metaRow: {
     flexDirection: 'row',
@@ -771,13 +783,17 @@ const styles = StyleSheet.create({
     marginRight: 6,
   },
 
-  metaText: {
-    fontFamily: 'Inter-ExtraBold',
+metaText: {
+  fontFamily: 'Inter',
+  fontWeight:'bold',
 
-    fontSize: 12,
+  fontSize: 11,
+  lineHeight: 16,
 
-    color: '#000',
-  },
+  letterSpacing: 0,
+
+  color: '#000000',
+},
 
   seeAllRow: {
     flexDirection: 'row',
@@ -847,23 +863,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#1F7500',
   },
 
-  bestSellerText: {
-    fontFamily: 'Montserrat-Regular',
+bestSellerText: {
+  fontFamily: 'Inter-Regular',
 
-    fontSize: 12,
+  fontSize: 12,
+  lineHeight: 16,
 
-    color: '#E95322',
-  },
+  letterSpacing: 0,
 
-  foodTitle: {
-    marginTop: 4,
+  color: '#E95322',
+},
 
-    fontFamily: 'Inter-SemiBold',
+foodTitle: {
+  marginTop: 4,
 
-    fontSize: 14,
+  fontFamily: 'Inter',
+  fontWeight:'bold',
 
-    color: '#343434',
-  },
+  fontSize: 14,
+  lineHeight: 17,
+
+  letterSpacing: 0,
+
+  color: '#646262',
+},
 
   priceRow: {
     marginTop: 8,
@@ -873,36 +896,44 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  price: {
-    fontFamily: 'Montserrat-Bold',
+price: {
+  fontFamily: 'Inter',
+  fontWeight:'bold',
 
-    fontSize: 17,
+  fontSize: 14,
+  lineHeight: 21,
 
-    color: '#000',
-  },
+  letterSpacing: -0.32,
 
-  addButton: {
-    width: 58,
-    height: 32,
+  color: '#000000',
+},
 
-    borderRadius: 8,
+addButton: {
+  width: 70,
+  height: 34,
 
-    borderWidth: 1,
-    borderColor: '#D9D9D9',
+  borderRadius: 8,
 
-    backgroundColor: '#FFFFFF',
+  borderWidth: 1,
+  borderColor: '#D9D9D9',
 
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  backgroundColor: '#FFFFFF',
 
-  addText: {
-    fontFamily: 'Montserrat-Bold',
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+addText: {
+  fontFamily: 'Inter',
+  fontWeight:'bold',
+  fontSize: 14,
+  lineHeight: 21,
 
-    fontSize: 15,
+  letterSpacing: -0.32,
 
-    color: '#000',
-  },
+  textAlign: 'center',
+
+  color: '#000000',
+},
 
   // MORE WITH US
 
@@ -911,8 +942,8 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     marginBottom: 16,
 
-    fontFamily: 'Montserrat-Bold',
-
+    fontFamily: 'Inter',
+    fontWeight:'bold',
     fontSize: 24,
 
     color: '#000',
@@ -953,8 +984,8 @@ const styles = StyleSheet.create({
   },
 
   restaurantName: {
-    fontFamily: 'Montserrat-Bold',
-
+    fontFamily: 'Inter',
+    fontWeight:'bold',
     fontSize: 23,
 
     color: '#000',

@@ -24,17 +24,11 @@ const { width, height } = Dimensions.get('window');
 const scale = (size: number) =>
   (width / 393) * size;
 
-const FOOD_1 =
-  'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=1200';
+const NOODLES = require('../../assets/images/restaurant/Noodles.png');
 
-const FOOD_2 =
-  'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200';
+const PANCAKE = require('../../assets/images/restaurant/Pancake.png');
 
-const TOP_1 =
-  'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200';
-
-const TOP_2 =
-  'https://images.unsplash.com/photo-1529042410759-befb1204b468?q=80&w=1200';
+const RUCHIBE = require('../../assets/images/restaurant/Ruchibe.png');
 
 export default function RestaurantScreen() {
 
@@ -159,7 +153,7 @@ export default function RestaurantScreen() {
                       <Ionicons
                         name="star"
                         size={scale(8)}
-                        color="#FFFFFF"
+                        color="#2FE922"
                       />
 
                     </View>
@@ -229,9 +223,15 @@ export default function RestaurantScreen() {
 
         {/* FILTERS */}
 
-        <View style={styles.chipWrapper}>
+        <ScrollView
+  horizontal
+  showsHorizontalScrollIndicator={false}
+  contentContainerStyle={{
+    paddingHorizontal: scale(16),
+  }}
+  style={styles.chipWrapper}>
 
-          <View style={styles.chipRow}>
+  <View style={styles.chipRow}>
 
             {/* VEG */}
 
@@ -307,7 +307,7 @@ export default function RestaurantScreen() {
 
           </View>
 
-        </View>
+        </ScrollView>
 
         {/* DIVIDER */}
 
@@ -327,54 +327,53 @@ export default function RestaurantScreen() {
             paddingRight: scale(6),
           }}>
 
-          {[TOP_1, TOP_2].map(
-            (item, index) => (
+{[RUCHIBE, RUCHIBE].map(
+  (item, index) => (
 
-              <TouchableOpacity
-                key={index}
-                activeOpacity={0.9}
-                style={styles.topCard}>
+    <TouchableOpacity
+      key={index}
+      activeOpacity={0.9}
+      style={styles.topCard}>
 
-                <Image
-                  source={{ uri: item }}
-                  style={styles.topImage}
-                />
+      <Image
+        source={item}
+        style={styles.topImage}
+      />
 
-                <LinearGradient
-                  colors={[
-                    'rgba(0,0,0,0)',
-                    'rgba(0,0,0,0.82)',
-                  ]}
-                  style={styles.topOverlay}>
+      <LinearGradient
+        colors={[
+          'rgba(0,0,0,0)',
+          'rgba(0,0,0,0.82)',
+        ]}
+        style={styles.topOverlay}>
 
-                  <Text style={styles.topName}>
-                    Ruchibe (guru Restaurant)
-                  </Text>
+        <Text style={styles.topName}>
+          Ruchibe (guru Restaurant)
+        </Text>
 
-                  <View style={styles.topMetaRow}>
+        <View style={styles.topMetaRow}>
 
-                    <View style={styles.smallStarBox}>
+          <View style={styles.smallStarBox}>
 
-                      <Ionicons
-                        name="star"
-                        size={scale(6)}
-                        color="#FFFFFF"
-                      />
+<Ionicons
+  name="star"
+  size={scale(7)}
+  color="#2FE922"
+/>
 
-                    </View>
+          </View>
 
-                    <Text style={styles.topMetaText}>
-                      3.3 (1.4k+) • 10-15 mins
-                    </Text>
+          <Text style={styles.topMetaText}>
+            3.3 (1.4k+) • 10-15 mins
+          </Text>
 
-                  </View>
+        </View>
 
-                </LinearGradient>
+      </LinearGradient>
 
-              </TouchableOpacity>
-
-            ),
-          )}
+    </TouchableOpacity>
+  ),
+)}
 
         </ScrollView>
 
@@ -385,130 +384,114 @@ export default function RestaurantScreen() {
         </Text>
 
         <View style={styles.grid}>
+{Array.from({ length: 10 }).map(
+  (_, index) => {
 
-          {Array.from({ length: 10 }).map(
-            (_, index) => (
+    const item =
+      index % 2 === 0
+        ? {
+            title: 'Rammen Noodel',
+            image: NOODLES,
+          }
+        : {
+            title: 'Hanoi Pancake Shop',
+            image: PANCAKE,
+          };
 
-              <TouchableOpacity
-                activeOpacity={0.95}
-                key={index}
-                style={styles.foodCard}
-                onPress={() => {
+    return (
 
-                  setShowCart(true);
+      <TouchableOpacity
+        activeOpacity={0.95}
+        key={index}
+        style={styles.foodCard}
+        onPress={() => {
 
-                  setSelectedItem({
-                    id: index,
-                    title:
-                      index % 2 === 0
-                        ? 'Rammen Noodel'
-                        : 'Hanoi Pancake Shop',
-                    image:
-                      index % 2 === 0
-                        ? FOOD_1
-                        : FOOD_2,
-                    price: 200,
-                  });
-                }}>
+          setShowCart(true);
 
-                <View>
+          setSelectedItem({
+            id: index,
+            title: item.title,
+            image: item.image,
+            price: 200,
+          });
+        }}>
 
-                  <Image
-                    source={{
-                      uri:
-                        index % 2 === 0
-                          ? FOOD_1
-                          : FOOD_2,
-                    }}
-                    style={styles.foodImage}
-                  />
+        <View>
 
-                  <TouchableOpacity
-                    activeOpacity={0.9}
-                    style={styles.heartBtn}>
+          <Image
+            source={item.image}
+            style={styles.foodImage}
+          />
 
-                    <Ionicons
-                      name="heart-outline"
-                      size={scale(24)}
-                      color="#FFFFFF"
-                    />
+          <TouchableOpacity
+            activeOpacity={0.9}
+            style={styles.heartBtn}>
 
-                  </TouchableOpacity>
+            <Ionicons
+              name="heart-outline"
+              size={scale(24)}
+              color="#FFFFFF"
+            />
 
-                </View>
+          </TouchableOpacity>
 
-                <View style={styles.foodContent}>
+        </View>
 
-                  <View
-                    style={styles.bestSellerRow}>
+        <View style={styles.foodContent}>
 
-                    <View style={styles.vegMini}>
+          <View style={styles.bestSellerRow}>
 
-                      <View
-                        style={styles.vegMiniInner}
-                      />
+            <View style={styles.vegMini}>
+              <View style={styles.vegMiniInner} />
+            </View>
 
-                    </View>
+            <Text style={styles.bestSellerText}>
+              Best Seller
+            </Text>
 
-                    <Text
-                      style={styles.bestSellerText}>
+          </View>
 
-                      Best Seller
-                    </Text>
+          <Text style={styles.foodTitle}>
+            {item.title}
+          </Text>
 
-                  </View>
+          <View style={styles.priceRow}>
 
-                  <Text style={styles.foodTitle}>
-                    {index % 2 === 0
-                      ? 'Rammen Noodel'
-                      : 'Hanoi Pancake Shop'}
-                  </Text>
+            <Text style={styles.price}>
+              $200
+            </Text>
 
-                  <View style={styles.priceRow}>
+            <TouchableOpacity
+              activeOpacity={0.9}
+              style={styles.addButton}
+              onPress={() =>
+                navigation.navigate(
+                  'ProductDetailScreen',
+                  {
+                    item: {
+                      id: index,
+                      title: item.title,
+                      image: item.image,
+                      price: 200,
+                    },
+                  },
+                )
+              }>
 
-                    <Text style={styles.price}>
-                      $200
-                    </Text>
+              <Text style={styles.addText}>
+                ADD
+              </Text>
 
-                    <TouchableOpacity
-                      activeOpacity={0.9}
-                      style={styles.addButton}
-                      onPress={() =>
-                        navigation.navigate(
-                          'ProductDetailScreen',
-                          {
-                            item: {
-                              id: index,
-                              title:
-                                index % 2 === 0
-                                  ? 'Rammen Noodel'
-                                  : 'Hanoi Pancake Shop',
-                              image:
-                                index % 2 === 0
-                                  ? FOOD_1
-                                  : FOOD_2,
-                              price: 200,
-                            },
-                          },
-                        )
-                      }>
+            </TouchableOpacity>
 
-                      <Text
-                        style={styles.addText}>
+          </View>
 
-                        ADD
-                      </Text>
+        </View>
 
-                    </TouchableOpacity>
-
-                  </View>
-
-                </View>
-
-              </TouchableOpacity>
-
-            ),
-          )}
+      </TouchableOpacity>
+    );
+  },
+)}
 
         </View>
 
@@ -649,12 +632,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  restaurantName: {
-    fontFamily: 'Inter-Bold',
-    fontSize: scale(16),
+restaurantName: {
+  fontFamily: 'Inter',
+  fontWeight:'bold',
+  fontSize: scale(16),
 
-    color: '#000000',
-  },
+  lineHeight: scale(24),
+  letterSpacing: -0.24,
+
+  color: '#000000',
+},
 
   metaRow: {
     flexDirection: 'row',
@@ -663,12 +650,14 @@ const styles = StyleSheet.create({
     marginTop: scale(4),
   },
 
-  metaText: {
-    fontFamily: 'Inter-Regular',
-    fontSize: scale(12),
+metaText: {
+  fontFamily: 'Inter-Regular',
+  fontSize: scale(12),
 
-    color: '#0000008A',
-  },
+  lineHeight: scale(16),
+
+  color: '#0000008A',
+},
 
   verticalLine: {
     width: 1,
@@ -688,19 +677,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  starBox: {
-    width: scale(12),
-    height: scale(12),
+starBox: {
+  width: scale(18),
+  height: scale(18),
 
-    borderRadius: scale(2),
+  borderRadius: scale(3),
+  borderWidth: 1.8,
 
-    backgroundColor: '#2FE922',
+  borderColor: '#2FE922',
+  // backgroundColor: '#FFFFFF',
 
-    justifyContent: 'center',
-    alignItems: 'center',
+  justifyContent: 'center',
+  alignItems: 'center',
 
-    marginRight: scale(4),
-  },
+  marginRight: scale(6),
+},
 
   ratingValue: {
     fontFamily: 'Inter-Bold',
@@ -724,16 +715,20 @@ const styles = StyleSheet.create({
     marginTop: scale(11),
   },
 
-  deliveryText: {
-    alignSelf: 'center',
+deliveryText: {
+  alignSelf: 'center',
 
-    marginTop: scale(6),
+  marginTop: scale(6),
 
-    fontFamily: 'Inter-SemiBold',
-    fontSize: scale(14),
+  fontFamily: 'Inter',
+  fontWeight:'bold',
+  fontSize: scale(14),
 
-    color: '#000000',
-  },
+  lineHeight: scale(24),
+  letterSpacing: -0.24,
+
+  color: '#000000',
+},
 
   searchContainer: {
     width: width - scale(32),
@@ -758,7 +753,8 @@ const styles = StyleSheet.create({
 
     marginLeft: scale(12),
 
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'Inter',
+    fontWeight:'regular',
     fontSize: scale(14),
 
     color: '#696969',
@@ -924,15 +920,18 @@ const styles = StyleSheet.create({
     marginBottom: scale(20),
   },
 
-  sectionTitle: {
-    marginLeft: scale(16),
-    marginBottom: scale(14),
+sectionTitle: {
+  marginLeft: scale(16),
+  marginBottom: scale(14),
 
-    fontFamily: 'Montserrat-Bold',
-    fontSize: scale(20),
+  fontFamily: 'Inter',
+  fontWeight:'bold',
+  fontSize: scale(22),
 
-    color: '#000000',
-  },
+  lineHeight: scale(28),
+
+  color: '#000000',
+},
 
   topCard: {
     width: scale(228),
@@ -961,12 +960,17 @@ const styles = StyleSheet.create({
     paddingTop: scale(24),
   },
 
-  topName: {
-    fontFamily: 'Inter-SemiBold',
-    fontSize: scale(14),
+topName: {
+  fontFamily: 'SF-Pro',
+  fontWeight: 'bold',
 
-    color: '#FFFFFF',
-  },
+  fontSize: scale(13),
+  lineHeight: scale(18),
+
+  letterSpacing: -0.08,
+
+  color: '#FFFFFF',
+},
 
   topMetaRow: {
     flexDirection: 'row',
@@ -975,25 +979,29 @@ const styles = StyleSheet.create({
     marginTop: scale(4),
   },
 
-  smallStarBox: {
-    width: scale(9),
-    height: scale(9),
+smallStarBox: {
+  width: scale(14),
+  height: scale(14),
 
-    borderRadius: scale(2),
+  borderRadius: scale(2),
+  borderWidth: 1.5,
 
-    backgroundColor: '#2FE922',
+  borderColor: '#2FE922',
+  // backgroundColor: '#FFFFFF',
 
-    justifyContent: 'center',
-    alignItems: 'center',
+  justifyContent: 'center',
+  alignItems: 'center',
 
-    marginRight: scale(4),
-  },
+  marginRight: scale(4),
+},
 
-  topMetaText: {
-    fontSize: scale(10),
+topMetaText: {
+  fontFamily: 'Inter',
+  fontWeight:'bold',
+  fontSize: scale(11),
 
-    color: '#FFFFFF',
-  },
+  color: '#FFFFFF',
+},
 
   recommendedTitle: {
     marginTop: scale(28),
@@ -1001,7 +1009,8 @@ const styles = StyleSheet.create({
 
     marginLeft: scale(16),
 
-    fontFamily: 'Montserrat-Bold',
+    fontFamily: 'Inter',
+    fontWeight:'bold',
     fontSize: scale(20),
 
     color: '#000000',
@@ -1081,10 +1090,11 @@ const styles = StyleSheet.create({
   foodTitle: {
     marginTop: scale(4),
 
-    fontFamily: 'Inter-SemiBold',
+    fontFamily: 'Inter',
+    fontWeight:'bold',
     fontSize: scale(14),
 
-    color: '#343434',
+    color: '#4c4b4b',
   },
 
   priceRow: {
@@ -1096,7 +1106,9 @@ const styles = StyleSheet.create({
   },
 
   price: {
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'Inter',
+    fontWeight:'bold',
+    
     fontSize: scale(14),
 
     color: '#000000',
@@ -1118,7 +1130,8 @@ const styles = StyleSheet.create({
   },
 
   addText: {
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'Inter',
+    fontWeight:'bold',
     fontSize: scale(14),
 
     color: '#000000',

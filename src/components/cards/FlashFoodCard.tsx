@@ -263,16 +263,17 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
 
-  hotelName: {
-    fontFamily: 'Montserrat-Bold',
+hotelName: {
+  fontFamily: 'Inter',
+  fontWeight:'bold',
 
-    fontSize: scale(15),
-    lineHeight: scale(20),
+  fontSize: scale(16),
+  lineHeight: scale(24),
 
-    letterSpacing: -0.24,
+  letterSpacing: -0.24,
 
-    color: '#040404',
-  },
+  color: '#000000',
+},
 
   infoRow: {
     flexDirection: 'row',
@@ -281,16 +282,19 @@ const styles = StyleSheet.create({
     marginTop: scale(4),
   },
 
-  infoText: {
-    marginLeft: scale(4),
+infoText: {
+  marginLeft: scale(4),
 
-    fontFamily: 'Inter-SemiBold',
+  fontFamily: 'Inter',
+  fontWeight:'bold',
 
-    fontSize: scale(10),
-    lineHeight: scale(12),
+  fontSize: scale(11),
+  lineHeight: scale(16),
 
-    color: '#040404',
-  },
+  letterSpacing: 0,
+
+  color: '#000000',
+},
 
   seeAllRow: {
     flexDirection: 'row',
@@ -342,16 +346,23 @@ const styles = StyleSheet.create({
     marginTop: scale(8),
   },
 
-  foodName: {
-    marginTop: scale(4),
+foodName: {
+  width: scale(140),
 
-    fontFamily: 'Inter-Medium',
+  marginTop: scale(4),
 
-    fontSize: scale(13),
-    lineHeight: scale(17),
+  fontFamily: 'Inter',
+  fontWeight: 'bold',
 
-    color: '#2A2A2A',
-  },
+  fontSize: scale(13),
+  lineHeight: scale(17),
+
+  letterSpacing: 0,
+
+  color: '#5C5B5B',
+
+  includeFontPadding: false,
+},
 
   bottomRow: {
     marginTop: scale(8),
@@ -361,13 +372,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  price: {
-    fontFamily: 'Montserrat-Bold',
+price: {
+  fontFamily: 'Inter',
+  fontWeight:'bold',
 
-    fontSize: scale(15),
-    lineHeight: scale(20),
+  fontSize: scale(14),
+  lineHeight: scale(21),
 
-    color: '#040404',
-  },
+  letterSpacing: -0.32,
+
+  color: '#000000',
+},
 
 });

@@ -23,8 +23,9 @@ const {
   height,
 } = Dimensions.get('window');
 
-const DELIVERY_IMAGE =
-  'https://cdn-icons-png.flaticon.com/512/2972/2972185.png';
+const DELIVERY_IMAGE = require(
+  '../../assets/images/booking/DeliveryMan.png',
+);
 
 export default function BookingScreen({
   navigation,
@@ -127,9 +128,15 @@ export default function BookingScreen({
 
             <View style={styles.offerContainer}>
 
-              <Text style={styles.offerTitle}>
-                Add one at $1
-              </Text>
+<View>
+
+  <Text style={styles.offerTitle}>
+    Add one at $1
+  </Text>
+
+  <View style={styles.offerGradientLine} />
+
+</View>
 
               <View style={styles.offerRow}>
 
@@ -139,9 +146,26 @@ export default function BookingScreen({
                     Save $29 now & get 3 months
                   </Text>
 
-                  <Text style={styles.offerText}>
-                    free deliveries
-                  </Text>
+<View
+  style={{
+    flexDirection: 'row',
+    alignItems: 'center',
+  }}>
+
+  <Text style={styles.offerText}>
+    free deliveries
+  </Text>
+
+  <Ionicons
+    name="chevron-forward"
+    size={width * 0.038}
+    color="#000"
+    style={{
+      marginLeft: width * 0.006,
+    }}
+  />
+
+</View>
 
                 </View>
 
@@ -269,11 +293,11 @@ export default function BookingScreen({
                 activeOpacity={0.8}
                 style={styles.optionButton2}>
 
-                <Ionicons
-                  name="restaurant-outline"
-                  size={width * 0.042}
-                  color="#000"
-                />
+<Ionicons
+  name="flash-outline"
+  size={width * 0.04}
+  color="#000000"
+/>
 
                 <Text style={styles.optionText}>
                   Cutlery Needed
@@ -361,25 +385,27 @@ export default function BookingScreen({
 
               </TouchableOpacity>
 
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={styles.segment}>
+             <TouchableOpacity
+  activeOpacity={0.8}
+  style={styles.segment}>
 
-                <Text style={styles.segmentText}>
-                  Tip
-                </Text>
+  <Text style={styles.segmentText}>
+    Tip
+  </Text>
 
-              </TouchableOpacity>
+</TouchableOpacity>
 
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={styles.segment}>
+<View style={styles.segmentSeparator} />
 
-                <Text style={styles.segmentText}>
-                  Instructions
-                </Text>
+<TouchableOpacity
+  activeOpacity={0.8}
+  style={styles.segment}>
 
-              </TouchableOpacity>
+  <Text style={styles.segmentText}>
+    Instructions
+  </Text>
+
+</TouchableOpacity>
 
             </View>
 
@@ -397,12 +423,10 @@ export default function BookingScreen({
 
               </View>
 
-              <Image
-                source={{
-                  uri: DELIVERY_IMAGE,
-                }}
-                style={styles.deliveryImage}
-              />
+<Image
+  source={DELIVERY_IMAGE}
+  style={styles.deliveryImage}
+/>
 
             </View>
 
@@ -420,7 +444,10 @@ export default function BookingScreen({
                 color="#E95322"
               />
 
-              <Text style={styles.addressTitle}>
+              <Text
+  numberOfLines={1}
+  adjustsFontSizeToFit
+  style={styles.addressTitle}>
                 Where would you like us to deliver this order?
               </Text>
 
@@ -497,11 +524,16 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
 
-  restaurantName: {
-    fontFamily: 'Montserrat-Regular',
-    fontSize: width * 0.033,
-    color: '#7A7A7A',
-  },
+restaurantName: {
+  fontFamily: 'Inter-Regular',
+
+  fontSize: width * 0.033,
+  lineHeight: width * 0.041,
+
+  letterSpacing: -0.24,
+
+  color: 'rgba(0,0,0,0.54)',
+},
 
   locationRow: {
     flexDirection: 'row',
@@ -509,14 +541,18 @@ const styles = StyleSheet.create({
     marginTop: height * 0.004,
   },
 
-  homeText: {
-    marginLeft: width * 0.01,
+homeText: {
+  marginLeft: width * 0.01,
 
-    fontFamily: 'Montserrat-SemiBold',
-    fontSize: width * 0.031,
+  fontFamily: 'Inter-Medium',
 
-    color: '#000',
-  },
+  fontSize: width * 0.033,
+  lineHeight: width * 0.041,
+
+  letterSpacing: -0.24,
+
+  color: '#000000',
+},
 
   dot: {
     marginHorizontal: width * 0.012,
@@ -558,11 +594,16 @@ const styles = StyleSheet.create({
     padding: width * 0.04,
   },
 
-  offerTitle: {
-    fontFamily: 'Montserrat-Bold',
-    fontSize: width * 0.04,
-    color: '#C64500',
-  },
+offerTitle: {
+  fontFamily: 'Inter-Bold',
+
+  fontSize: width * 0.036,
+  lineHeight: width * 0.053,
+
+  letterSpacing: -0.32,
+
+  color: '#C64500',
+},
 
   offerRow: {
     flexDirection: 'row',
@@ -572,11 +613,16 @@ const styles = StyleSheet.create({
     marginTop: height * 0.02,
   },
 
-  offerText: {
-    fontFamily: 'Montserrat-Medium',
-    fontSize: width * 0.04,
-    color: '#000',
-  },
+offerText: {
+  fontFamily: 'Inter-Medium',
+
+  fontSize: width * 0.033,
+  lineHeight: width * 0.041,
+
+  letterSpacing: -0.24,
+
+  color: '#000000',
+},
 
   offerRight: {
     flexDirection: 'row',
@@ -599,19 +645,31 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
 
-  addMiniText: {
-    fontFamily: 'Montserrat-Bold',
-    fontSize: width * 0.028,
-    color: '#34C759',
-  },
+ addMiniText: {
+  fontFamily: 'Inter',
+  fontWeight:'bold',
 
-  oneDollar: {
-    marginLeft: width * 0.025,
+  fontSize: width * 0.028,
+  lineHeight: width * 0.05,
 
-    fontFamily: 'Montserrat-Bold',
-    fontSize: width * 0.055,
-    color: '#000',
-  },
+  letterSpacing: -0.32,
+
+  color: '#34C759',
+},
+
+oneDollar: {
+  marginLeft: width * 0.02,
+
+  fontFamily: 'Inter',
+  fontWeight: 'bold',
+
+  fontSize: width * 0.052,
+  lineHeight: width * 0.056,
+
+  letterSpacing: -0.32,
+
+  color: '#000000',
+},
 
   /* PRODUCT */
 
@@ -668,59 +726,82 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  stepper: {
-    width: width * 0.18,
-    height: height * 0.05,
+stepper: {
+  width: width * 0.16,
+  height: width * 0.075,
 
-    borderRadius: width * 0.02,
+  borderRadius: width * 0.02,
 
-    borderWidth: 1,
-    borderColor: '#D9D9D9',
+  borderWidth: 1,
+  borderColor: '#D9D9D9',
 
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
+  backgroundColor: '#FFFFFF',
+
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-evenly',
+},
 
   stepperBtn: {
     fontSize: width * 0.06,
     color: '#34C759',
   },
 
-  quantityText: {
-    fontFamily: 'Montserrat-SemiBold',
-    fontSize: width * 0.04,
-    color: '#000',
-  },
+quantityText: {
+  fontFamily: 'Inter-Regular',
+
+  fontSize: width * 0.042,
+
+  letterSpacing: -0.24,
+
+  color: '#000000',
+},
 
   priceColumn: {
     marginLeft: width * 0.03,
     alignItems: 'flex-end',
   },
 
-  oldPrice: {
-    fontSize: width * 0.03,
-    color: '#999',
-    textDecorationLine: 'line-through',
-  },
+oldPrice: {
+  fontFamily: 'Inter',
+  fontWeight:'bold',
+  fontSize: width * 0.028,
+
+  letterSpacing: -0.24,
+
+  textDecorationLine: 'line-through',
+
+  color: '#8A8A8A',
+
+  marginBottom: -2,
+},
 
   newPrice: {
-    fontFamily: 'Montserrat-Bold',
-    fontSize: width * 0.05,
-    color: '#000',
-  },
+  fontFamily: 'Inter',
+  fontWeight:'bold',
+
+  fontSize: width * 0.052,
+
+  lineHeight: width * 0.058,
+
+  letterSpacing: -0.32,
+
+  color: '#000000',
+},
 
   /* BUTTONS */
 
-  bottomButtons: {
-    marginTop: height * 0.03,
+bottomButtons: {
+  marginTop: height * 0.028,
 
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
+  flexDirection: 'row',
+  justifyContent: 'center',
+
+  gap: width * 0.05,
+},
 
   optionButton: {
-    width: width * 0.42,
+    width: width * 0.408,
     height: height * 0.055,
 
     borderRadius: width * 0.02,
@@ -734,7 +815,7 @@ const styles = StyleSheet.create({
   },
 
   optionButton2: {
-    width: width * 0.34,
+    width: width * 0.35,
     height: height * 0.055,
 
     borderRadius: width * 0.02,
@@ -799,14 +880,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  couponText: {
-    marginLeft: width * 0.025,
+couponText: {
+  marginLeft: width * 0.025,
 
-    fontFamily: 'Montserrat-Medium',
-    fontSize: width * 0.042,
+  fontFamily: 'Inter',
+  fontWeight:'medium',
 
-    color: '#000',
-  },
+  fontSize: width * 0.038,
+  lineHeight: width * 0.045,
+
+  letterSpacing: -0.24,
+
+  color: '#000000',
+},
 
   divider: {
     width: '100%',
@@ -817,11 +903,16 @@ const styles = StyleSheet.create({
     marginTop: height * 0.025,
   },
 
-  appliedText: {
-    fontFamily: 'Montserrat-Bold',
-    fontSize: width * 0.04,
-    color: '#34C759',
-  },
+appliedText: {
+  fontFamily: 'Inter',
+  fontWeight:'bold',
+  fontSize: width * 0.038,
+  lineHeight: width * 0.045,
+
+  letterSpacing: -0.24,
+
+  color: '#34C759',
+},
 
   /* DELIVERY */
 
@@ -893,11 +984,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  deliveryTime: {
-    fontFamily: 'Montserrat-Bold',
-    fontSize: width * 0.04,
-    color: '#E95322',
-  },
+deliveryTime: {
+  fontFamily: 'Inter',
+  fontWeight:'bold',
+  fontSize: width * 0.033,
+  lineHeight: width * 0.053,
+
+  letterSpacing: -0.32,
+
+  color: '#E95322',
+},
 
   flashFoodText: {
     marginTop: height * 0.004,
@@ -932,16 +1028,22 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.03,
   },
 
-  addressTitle: {
-    marginLeft: width * 0.02,
+addressTitle: {
+  marginLeft: width * 0.02,
 
-    flex: 1,
+  flex: 1,
 
-    fontFamily: 'Montserrat-Bold',
-    fontSize: width * 0.045,
+  fontFamily: 'Montserrat',
+  fontWeight:'bold',
 
-    color: '#444',
-  },
+  fontSize: width * 0.041,
+
+  lineHeight: width * 0.05,
+
+  color: '#535252',
+
+  flexShrink: 1,
+},
 
   addressButton: {
     width: '100%',
@@ -956,10 +1058,34 @@ const styles = StyleSheet.create({
   },
 
   addressButtonText: {
-    fontFamily: 'Montserrat-Bold',
+    fontFamily: 'Montserrat',
+    fontWeight:'bold',
     fontSize: width * 0.045,
 
     color: '#FFFFFF',
   },
+  offerGradientLine: {
+  width: width * 0.21, // ~82px from Figma
+  height: 1,
 
+  marginTop: height * 0.004,
+
+  backgroundColor: '#E95322',
+
+  opacity: 0.8,
+
+  alignSelf: 'flex-start',
+},
+segmentSeparator: {
+  width: 1,
+  height: 12,
+
+  borderRadius: 0.5,
+
+  backgroundColor: '#8E8E93',
+
+  opacity: 0.3,
+
+  alignSelf: 'center',
+},
 });

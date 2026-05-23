@@ -200,8 +200,8 @@ leftContent: {
   },
 
   orderButton: {
-    width: scale(84),
-    height: scale(31),
+    width: scale(99),
+    height: scale(38),
 
     marginTop: scale(18),
 
@@ -220,9 +220,9 @@ leftContent: {
   },
 
   orderButtonText: {
-    fontFamily: 'Montserrat-Bold',
-
-    fontSize: 12,
+    fontFamily: 'Montserrat',
+    fontWeight:'bold',
+    fontSize: 13,
     lineHeight: 12,
 
     letterSpacing: -0.2,
@@ -233,8 +233,8 @@ leftContent: {
   },
 
   offerImage: {
-    width: scale(164),
-    height: scale(164),
+    width: scale(160),
+    height: scale(160),
 
     position: 'absolute',
 

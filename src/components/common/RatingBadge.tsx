@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
   text: {
     marginLeft: scale(4),
 
-    fontFamily: 'Inter-Bold',
-
+    fontFamily: 'Inter',
+    fontWeight:'bold',
     fontSize: scale(10),
     lineHeight: scale(12),
 
