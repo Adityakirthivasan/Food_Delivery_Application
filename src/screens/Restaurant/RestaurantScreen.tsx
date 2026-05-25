@@ -326,14 +326,14 @@ export default function RestaurantScreen({ route }: any) {
                     <TouchableOpacity
                       activeOpacity={0.9}
                       style={styles.addButton}
-onPress={() => {
-  setShowCart(true);
-
-  setSelectedItem({
-    id: index,
-    ...item,
-  });
-}}
+                      onPress={() =>
+                        navigation.navigate('ProductDetailScreen', {
+                          item: {
+                            id: index,
+                            ...item,
+                          },
+                        })
+                      }
                     >
                       <Text style={styles.addText}>ADD</Text>
                     </TouchableOpacity>
