@@ -22,7 +22,7 @@ interface Props {
   };
 }
 
-export default function OrderHistoryCard({ item }: Props) {
+export default function OrderHistoryCard({ item }: any){
   const { width } = useWindowDimensions();
   const scale = width / BASE_WIDTH;
 
@@ -51,8 +51,10 @@ export default function OrderHistoryCard({ item }: Props) {
             borderRadius: s(5),
           },
         ]}>
-        <Image
-          source={item.image}
+<Image
+  source={{
+    uri: item.items?.[0]?.dishDetails?.image,
+  }}
           style={[
             styles.image,
             {
@@ -86,7 +88,7 @@ export default function OrderHistoryCard({ item }: Props) {
                 maxWidth: s(148),
               },
             ]}>
-            {item.title}
+            {item.items?.[0]?.dishDetails?.name}
           </Text>
           <Text
             style={[
@@ -112,7 +114,7 @@ export default function OrderHistoryCard({ item }: Props) {
                 marginRight: s(10),
               },
             ]}>
-            {item.date ?? '15 Mar 2020'}
+            {item.orderTime}
           </Text>
           <Text
             style={[
@@ -122,7 +124,7 @@ export default function OrderHistoryCard({ item }: Props) {
                 lineHeight: s(12),
               },
             ]}>
-            {item.items ?? '5 Items'}
+            {item.items?.length} Items
           </Text>
         </View>
 

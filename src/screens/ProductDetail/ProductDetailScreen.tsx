@@ -61,12 +61,14 @@ export default function ProductDetailScreen({ navigation, route }: any) {
         </View>
 
         {/* PRODUCT IMAGE */}
-        <Image
-          source={{
-            uri: item.image,
-          }}
-          style={styles.productImage}
-        />
+<Image
+  source={
+    typeof item.image === 'string'
+      ? { uri: item.image }
+      : item.image
+  }
+  style={styles.productImage}
+/>
       </View>
 
       {/* DETAILS */}

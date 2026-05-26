@@ -20,7 +20,7 @@ const guidelineWidth = 393;
 
 const scale = width / guidelineWidth;
 
-const CARD_WIDTH = (width - 51) / 2;
+const CARD_WIDTH = (width - (16 + 16 + 13)) / 2;
 
 interface Props {
   item: any;
@@ -75,10 +75,14 @@ export default function BestSellerCard({
 
         {/* IMAGE */}
 
-        <Image
-          source={item.image}
-          style={styles.image}
-        />
+<Image
+  source={
+    typeof item.image === 'string'
+      ? { uri: item.image }
+      : item.image
+  }
+  style={styles.image}
+/>
 
       </View>
 
@@ -88,7 +92,7 @@ export default function BestSellerCard({
         numberOfLines={2}
         style={styles.title}>
 
-        {item.title}
+        {item.name}
 
       </Text>
 
@@ -104,9 +108,9 @@ export default function BestSellerCard({
             color="#696969"
           />
 
-          <Text style={styles.infoText}>
-            {item.time}
-          </Text>
+<Text style={styles.infoText}>
+  {item.prepTime} min
+</Text>
 
         </View>
 
@@ -166,57 +170,60 @@ export default function BestSellerCard({
 
 const styles = StyleSheet.create({
 
-  card: {
-    width: CARD_WIDTH,
+card: {
+  width: CARD_WIDTH,
 
-    marginBottom: 22 * scale,
-  },
+  marginBottom: 16 * scale,
+},
 
-  imageContainer: {
-    width: '100%',
-    height: 126 * scale,
+imageContainer: {
+  width: '100%',
+  height: 126 * scale,
 
-    backgroundColor: '#FFFFFF',
+  backgroundColor: '#FFFFFF',
 
-    borderRadius: 10 * scale,
+  borderRadius: 10 * scale,
 
-    justifyContent: 'center',
-    alignItems: 'center',
+  justifyContent: 'center',
+  alignItems: 'center',
 
-    position: 'relative',
+  position: 'relative',
 
-    overflow: 'hidden',
-  },
+  overflow: 'hidden',
+},
 
-  badge: {
-    position: 'absolute',
+ badge: {
+  position: 'absolute',
 
-    left: 0,
-    top: 11 * scale,
+  left: -3 * scale,
+  top: 11 * scale,
 
-    width: 77 * scale,
-    height: 29 * scale,
+  width: 77 * scale,
+  height: 29 * scale,
 
-    backgroundColor: '#E95322',
+  backgroundColor: '#E95322',
 
-    borderTopRightRadius: 8,
-    borderBottomRightRadius: 8,
+  justifyContent: 'center',
+  alignItems: 'center',
 
-    justifyContent: 'center',
-    alignItems: 'center',
+  borderTopRightRadius: 8 * scale,
+  borderBottomRightRadius: 8 * scale,
 
-    zIndex: 10,
-  },
+  zIndex: 10,
+},
 
-  badgeText: {
-    fontFamily: 'Inter-Bold',
+badgeText: {
+  fontFamily: 'Inter',
 
-    fontSize: 12 * scale,
+  fontWeight: '700',
 
-    letterSpacing: -0.24,
+  fontSize: 12 * scale,
+  lineHeight: 15 * scale,
 
-    color: '#FFFFFF',
-  },
+  letterSpacing: -0.24,
+
+  color: '#FFFFFF',
+},
 
   heartButton: {
     width: 22 * scale,
@@ -255,24 +262,24 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
 
-  title: {
-    marginTop: 12 * scale,
+ title: {
+  marginTop: 8 * scale,
 
-    fontFamily: 'Montserrat-Medium',
+  fontFamily: 'Montserrat-Medium',
 
-    fontSize: 16 * scale,
-    lineHeight: 20 * scale,
+  fontSize: 16 * scale,
+  lineHeight: 20 * scale,
 
-    letterSpacing: -0.24,
+  letterSpacing: -0.24,
 
-    color: '#040404',
-  },
+  color: '#040404',
+},
 
   infoRow: {
     flexDirection: 'row',
     alignItems: 'center',
 
-    marginTop: 8 * scale,
+    marginTop: 4 * scale,
   },
 
   infoItem: {
@@ -315,16 +322,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  price: {
-    fontFamily: 'Montserrat-Medium',
+price: {
+  fontFamily: 'Montserrat-Medium',
 
-    fontSize: 14 * scale,
-    lineHeight: 20 * scale,
+  fontSize: 14 * scale,
+  lineHeight: 20 * scale,
 
-    letterSpacing: -0.24,
+  letterSpacing: -0.24,
 
-    color: '#040404',
-  },
+  color: '#040404',
+},
 
   discount: {
     marginLeft: 5,
@@ -341,15 +348,15 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
 
-  addButton: {
-    width: 25 * scale,
-    height: 25 * scale,
+addButton: {
+  width: 25 * scale,
+  height: 25 * scale,
 
-    borderRadius: 5 * scale,
+  borderRadius: 5 * scale,
 
-    backgroundColor: '#FFFFFF',
+  backgroundColor: '#FFFFFF',
 
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  justifyContent: 'center',
+  alignItems: 'center',
+},
 });

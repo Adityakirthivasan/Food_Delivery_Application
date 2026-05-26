@@ -26,9 +26,9 @@ export default function OrderHistoryScreen({ navigation }: any) {
 
   useEffect(() => {
     axios
-      .get(
-        'https://dinedash-backend-1.onrender.com/api/user/get-orders?userId=1e5fae27-6219-43cb-b255-7c016b6829a7',
-      )
+.get(
+'https://dinedash-backend-1.onrender.com/api/user/get-orders?userId=3588d041-5366-4dc4-8979-cef3b51f26f0',
+)
       .then(response => {
         setOrderHistoryData(response.data.result);
         setLoading(false);
@@ -50,7 +50,11 @@ export default function OrderHistoryScreen({ navigation }: any) {
       <View style={styles.header}>
         <View style={styles.leftHeader}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="arrow-back" size={24} color="#111" />
+            <Ionicons
+  name="arrow-back"
+  size={16}
+  color="#040404"
+/>
           </TouchableOpacity>
 
           <Text style={styles.headerTitle}>My Orders</Text>
@@ -63,90 +67,88 @@ export default function OrderHistoryScreen({ navigation }: any) {
 
       {/* SEARCH */}
 
-      <View style={styles.searchRow}>
-        <View style={styles.searchContainer}>
-          <SearchBar showMic={false} placeholder="Search orders" />
-        </View>
+{/* SEARCH */}
 
-        <TouchableOpacity style={styles.filterButton}>
-          <Feather name="sliders" size={20} color="#111" />
-        </TouchableOpacity>
-      </View>
+<View style={styles.searchContainer}>
+  <SearchBar
+    showMic={true}
+    placeholder="Search orders"
+  />
+</View>
 
       {/* ORDERS */}
 
-      <FlatList
-        data={orderHistoryData}
-        keyExtractor={item => item.orderId}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.listContent}
-        renderItem={({ item }) => <OrderHistoryCard item={item} />}
-      />
+<FlatList
+  data={orderHistoryData}
+  keyExtractor={item => item.orderId}
+  showsVerticalScrollIndicator={false}
+  contentContainerStyle={styles.listContent}
+  style={{ marginTop: 20 }}
+  renderItem={({ item }) => (
+    <OrderHistoryCard item={item} />
+  )}
+/>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFF8F4',
-  },
+container: {
+  flex: 1,
+  backgroundColor: '#FFF8F4',
+},
 
-  header: {
-    width: 337,
-    height: 32,
-    marginTop: 49,
-    marginLeft: 11,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    alignSelf: 'center',
-  },
+header: {
+  width: 353,
 
-  leftHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+  height: 32,
 
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: '500',
-    color: '#111',
-    marginLeft: 12,
-  },
+  marginTop: 49,
+  marginLeft: 16,
 
-  searchRow: {
-    width: 353,
-    height: 50,
-    marginTop: 20,
-    alignSelf: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 16,
-  },
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+},
 
-  searchContainer: {
-    flex: 1,
-    marginTop: -20,
-  },
+leftHeader: {
+  flexDirection: 'row',
+  alignItems: 'center',
+},
 
-  filterButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 15,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+headerTitle: {
+  marginLeft: 12,
 
-  listContent: {
-    width: 353,
-    paddingTop: 24,
-    paddingBottom: 40,
-    alignSelf: 'center',
-  },
-  iconOnly: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  fontFamily: 'Montserrat-Medium',
+
+  fontSize: 16,
+  lineHeight: 20,
+
+  letterSpacing: -0.24,
+
+  color: '#040404',
+},
+
+ searchContainer: {
+  width: 353,
+
+  marginTop: 20,
+
+  alignSelf: 'center',
+},
+
+listContent: {
+  paddingTop: 20,
+
+  paddingBottom: 40,
+
+  gap: 16,
+},
+iconOnly: {
+  width: 32,
+  height: 32,
+
+  justifyContent: 'center',
+  alignItems: 'center',
+},
 });
