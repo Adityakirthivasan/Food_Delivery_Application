@@ -34,26 +34,82 @@ import { scale, width } from '../../utils/responsive';
 import ScooterSvg from '../../assets/images/home/action/Scooter.svg';
 export default function HomeScreen() {
   const navigation = useNavigation<any>();
-    const [restaurantData, setRestaurantData] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
+  const [restaurantData, setRestaurantData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-      axios
-        .get('https://dinedash-backend-1.onrender.com/api/user/get-restaurants')
-        .then(response => {
-          setRestaurantData(response.data.result);
-          console.log(restaurantData)
-          setLoading(false);
-        })
-        .catch(error => {
-          console.error('Network Error:', error);
-          setLoading(false);
+  useEffect(() => {
+    const fetchAndHydrateRestaurants = async () => {
+      try {
+        // Fetch the baseline list of restaurants
+        const restaurantsRes = await axios.get(
+          'https://dinedash-backend-1.onrender.com/api/user/get-restaurants',
+        );
+
+        const rawRestaurants = restaurantsRes.data.result || [];
+        console.log(rawRestaurants);
+
+        // Map over each restaurant and build a dynamic array of distance API promises
+        const distancePromises = rawRestaurants.map(async (restaurant: any) => {
+          try {
+            const resLat = restaurant.latitude;
+            const resLng = restaurant.longitude;
+
+            const distanceRes = await axios.get(
+              `https://dinedash-backend-1.onrender.com/api/user/get-distances`,
+              {
+                params: {
+                  userLat: 11.027471,
+                  userLng: 76.873813,
+                  resLat,
+                  resLng,
+                },
+              },
+            );
+            console.log(distanceRes);
+            // Extract your metrics from your newly fixed backend controller payload format
+            const logistics = distanceRes.data.data;
+
+            // Append logistics fields right into the restaurant object
+            return {
+              ...restaurant,
+              distance: logistics.distanceKm,
+              deliveryTime: logistics.travelDurationMinutes,
+            };
+          } catch (err) {
+            console.error(
+              `Failed to fetch logistics for restaurant ${restaurant._id}:`,
+              err,
+            );
+            // Fallback default properties if one Mapbox look-up fails so the whole app doesn't crash
+            return {
+              ...restaurant,
+              distanceKm: null,
+              travelDurationMinutes: null,
+              totalExpectedDeliveryTimeMinutes: null,
+            };
+          }
         });
-    }, []);
 
-    if (loading) {
-      return <ActivityIndicator size="large" />;
-    }
+        const hydratedRestaurants = await Promise.all(distancePromises);
+
+        setRestaurantData(hydratedRestaurants);
+        console.log(
+          'Fully Hydrated Restaurant Array Data:',
+          hydratedRestaurants,
+        );
+        setLoading(false);
+      } catch (error) {
+        console.error('Data Fetching Network Error:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchAndHydrateRestaurants();
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator size="large" />;
+  }
 
   return (
     <View style={styles.container}>
@@ -106,11 +162,11 @@ export default function HomeScreen() {
 
             {/* IMAGE */}
 
-<AmicoSvg
-  width={width * 0.48}
-  height={width * 0.48}
-  style={styles.amico}
-/>
+            <AmicoSvg
+              width={width * 0.48}
+              height={width * 0.48}
+              style={styles.amico}
+            />
           </LinearGradient>
 
           {/* ACTION CARD */}
@@ -129,10 +185,7 @@ export default function HomeScreen() {
             </View>
 
             <View style={styles.scooterContainer}>
-<ScooterSvg
-  width={'92%'}
-  height={'72%'}
-/>
+              <ScooterSvg width={'92%'} height={'72%'} />
             </View>
           </View>
 
@@ -234,11 +287,7 @@ export default function HomeScreen() {
           >
             <FilterChip
               title="Filter"
-              icon={<Feather
-  name="sliders"
-  size={scale(14)}
-  color="#000000"
-/>}
+              icon={<Feather name="sliders" size={scale(14)} color="#000000" />}
             />
 
             <FilterChip
@@ -251,11 +300,13 @@ export default function HomeScreen() {
             <FilterChip
               title="Flash food in 10 min"
               large
-              icon={<Ionicons
-  name="flash-outline"
-  size={scale(15)}
-  color="#000000"
-/>}
+              icon={
+                <Ionicons
+                  name="flash-outline"
+                  size={scale(15)}
+                  color="#000000"
+                />
+              }
             />
           </ScrollView>
 
@@ -356,42 +407,42 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
   },
 
-orderButton: {
-  width: scale(83),
+  orderButton: {
+    width: scale(83),
 
-  height: scale(31),
+    height: scale(31),
 
-  marginTop: scale(20),
+    marginTop: scale(20),
 
-  borderRadius: scale(10),
+    borderRadius: scale(10),
 
-  backgroundColor: '#000000',
+    backgroundColor: '#000000',
 
-  justifyContent: 'center',
-  alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
 
-  paddingVertical: scale(8),
+    paddingVertical: scale(8),
 
-  paddingHorizontal: scale(9),
-},
+    paddingHorizontal: scale(9),
+  },
 
-orderButtonText: {
-  fontFamily: 'Montserrat',
+  orderButtonText: {
+    fontFamily: 'Montserrat',
 
-  fontWeight: '700',
+    fontWeight: '700',
 
-  fontSize: scale(12.5),
+    fontSize: scale(12.5),
 
-  lineHeight: scale(14),
+    lineHeight: scale(14),
 
-  letterSpacing: -0.24,
+    letterSpacing: -0.24,
 
-  textAlign: 'center',
+    textAlign: 'center',
 
-  color: '#FFFFFF',
+    color: '#FFFFFF',
 
-  includeFontPadding: false,
-},
+    includeFontPadding: false,
+  },
 
   amico: {
     width: width * 0.48,
@@ -533,7 +584,7 @@ orderButtonText: {
 
   restaurantTitle: {
     fontFamily: 'Inter-semiBold',
-   fontWeight: '700',
+    fontWeight: '700',
     fontSize: scale(20),
 
     color: '#040404',

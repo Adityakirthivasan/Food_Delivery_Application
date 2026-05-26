@@ -1,7 +1,4 @@
-import React, {
-  useRef,
-  useState,
-} from 'react';
+import React, { useRef, useState } from 'react';
 
 import {
   View,
@@ -35,11 +32,7 @@ const SCREEN_WIDTH = width;
 const TOP_PICK_CARD_WIDTH = width * 0.356;
 
 interface Props {
-  type:
-    | 'category'
-    | 'topPick'
-    | 'restaurant'
-    | 'more';
+  type: 'category' | 'topPick' | 'restaurant' | 'more';
 
   item?: any;
 
@@ -50,29 +43,16 @@ interface Props {
   onPress?: () => void;
 }
 
-export default function HomeCard({
-  type,
-  item,
-  title,
-  image,
-  onPress,
-}: Props) {
-
+export default function HomeCard({ type, item, title, image, onPress }: Props) {
   const navigation = useNavigation<any>();
 
-  const [activeIndex, setActiveIndex] =
-    useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const scrollRef =
-    useRef<ScrollView>(null);
+  const scrollRef = useRef<ScrollView>(null);
 
-  const onScrollHandler = (
-    event: NativeSyntheticEvent<NativeScrollEvent>,
-  ) => {
-
+  const onScrollHandler = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const slide = Math.round(
-      event.nativeEvent.contentOffset.x /
-        (SCREEN_WIDTH - 32),
+      event.nativeEvent.contentOffset.x / (SCREEN_WIDTH - 32),
     );
 
     setActiveIndex(slide);
@@ -81,171 +61,96 @@ export default function HomeCard({
   // CATEGORY
 
   if (type === 'category') {
-
     return (
-
       <View style={styles.categoryItem}>
+        <View style={styles.categoryImageContainer}>
+          {image === 'meat' && (
+            <MeatSvg width={82.43 * scale} height={50 * scale} />
+          )}
 
-<View style={styles.categoryImageContainer}>
-  {image === 'meat' && (
-    <MeatSvg
-      width={82.43 * scale}
-      height={50 * scale}
-    />
-  )}
+          {image === 'coldDrinks' && (
+            <ColdDrinksSvg width={49.03 * scale} height={50 * scale} />
+          )}
 
-  {image === 'coldDrinks' && (
-    <ColdDrinksSvg
-      width={49.03 * scale}
-      height={50 * scale}
-    />
-  )}
+          {image === 'dessert' && (
+            <DessertSvg width={56 * scale} height={50 * scale} />
+          )}
 
-  {image === 'dessert' && (
-    <DessertSvg
-      width={56 * scale}
-      height={50 * scale}
-    />
-  )}
+          {image === 'burger' && (
+            <BurgerSvg width={67.77 * scale} height={50 * scale} />
+          )}
+        </View>
 
-  {image === 'burger' && (
-    <BurgerSvg
-      width={67.77 * scale}
-      height={50 * scale}
-    />
-  )}
-</View>
-
-        <Text style={styles.categoryText}>
-          {title}
-        </Text>
-
+        <Text style={styles.categoryText}>{title}</Text>
       </View>
-
     );
   }
 
   // MORE
 
   if (type === 'more') {
-
     return (
-
-      <TouchableOpacity
-        activeOpacity={0.9}
-        style={styles.moreCard}>
-
-        <Image
-          source={item.image}
-          style={styles.moreImage}
-        />
-
+      <TouchableOpacity activeOpacity={0.9} style={styles.moreCard}>
+        <Image source={item.image} style={styles.moreImage} />
       </TouchableOpacity>
-
     );
   }
 
   // TOP PICK
 
   if (type === 'topPick') {
-
     return (
-
       <TouchableOpacity
         activeOpacity={0.92}
         style={styles.topPickCard}
         onPress={() =>
-          navigation.navigate(
-            'ProductDetailScreen',
-            {
-              item,
-            },
-          )
-        }>
-
+          navigation.navigate('ProductDetailScreen', {
+            item,
+          })
+        }
+      >
         <View style={styles.imageWrapper}>
+          <Image source={item.image} style={styles.topPickImage} />
 
-          <Image
-            source={item.image}
-            style={styles.topPickImage}
-          />
-
-          <TouchableOpacity
-            activeOpacity={0.9}
-            style={styles.heartButton}>
-
-            <Ionicons
-              name="heart-outline"
-              size={18 * scale}
-              color="#FFFFFF"
-            />
-
+          <TouchableOpacity activeOpacity={0.9} style={styles.heartButton}>
+            <Ionicons name="heart-outline" size={18 * scale} color="#FFFFFF" />
           </TouchableOpacity>
-
         </View>
 
         <View style={styles.foodTypeRow}>
+          <Text style={styles.foodType}>{item.category}</Text>
 
-          <Text style={styles.foodType}>
-            {item.category}
-          </Text>
-
-          <RatingBadge
-            rating={item.rating}
-            small
-          />
-
+          <RatingBadge rating={item.rating} small />
         </View>
 
-        <Text
-          numberOfLines={1}
-          style={styles.restaurantName}>
-
+        <Text numberOfLines={1} style={styles.restaurantName}>
           {item.title}
-
         </Text>
 
         <View style={styles.foodInfoRow}>
-
           <View style={styles.infoItem}>
+            <Feather name="clock" size={11 * scale} color="#8A8A8A" />
 
-            <Feather
-              name="clock"
-              size={11 * scale}
-              color="#8A8A8A"
-            />
-
-            <Text style={styles.foodInfo}>
-              {item.time}
-            </Text>
-
+            <Text style={styles.foodInfo}>{item.time}</Text>
           </View>
 
           <View style={styles.infoItem}>
-
             <Ionicons
               name="paper-plane-outline"
               size={11 * scale}
               color="#8A8A8A"
             />
 
-            <Text style={styles.foodInfo}>
-              {item.distance}
-            </Text>
-
+            <Text style={styles.foodInfo}>{item.distance}</Text>
           </View>
-
         </View>
-
       </TouchableOpacity>
-
     );
   }
 
   // RESTAURANT
 
   return (
-
     <TouchableOpacity
       style={styles.restaurantCard}
       activeOpacity={0.95}
@@ -253,162 +158,89 @@ export default function HomeCard({
         onPress
           ? onPress
           : () =>
-              navigation.navigate(
-                'RestaurantScreen',
-                {
-                  item,
-                },
-              )
-      }>
-
+              navigation.navigate('RestaurantScreen', {
+                item,
+              })
+      }
+    >
       {/* IMAGE SECTION */}
 
       <View>
-
         <ScrollView
           ref={scrollRef}
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}
           onScroll={onScrollHandler}
-          scrollEventThrottle={16}>
-
-          {/* {item.images.map(
-            (
-              img: any,
-              index: number,
-            ) => (
-
-              <Image
-                key={index}
-                source={img}
-                style={styles.restaurantImage}
-              />
-
-            ),
-          )} */}
-
+          scrollEventThrottle={16}
+        >
+          {item.images.map((img: any, index: number) => (
+            <Image key={index} source={img} style={styles.restaurantImage} />
+          ))}
         </ScrollView>
 
         {/* HEART */}
 
-        <TouchableOpacity
-          style={styles.restaurantHeart}>
-
-          <Ionicons
-            name="heart-outline"
-            size={28}
-            color="#FFFFFF"
-          />
-
+        <TouchableOpacity style={styles.restaurantHeart}>
+          <Ionicons name="heart-outline" size={28} color="#FFFFFF" />
         </TouchableOpacity>
 
         {/* DOTS */}
 
         <View style={styles.dotsContainer}>
-
-          {/* {item.images.map(
-            (
-              _: any,
-              index: number,
-            ) => (
-
-              <View
-                key={index}
-                style={[
-                  styles.dot,
-
-                  activeIndex === index &&
-                    styles.activeDot,
-                ]}
-              />
-
-            ),
-          )} */}
-
+          {item.images.map((_: any, index: number) => (
+            <View
+              key={index}
+              style={[styles.dot, activeIndex === index && styles.activeDot]}
+            />
+          ))}
         </View>
-
       </View>
 
       {/* CONTENT */}
 
       <View style={styles.content}>
+        <Text style={styles.flashText}>{item.flashText}</Text>
 
-        <Text style={styles.flashText}>
-          Flash food in 10 min
-        </Text>
-
-        <Text style={styles.name}>
-          {item.name}
-        </Text>
+        <Text style={styles.name}>{item.name}</Text>
 
         <View style={styles.ratingRow}>
-
-          <RatingBadge
-            rating={item.rating}
-          />
+          <RatingBadge rating={item.rating} />
 
           <Text style={styles.info}>
-            (1.4k+) • {item.deliveryTime}
+            (1.4k+) • {item.deliveryTime} min
             {' • '}
-            {item.distance}
+            {item.distance} km
           </Text>
-
         </View>
 
-        <Text style={styles.cuisine}>
-          {item.cuisine}
-        </Text>
+        <Text style={styles.cuisine}>{item.cuisine}</Text>
 
-        <Text style={styles.location}>
-          Bangalore
-        </Text>
+        <Text style={styles.location}>{item.address}</Text>
 
         {/* TAGS */}
 
         <View style={styles.tagRow}>
-
-          <View style={styles.largeTag}>
-
-            <Text
-              numberOfLines={1}
-              style={styles.tagText}>
-
-              Last 100 orders without complaints
-
-            </Text>
-
-          </View>
-
-          <View style={styles.smallTag}>
-
-            <Text
-              numberOfLines={1}
-              style={styles.tagText}>
-
-              Frequently reordered
-
-            </Text>
-
-          </View>
-
+          {item.tags.map((tag: string) => (
+            <View key={tag} style={styles.largeTag}>
+              <Text numberOfLines={1} style={styles.tagText}>
+                {tag}
+              </Text>
+            </View>
+          ))}
         </View>
-
       </View>
-
     </TouchableOpacity>
-
   );
 }
 
 const styles = StyleSheet.create({
-
   // CATEGORY
 
-categoryItem: {
-  marginRight: 16 * scale,
-  alignItems: 'center',
-},
+  categoryItem: {
+    marginRight: 16 * scale,
+    alignItems: 'center',
+  },
 
   categoryImage: {
     width: 58 * scale,
@@ -417,15 +249,15 @@ categoryItem: {
     resizeMode: 'contain',
   },
 
-categoryText: {
-  marginTop: 8 * scale,
+  categoryText: {
+    marginTop: 8 * scale,
 
-  fontFamily: 'Montserrat-Medium',
+    fontFamily: 'Montserrat-Medium',
 
-  fontSize: 12 * scale,
+    fontSize: 12 * scale,
 
-  color: '#040404',
-},
+    color: '#040404',
+  },
 
   // MORE
 
@@ -581,37 +413,37 @@ categoryText: {
 
   // EXACT DOTS
 
-dotsContainer: {
-  position: 'absolute',
+  dotsContainer: {
+    position: 'absolute',
 
-  bottom: 16 * scale,
-  right: 16 * scale,
+    bottom: 16 * scale,
+    right: 16 * scale,
 
-  width: 61 * scale,
-  height: 5 * scale,
+    width: 61 * scale,
+    height: 5 * scale,
 
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-},
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
 
-dot: {
-  width: 5 * scale,
-  height: 5 * scale,
+  dot: {
+    width: 5 * scale,
+    height: 5 * scale,
 
-  borderRadius: 10,
+    borderRadius: 10,
 
-  backgroundColor: '#B9A8A3',
-},
+    backgroundColor: '#B9A8A3',
+  },
 
-activeDot: {
-  width: 25 * scale,
-  height: 5 * scale,
+  activeDot: {
+    width: 25 * scale,
+    height: 5 * scale,
 
-  borderRadius: 10,
+    borderRadius: 10,
 
-  backgroundColor: '#B9A8A3',
-},
+    backgroundColor: '#B9A8A3',
+  },
 
   content: {
     paddingHorizontal: 16,
@@ -619,100 +451,100 @@ activeDot: {
     paddingBottom: 16,
   },
 
-flashText: {
-  width: 113 * scale,
+  flashText: {
+    width: 113 * scale,
 
-  fontFamily: 'Inter',
+    fontFamily: 'Inter',
 
-  fontWeight: '400',
+    fontWeight: '400',
 
-  fontSize: 12 * scale,
+    fontSize: 12 * scale,
 
-  lineHeight: 16 * scale,
+    lineHeight: 16 * scale,
 
-  letterSpacing: 0,
+    letterSpacing: 0,
 
-  color: '#111111',
-},
+    color: '#111111',
+  },
 
   // EXACT TITLE
 
-name: {
-  fontFamily: 'Inter',
+  name: {
+    fontFamily: 'Inter',
 
-  fontWeight: '700',
+    fontWeight: '700',
 
-  fontSize: 18,
+    fontSize: 18,
 
-  lineHeight: 24,
+    lineHeight: 24,
 
-  letterSpacing: -0.24,
+    letterSpacing: -0.24,
 
-  marginTop: 4,
+    marginTop: 4,
 
-  color: '#000000',
-},
+    color: '#000000',
+  },
 
   // EXACT META ROW
 
-ratingRow: {
-  flexDirection: 'row',
-  alignItems: 'center',
+  ratingRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
 
-  marginTop: 4 * scale,
-},
+    marginTop: 4 * scale,
+  },
 
-info: {
-  marginLeft: 5,
+  info: {
+    marginLeft: 5,
 
-  fontFamily: 'Inter',
+    fontFamily: 'Inter',
 
-  fontWeight: '700',
+    fontWeight: '700',
 
-  fontSize: 11,
+    fontSize: 11,
 
-  lineHeight: 16,
+    lineHeight: 16,
 
-  letterSpacing: 0,
+    letterSpacing: 0,
 
-  color: '#111111',
-},
+    color: '#111111',
+  },
 
-cuisine: {
-  marginTop: 4,
+  cuisine: {
+    marginTop: 4,
 
-  fontFamily: 'Inter',
+    fontFamily: 'Inter',
 
-  fontWeight: '400',
+    fontWeight: '400',
 
-  fontSize: 11,
+    fontSize: 11,
 
-  lineHeight: 16,
+    lineHeight: 16,
 
-  color: '#444444',
-},
+    color: '#444444',
+  },
 
-location: {
-  marginTop: 4,
+  location: {
+    marginTop: 4,
 
-  fontFamily: 'Inter',
+    fontFamily: 'Inter',
 
-  fontWeight: '400',
+    fontWeight: '400',
 
-  fontSize: 11,
+    fontSize: 11,
 
-  lineHeight: 16,
+    lineHeight: 16,
 
-  color: '#444444',
-},
+    color: '#444444',
+  },
   // EXACT TAGS
 
-tagRow: {
-  flexDirection: 'row',
-  alignItems: 'center',
+  tagRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
 
-  marginTop: 4 * scale,
-},
+    marginTop: 4 * scale,
+  },
 
   largeTag: {
     width: 164,
@@ -750,27 +582,26 @@ tagRow: {
     paddingHorizontal: 4,
   },
 
-tagText: {
-  fontFamily: 'Inter',
+  tagText: {
+    fontFamily: 'Inter',
 
-  fontWeight: '400',
+    fontWeight: '400',
 
-  fontSize: 10 * scale,
+    fontSize: 10 * scale,
 
-  lineHeight: 21 * scale,
+    lineHeight: 21 * scale,
 
-  letterSpacing: -0.32,
+    letterSpacing: -0.32,
 
-  textAlign: 'center',
+    textAlign: 'center',
 
-  color: '#000000',
+    color: '#000000',
 
-  includeFontPadding: false,
-},
+    includeFontPadding: false,
+  },
   categoryImageContainer: {
-  justifyContent: 'center',
-  alignItems: 'center',
-  height: 50 * scale,
-},
-
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50 * scale,
+  },
 });
