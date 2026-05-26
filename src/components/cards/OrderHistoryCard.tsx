@@ -9,20 +9,20 @@ import {
 
 const BASE_WIDTH = 393;
 
-interface Props {
-  item: {
-    id: number;
-    title: string;
-    price: string;
-    image: any;
-    orderId?: string;
-    date?: string;
-    items?: string;
-    status?: string;
-  };
-}
+// interface Props {
+//   item: {
+//     id: number;
+//     title: string;
+//     price: string;
+//     image: any;
+//     orderId?: string;
+//     orderTime?: Date;
+//     items?: string;
+//     status?: string;
+//   };
+// }
 
-export default function OrderHistoryCard({ item }: Props) {
+export default function OrderHistoryCard({ item }: any) {
   const { width } = useWindowDimensions();
   const scale = width / BASE_WIDTH;
 
@@ -40,7 +40,8 @@ export default function OrderHistoryCard({ item }: Props) {
           paddingVertical: s(10),
           marginBottom: s(16),
         },
-      ]}>
+      ]}
+    >
       {/* IMAGE BOX */}
       <View
         style={[
@@ -50,9 +51,10 @@ export default function OrderHistoryCard({ item }: Props) {
             height: s(76),
             borderRadius: s(5),
           },
-        ]}>
+        ]}
+      >
         <Image
-          source={item.image}
+          source={{ uri: item.items[0].dishDetails.image }}
           style={[
             styles.image,
             {
@@ -72,7 +74,8 @@ export default function OrderHistoryCard({ item }: Props) {
             marginLeft: s(12),
             minHeight: s(88),
           },
-        ]}>
+        ]}
+      >
         {/* TOP ROW: title + price */}
         <View style={styles.topRow}>
           <Text
@@ -85,8 +88,9 @@ export default function OrderHistoryCard({ item }: Props) {
                 letterSpacing: -0.24,
                 maxWidth: s(148),
               },
-            ]}>
-            {item.title}
+            ]}
+          >
+            {item.items![0].dishDetails.name}
           </Text>
           <Text
             style={[
@@ -96,7 +100,8 @@ export default function OrderHistoryCard({ item }: Props) {
                 lineHeight: s(12),
                 letterSpacing: -0.24,
               },
-            ]}>
+            ]}
+          >
             {item.price}
           </Text>
         </View>
@@ -111,8 +116,9 @@ export default function OrderHistoryCard({ item }: Props) {
                 lineHeight: s(12),
                 marginRight: s(10),
               },
-            ]}>
-            {item.date ?? '15 Mar 2020'}
+            ]}
+          >
+            {item!.orderTime}
           </Text>
           <Text
             style={[
@@ -121,8 +127,9 @@ export default function OrderHistoryCard({ item }: Props) {
                 fontSize: s(10),
                 lineHeight: s(12),
               },
-            ]}>
-            {item.items ?? '5 Items'}
+            ]}
+          >
+            {item.items!.length ?? '5 Items'}
           </Text>
         </View>
 
@@ -138,7 +145,8 @@ export default function OrderHistoryCard({ item }: Props) {
                   letterSpacing: -0.24,
                   marginRight: s(4),
                 },
-              ]}>
+              ]}
+            >
               {item.status ?? 'Delivered'}
             </Text>
             {/* Double-check icon using unicode */}
@@ -178,7 +186,8 @@ export default function OrderHistoryCard({ item }: Props) {
                 lineHeight: s(12),
                 letterSpacing: -0.24,
               },
-            ]}>
+            ]}
+          >
             {item.orderId ?? 'OrderId:#123215'}
           </Text>
         </View>

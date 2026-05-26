@@ -27,7 +27,7 @@ export default function OrderHistoryScreen({ navigation }: any) {
   useEffect(() => {
     axios
       .get(
-        'https://dinedash-backend-1.onrender.com/api/user/get-orders?userId=1e5fae27-6219-43cb-b255-7c016b6829a7',
+        'https://dinedash-backend-1.onrender.com/api/user/get-orders?userId=3588d041-5366-4dc4-8979-cef3b51f26f0',
       )
       .then(response => {
         setOrderHistoryData(response.data.result);
