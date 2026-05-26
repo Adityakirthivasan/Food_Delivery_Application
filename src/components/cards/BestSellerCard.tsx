@@ -26,14 +26,10 @@ interface Props {
   item: any;
 }
 
-export default function BestSellerCard({
-  item,
-}: Props) {
-
+export default function BestSellerCard({ item }: Props) {
   const navigation = useNavigation<any>();
 
   return (
-
     <TouchableOpacity
       style={styles.card}
       activeOpacity={0.95}
@@ -41,131 +37,74 @@ export default function BestSellerCard({
         navigation.navigate('ProductDetailScreen', {
           item,
         })
-      }>
-
+      }
+    >
       {/* IMAGE BOX */}
 
       <View style={styles.imageContainer}>
-
         {/* NEW ARRIVED */}
 
         {item.newArrived && (
-
           <View style={styles.badge}>
-
-            <Text style={styles.badgeText}>
-              New Arrived
-            </Text>
-
+            <Text style={styles.badgeText}>New Arrived</Text>
           </View>
-
         )}
 
         {/* HEART */}
 
         <TouchableOpacity style={styles.heartButton}>
-
-          <Ionicons
-            name="heart-outline"
-            size={14}
-            color="#040404"
-          />
-
+          <Ionicons name="heart-outline" size={14} color="#040404" />
         </TouchableOpacity>
 
         {/* IMAGE */}
 
-        <Image
-          source={item.image}
-          style={styles.image}
-        />
-
+        <Image source={{ uri: item.image }} style={styles.image} />
       </View>
 
       {/* TITLE */}
 
-      <Text
-        numberOfLines={2}
-        style={styles.title}>
-
-        {item.title}
-
+      <Text numberOfLines={2} style={styles.title}>
+        {item.name}
       </Text>
 
       {/* INFO */}
 
       <View style={styles.infoRow}>
-
         <View style={styles.infoItem}>
+          <Feather name="clock" size={13} color="#696969" />
 
-          <Feather
-            name="clock"
-            size={13}
-            color="#696969"
-          />
-
-          <Text style={styles.infoText}>
-            {item.time}
-          </Text>
-
+          <Text style={styles.infoText}>{item.prepTime} min</Text>
         </View>
 
         <View style={styles.separator} />
 
         <View style={styles.infoItem}>
+          <Ionicons name="star-outline" size={13} color="#696969" />
 
-          <Ionicons
-            name="star-outline"
-            size={13}
-            color="#696969"
-          />
-
-          <Text style={styles.infoText}>
-            {item.rating}
-          </Text>
-
+          <Text style={styles.infoText}>{item.rating}</Text>
         </View>
-
       </View>
 
       {/* BOTTOM */}
 
       <View style={styles.bottomRow}>
-
         <View style={styles.priceRow}>
-
-          <Text style={styles.price}>
-            {item.price}
-          </Text>
+          <Text style={styles.price}>${item.price}</Text>
 
           {!!item.discount && (
-
-            <Text style={styles.discount}>
-              {item.discount}
-            </Text>
-
+            <Text style={styles.discount}>{item.discount}</Text>
           )}
-
         </View>
 
         <TouchableOpacity style={styles.addButton}>
-
-          <Ionicons
-            name="add"
-            size={18}
-            color="#040404"
-          />
-
+          <Ionicons name="add" size={18} color="#040404" />
         </TouchableOpacity>
-
       </View>
-
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-
   card: {
     width: CARD_WIDTH,
 
