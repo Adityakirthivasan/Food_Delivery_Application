@@ -1,5 +1,6 @@
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import AmicoSvg from '../../assets/images/home/promo/amico.svg';
 import {
   View,
   Text,
@@ -8,11 +9,10 @@ import {
   Image,
   ScrollView,
   StatusBar,
+  ActivityIndicator,
 } from 'react-native';
 
-import {
-  SafeAreaView,
-} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -28,110 +28,95 @@ import SearchBar from '../../components/inputs/SearchBar';
 
 import HomeCard from '../../components/cards/HomeCard';
 
-import {
-  topPickData,
-  restaurantData,
-  categoryData,
-} from '../../data/homeData';
+import { topPickData, categoryData } from '../../data/homeData';
 
-import {
-  scale,
-  width,
-} from '../../utils/responsive';
-
+import { scale, width } from '../../utils/responsive';
+import ScooterSvg from '../../assets/images/home/action/Scooter.svg';
 export default function HomeScreen() {
-
   const navigation = useNavigation<any>();
+    const [restaurantData, setRestaurantData] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+      axios
+        .get('https://dinedash-backend-1.onrender.com/api/user/get-restaurants')
+        .then(response => {
+          setRestaurantData(response.data.result);
+          console.log(restaurantData)
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Network Error:', error);
+          setLoading(false);
+        });
+    }, []);
+
+    if (loading) {
+      return <ActivityIndicator size="large" />;
+    }
 
   return (
-
     <View style={styles.container}>
-
       <StatusBar
         translucent
         backgroundColor="transparent"
         barStyle="light-content"
       />
 
-      <SafeAreaView
-        edges={['top']}
-        style={styles.safeArea}>
-
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          bounces={false}>
-
+      <SafeAreaView edges={['top']} style={styles.safeArea}>
+        <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
           {/* TOP SECTION */}
 
           <LinearGradient
             colors={['#FF8340', '#C64500']}
             start={{ x: 0, y: 0 }}
             end={{ x: 0, y: 1 }}
-            style={styles.topSection}>
-
+            style={styles.topSection}
+          >
             {/* HEADER */}
 
             <View style={styles.headerWrapper}>
-
               <LocationHeader
                 title="Rivertown Haven"
                 subtitle="SGM, petals, sai baba colony..."
-                onProfilePress={() =>
-                  navigation.navigate('MyOrdersScreen')
-                }
+                onProfilePress={() => navigation.navigate('MyOrdersScreen')}
               />
 
               <TouchableOpacity
                 activeOpacity={0.95}
-                onPress={() =>
-                  navigation.navigate('SearchScreen')
-                }>
-
+                onPress={() => navigation.navigate('SearchScreen')}
+              >
                 <SearchBar showVegToggle />
-
               </TouchableOpacity>
-
             </View>
 
             {/* OFFER */}
 
             <View style={styles.offerContent}>
-
-              <Text style={styles.offerTitle}>
-                Get extra $50 OFF!
-              </Text>
+              <Text style={styles.offerTitle}>Get extra $50 OFF!</Text>
 
               <Text style={styles.offerSubtitle}>
                 Win today, eat for less tomorrow.
               </Text>
 
-              <TouchableOpacity
-                activeOpacity={0.9}
-                style={styles.orderButton}>
-
-                <Text style={styles.orderButtonText}>
-                  Order now
-                </Text>
-
+              <TouchableOpacity activeOpacity={0.9} style={styles.orderButton}>
+                <Text style={styles.orderButtonText}>Order now</Text>
               </TouchableOpacity>
-
             </View>
 
             {/* IMAGE */}
 
-            <Image
-              source={require('../../assets/images/home/promo/amico.png')}
-              style={styles.amico}
-            />
-
+<AmicoSvg
+  width={width * 0.48}
+  height={width * 0.48}
+  style={styles.amico}
+/>
           </LinearGradient>
 
           {/* ACTION CARD */}
 
           <View style={styles.actionCard}>
-
             <View style={styles.actionContent}>
-
               <Text style={styles.actionTitle}>
                 Free delivery
                 {'\n'}
@@ -139,157 +124,105 @@ export default function HomeScreen() {
               </Text>
 
               <TouchableOpacity style={styles.actionButton}>
-
-                <Text style={styles.actionButtonText}>
-                  Order now
-                </Text>
-
+                <Text style={styles.actionButtonText}>Order now</Text>
               </TouchableOpacity>
-
             </View>
 
             <View style={styles.scooterContainer}>
-
-              <Image
-                source={require('../../assets/images/home/action/Scooter.png')}
-                style={styles.scooterImage}
-              />
-
+<ScooterSvg
+  width={'92%'}
+  height={'72%'}
+/>
             </View>
-
           </View>
 
           {/* SLIDER */}
 
           <View style={styles.sliderContainer}>
-
             <View style={styles.sliderActive} />
-
           </View>
 
           {/* CATEGORIES */}
 
           <View style={styles.categorySection}>
-
-            <Text style={styles.sectionTitle}>
-              What you like to have?
-            </Text>
+            <Text style={styles.sectionTitle}>What you like to have?</Text>
 
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.categoryScroll}>
-
-              {categoryData.map((item) => (
-
+              contentContainerStyle={styles.categoryScroll}
+            >
+              {categoryData.map(item => (
                 <HomeCard
                   key={item.id}
                   type="category"
                   title={item.title}
                   image={item.image}
                 />
-
               ))}
-
             </ScrollView>
-
           </View>
 
           {/* TOP PICKS */}
 
           <View style={styles.topPickContainer}>
-
             <View style={styles.topPickHeader}>
-
-              <Text style={styles.topPickTitle}>
-                Top picks
-              </Text>
+              <Text style={styles.topPickTitle}>Top picks</Text>
 
               <View style={styles.seeAllRow}>
-
-                <Text style={styles.seeAll}>
-                  See all
-                </Text>
+                <Text style={styles.seeAll}>See all</Text>
 
                 <Ionicons
                   name="chevron-forward"
                   size={scale(16)}
                   color="#B0B0B0"
                 />
-
               </View>
-
             </View>
 
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}>
-
-              {topPickData.map((item) => (
-
-                <HomeCard
-                  key={item.id}
-                  type="topPick"
-                  item={item}
-                />
-
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {topPickData.map(item => (
+                <HomeCard key={item.id} type="topPick" item={item} />
               ))}
-
             </ScrollView>
-
           </View>
 
           {/* MORE WITH US */}
 
           <View style={styles.moreSection}>
-
-            <Text style={styles.moreTitle}>
-              More with us
-            </Text>
+            <Text style={styles.moreTitle}>More with us</Text>
 
             <View style={styles.moreImageRow}>
-
               <TouchableOpacity
                 style={styles.moreCard}
-                onPress={() =>
-                  navigation.navigate('OfferScreen')
-                }>
-
+                onPress={() => navigation.navigate('OfferScreen')}
+              >
                 <Image
                   source={require('../../assets/images/home/MWU/OnlinePayment.png')}
                   style={styles.moreImage}
                 />
-
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={styles.moreCard}
-                onPress={() =>
-                  navigation.navigate('BestSellerScreen')
-                }>
-
+                onPress={() => navigation.navigate('BestSellerScreen')}
+              >
                 <Image
                   source={require('../../assets/images/home/MWU/Lunch.png')}
                   style={styles.moreImage}
                 />
-
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={styles.moreCard}
-                onPress={() =>
-                  navigation.navigate('BestSellerScreen')
-                }>
-
+                onPress={() => navigation.navigate('BestSellerScreen')}
+              >
                 <Image
                   source={require('../../assets/images/home/MWU/TakeAway.png')}
                   style={styles.moreImage}
                 />
-
               </TouchableOpacity>
-
             </View>
-
           </View>
 
           {/* FILTERS */}
@@ -297,82 +230,63 @@ export default function HomeScreen() {
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.filterContainer}>
-
+            contentContainerStyle={styles.filterContainer}
+          >
             <FilterChip
               title="Filter"
-              icon={
-                <Feather
-                  name="sliders"
-                  size={scale(16)}
-                  color="#000"
-                />
-              }
+              icon={<Feather
+  name="sliders"
+  size={scale(14)}
+  color="#000000"
+/>}
             />
 
             <FilterChip
               title="Sort By"
               icon={
-                <Ionicons
-                  name="chevron-down"
-                  size={scale(16)}
-                  color="#000"
-                />
+                <Ionicons name="chevron-down" size={scale(16)} color="#000" />
               }
             />
 
             <FilterChip
               title="Flash food in 10 min"
               large
-              icon={
-                <Ionicons
-                  name="flash"
-                  size={scale(16)}
-                  color="#000000"
-                />
-              }
+              icon={<Ionicons
+  name="flash-outline"
+  size={scale(15)}
+  color="#000000"
+/>}
             />
-
           </ScrollView>
 
           {/* RESTAURANTS */}
 
           <View style={styles.restaurantSection}>
+            <Text style={styles.restaurantTitle}>Restaurant for you</Text>
 
-            <Text style={styles.restaurantTitle}>
-              Restaurant for you
-            </Text>
-
-            {restaurantData.map((item) => (
-
-              <HomeCard
-                key={item.id}
-                type="restaurant"
-                item={item}
-                onPress={() =>
-                  navigation.navigate(
-                    'RestaurantScreen',
-                    {
+            {restaurantData.map(item => {
+              console.log(item);
+              return (
+                <HomeCard
+                  key={item.restaurantId}
+                  type="restaurant"
+                  item={item}
+                  onPress={() =>
+                    navigation.navigate('RestaurantScreen', {
                       restaurant: item,
-                    },
-                  )
-                }
-              />
-
-            ))}
-
+                    })
+                  }
+                />
+              );
+            })}
           </View>
-
         </ScrollView>
-
       </SafeAreaView>
-
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
@@ -383,84 +297,92 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
 
-topSection: {
-  width: width,
+  topSection: {
+    width: width,
 
-  height: scale(300),
+    height: scale(300),
 
-  borderBottomLeftRadius: scale(30),
-  borderBottomRightRadius: scale(30),
+    borderBottomLeftRadius: scale(30),
+    borderBottomRightRadius: scale(30),
 
-  overflow: 'hidden',
-},
-
- headerWrapper: {
-  paddingHorizontal: scale(16),
-
-  paddingTop: scale(15),
-},
-
-offerContent: {
-  marginTop: scale(24),
-
-  paddingHorizontal: scale(16),
-
-  width: scale(190),
-
-  zIndex: 20,
-},
-
- offerTitle: {
-  width: scale(190),
-
-  fontFamily: 'Montserrat',
-  fontWeight:'bold',
-  fontSize: scale(22),
-  lineHeight: scale(24),
-
-  letterSpacing: -0.24,
-
-  color: '#FFFFFF',
-
-  includeFontPadding: false,
-},
-
-offerSubtitle: {
-  width: scale(190),
-
-  marginTop: scale(6),
-
-  fontFamily: 'Montserrat',
-  fontWeight:'semibold',
-  fontSize: scale(15),
-  lineHeight: scale(15),
-
-  letterSpacing: -0.24,
-
-  color: '#FFFFFF',
-
-  includeFontPadding: false,
-},
-
-  orderButton: {
-    width: scale(83),
-    height: scale(31),
-
-    marginTop: scale(18),
-
-    borderRadius: scale(10),
-
-    backgroundColor: '#000000',
-
-    justifyContent: 'center',
-    alignItems: 'center',
+    overflow: 'hidden',
   },
+
+  headerWrapper: {
+    paddingHorizontal: scale(16),
+
+    paddingTop: scale(15),
+  },
+
+  offerContent: {
+    marginTop: scale(24),
+
+    paddingHorizontal: scale(16),
+
+    width: scale(190),
+
+    zIndex: 20,
+  },
+
+  offerTitle: {
+    width: scale(190),
+
+    fontFamily: 'Montserrat',
+    fontWeight: 'bold',
+    fontSize: scale(22),
+    lineHeight: scale(24),
+
+    letterSpacing: -0.24,
+
+    color: '#FFFFFF',
+
+    includeFontPadding: false,
+  },
+
+  offerSubtitle: {
+    width: scale(190),
+
+    marginTop: scale(6),
+
+    fontFamily: 'Montserrat',
+    fontWeight: 'semibold',
+    fontSize: scale(15),
+    lineHeight: scale(15),
+
+    letterSpacing: -0.24,
+
+    color: '#FFFFFF',
+
+    includeFontPadding: false,
+  },
+
+orderButton: {
+  width: scale(83),
+
+  height: scale(31),
+
+  marginTop: scale(20),
+
+  borderRadius: scale(10),
+
+  backgroundColor: '#000000',
+
+  justifyContent: 'center',
+  alignItems: 'center',
+
+  paddingVertical: scale(8),
+
+  paddingHorizontal: scale(9),
+},
 
 orderButtonText: {
   fontFamily: 'Montserrat',
-  fontWeight:'bold',
-  fontSize: scale(12),
-  lineHeight: scale(15),
+
+  fontWeight: '700',
+
+  fontSize: scale(12.5),
+
+  lineHeight: scale(14),
 
   letterSpacing: -0.24,
 
@@ -471,18 +393,18 @@ orderButtonText: {
   includeFontPadding: false,
 },
 
-amico: {
-  width: width * 0.48,
-  height: width * 0.48,
+  amico: {
+    width: width * 0.48,
+    height: width * 0.48,
 
-  position: 'absolute',
+    position: 'absolute',
 
-  right: width * 0.010,
+    right: width * 0.01,
 
-  bottom: -scale(20),
+    bottom: -scale(20),
 
-  resizeMode: 'contain',
-},
+    resizeMode: 'contain',
+  },
 
   categorySection: {
     marginTop: scale(28),
@@ -491,7 +413,7 @@ amico: {
 
   sectionTitle: {
     fontFamily: 'Montserrat',
-    fontWeight:'bold',
+    fontWeight: 'bold',
     fontSize: scale(22),
 
     color: '#040404',
@@ -517,7 +439,7 @@ amico: {
 
   topPickTitle: {
     fontFamily: 'Inter',
-    fontWeight:'bold',
+    fontWeight: 'bold',
 
     fontSize: scale(20),
 
@@ -544,7 +466,7 @@ amico: {
 
   moreTitle: {
     fontFamily: 'Inter',
-    fontWeight:'bold',
+    fontWeight: 'bold',
     fontSize: scale(20),
 
     color: '#040404',
@@ -610,8 +532,8 @@ amico: {
   },
 
   restaurantTitle: {
-    fontFamily: 'Inter',
-    fontWeight:'semibold',
+    fontFamily: 'Inter-semiBold',
+   fontWeight: '700',
     fontSize: scale(20),
 
     color: '#040404',
@@ -725,5 +647,4 @@ amico: {
 
     backgroundColor: '#000000',
   },
-
 });

@@ -2,31 +2,31 @@ export const categoryData = [
   {
     id: 1,
     title: 'Meat',
-    image: require('../assets/images/home/categories/Meat.png'),
+    image: 'meat',
   },
 
   {
     id: 2,
     title: 'Cold drinks',
-    image: require('../assets/images/home/categories/ColdDrinks.png'),
+    image: 'coldDrinks',
   },
 
   {
     id: 3,
     title: 'Dessert',
-    image: require('../assets/images/home/categories/Dessert.png'),
+    image: 'dessert',
   },
 
   {
     id: 4,
     title: 'Burger',
-    image: require('../assets/images/home/categories/Burger.png'),
+    image: 'burger',
   },
 
   {
     id: 5,
     title: 'Burger',
-    image: require('../assets/images/home/categories/Burger.png'),
+    image: 'burger',
   },
 ];
 

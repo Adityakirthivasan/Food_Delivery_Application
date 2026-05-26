@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import {
   View,
@@ -24,7 +24,10 @@ interface Props {
   subtitle: string;
   buttonText: string;
 
-  image: string | ImageSourcePropType;
+  image:
+  | string
+  | ImageSourcePropType
+  | ReactNode;
 
   showIcon?: boolean;
 
@@ -118,17 +121,28 @@ export default function HeroHeader({
 
         {/* IMAGE */}
 
-        <Image
-          source={
-            typeof image === 'string'
-              ? { uri: image }
-              : image
-          }
-          style={[
-            styles.offerImage,
-            imageStyle,
-          ]}
-        />
+<View
+  style={[
+    styles.offerImage,
+    imageStyle,
+  ]}>
+
+{React.isValidElement(image) ? (
+  image
+) : typeof image === 'string' ? (
+  <Image
+    source={{ uri: image }}
+    style={styles.image}
+  />
+) : (
+  <Image
+    source={image as ImageSourcePropType}
+    style={styles.image}
+  />
+)}
+
+</View>
+
 
       </View>
 
@@ -199,49 +213,61 @@ leftContent: {
     includeFontPadding: false,
   },
 
-  orderButton: {
-    width: scale(99),
-    height: scale(38),
+orderButton: {
+  width: scale(111),
+  height: scale(40),
 
-    marginTop: scale(18),
+  marginTop: scale(16),
 
-    borderRadius: scale(10),
+  borderRadius: scale(10),
 
-    backgroundColor: '#040404',
+  backgroundColor: '#040404',
 
-    justifyContent: 'center',
-    alignItems: 'center',
+  justifyContent: 'center',
+  alignItems: 'center',
 
-    flexDirection: 'row',
-  },
+  flexDirection: 'row',
+
+  paddingHorizontal: scale(9),
+},
 
   flashIcon: {
     marginRight: scale(4),
   },
 
-  orderButtonText: {
-    fontFamily: 'Montserrat',
-    fontWeight:'bold',
-    fontSize: 13,
-    lineHeight: 12,
+orderButtonText: {
+  fontFamily: 'Montserrat',
 
-    letterSpacing: -0.2,
+  fontWeight: '700',
 
-    color: '#FFFFFF',
+  fontSize: scale(12.5),
 
-    includeFontPadding: false,
-  },
+  lineHeight: scale(14),
 
-  offerImage: {
-    width: scale(160),
-    height: scale(160),
+  letterSpacing: -0.24,
 
-    position: 'absolute',
+  color: '#FFFFFF',
 
-    right: scale(-1),
-    bottom: scale(-3),
+  includeFontPadding: false,
+},
 
-    resizeMode: 'contain',
-  },
+offerImage: {
+  width: scale(245.95),
+  height: scale(242.14),
+
+  position: 'absolute',
+
+  right: scale(10),
+  bottom: scale(-44),
+
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+  image: {
+  width: '100%',
+  height: '100%',
+
+  //resizeMode: 'contain',
+},
 
 });

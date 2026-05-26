@@ -16,7 +16,10 @@ import { useNavigation } from '@react-navigation/native';
 import RatingBadge from '../common/RatingBadge';
 import FoodTypeBadge from '../common/FoodTypeBadge';
 import AddButton from '../buttons/AddButton';
-
+import MeatSvg from '../../assets/images/home/categories/Meat.svg';
+import ColdDrinksSvg from '../../assets/images/home/categories/ColdDrinks.svg';
+import DessertSvg from '../../assets/images/home/categories/Dessert.svg';
+import BurgerSvg from '../../assets/images/home/categories/Burger.svg';
 import {
   scale,
 } from '../../utils/responsive';
@@ -49,10 +52,35 @@ export default function FlashFoodCard({
 
       <View style={styles.categoryItem}>
 
-        <Image
-          source={image}
-          style={styles.categoryImage}
-        />
+<View style={styles.categoryImageContainer}>
+  {image === 'meat' && (
+    <MeatSvg
+width={scale(82.43)}
+height={scale(50)}
+    />
+  )}
+
+  {image === 'coldDrinks' && (
+<ColdDrinksSvg
+  width={scale(49.03)}
+  height={scale(50)}
+/>
+  )}
+
+  {image === 'dessert' && (
+<DessertSvg
+  width={scale(56)}
+  height={scale(50)}
+/>
+  )}
+
+  {image === 'burger' && (
+<BurgerSvg
+  width={scale(67.77)}
+  height={scale(50)}
+/>
+  )}
+</View>
 
         <Text style={styles.categoryText}>
           {title}
@@ -343,7 +371,7 @@ infoText: {
   },
 
   foodContent: {
-    marginTop: scale(8),
+    marginTop: scale(4),
   },
 
 foodName: {
@@ -382,6 +410,12 @@ price: {
   letterSpacing: -0.32,
 
   color: '#000000',
+  
+},
+categoryImageContainer: {
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: scale(50),
 },
 
 });

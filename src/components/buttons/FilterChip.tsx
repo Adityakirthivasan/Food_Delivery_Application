@@ -16,34 +16,54 @@ interface Props {
   title: string;
   icon?: React.ReactNode;
   large?: boolean;
-}
 
+  textStyle?: any;
+}
 export default function FilterChip({
   title,
   icon,
-  large,
-}: Props) {
-
+  textStyle,
+}: Props){
   const isFlash =
     title === 'Flash food in 10 min';
 
-  return (
+  const isFilter =
+    title === 'Filter';
 
+  const isSort =
+    title === 'Sort By';
+
+  return (
     <TouchableOpacity
       activeOpacity={0.9}
       style={[
         styles.chip,
 
-        large && styles.largeChip,
+        isFilter &&
+          styles.filterChip,
+
+        isSort &&
+          styles.sortChip,
+
+        isFlash &&
+          styles.flashChip,
       ]}>
 
       <View style={styles.row}>
 
         {/* FLASH ICON FIRST */}
 
-        {isFlash && icon}
+        {isFlash && (
+          <View style={styles.flashIcon}>
+            {icon}
+          </View>
+        )}
 
-        <Text style={styles.text}>
+        <Text
+  style={[
+    styles.text,
+    textStyle,
+  ]}>
           {title}
         </Text>
 
@@ -54,47 +74,79 @@ export default function FilterChip({
       </View>
 
     </TouchableOpacity>
-
   );
 }
 
 const styles = StyleSheet.create({
 
   chip: {
-    height: 42 * scale,
-
-    borderRadius: 8 * scale,
+    borderRadius: 6 * scale,
 
     borderWidth: 1,
     borderColor: '#D9D9D9',
 
     justifyContent: 'center',
-
-    paddingHorizontal: 16 * scale,
-
-    marginRight: 12 * scale,
+    alignItems: 'center',
 
     backgroundColor: '#FFFFFF',
+
+    marginRight: 8 * scale,
   },
 
-  largeChip: {
-    paddingHorizontal: 18 * scale,
+  /* FILTER */
+
+  filterChip: {
+    width: 76 * scale,
+    height: 25 * scale,
+
+    paddingHorizontal: 12 * scale,
+  },
+
+  /* SORT */
+
+  sortChip: {
+    width: 91 * scale,
+    height: 25 * scale,
+
+    paddingHorizontal: 12 * scale,
+  },
+
+  /* FLASH */
+
+  flashChip: {
+    width: 170 * scale,
+    height: 25 * scale,
+
+    paddingHorizontal: 12 * scale,
   },
 
   row: {
     flexDirection: 'row',
     alignItems: 'center',
 
-    gap: 6 * scale,
+    gap: 4 * scale,
+  },
+
+  flashIcon: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   text: {
-    fontFamily: 'Inter-SemiBold',
+    fontFamily: 'Inter',
 
-    fontSize: 16 * scale,
-    lineHeight: 20 * scale,
+    fontWeight: '400',
+
+    fontSize: 14 * scale,
+
+    lineHeight: 21 * scale,
+
+    letterSpacing: -0.32,
+
+    textAlign: 'center',
 
     color: '#040404',
-  },
 
+    includeFontPadding: false,
+  },
 });

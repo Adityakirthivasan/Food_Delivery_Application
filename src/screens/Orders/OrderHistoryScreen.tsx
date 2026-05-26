@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   View,
@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 
 import Ionicons from '@react-native-vector-icons/ionicons';
@@ -17,92 +18,75 @@ import ProfileButton from '../../components/buttons/ProfileButton';
 import OrderHistoryCard from '../../components/cards/OrderHistoryCard';
 
 import { orderHistoryData } from '../../data/orderHistoryData';
+import axios from 'axios';
 
-export default function OrderHistoryScreen({
-  navigation,
-}: any) {
+export default function OrderHistoryScreen({ navigation }: any) {
+  const [orderHistoryData, setOrderHistoryData] = useState<any>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get(
+        'https://dinedash-backend-1.onrender.com/api/user/get-orders?userId=1e5fae27-6219-43cb-b255-7c016b6829a7',
+      )
+      .then(response => {
+        setOrderHistoryData(response.data.result);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Network Error:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator size="large" />;
+  }
+
   return (
     <View style={styles.container}>
-
       {/* HEADER */}
 
       <View style={styles.header}>
-
         <View style={styles.leftHeader}>
-
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}>
-
-            <Ionicons
-              name="arrow-back"
-              size={24}
-              color="#111"
-            />
-
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={24} color="#111" />
           </TouchableOpacity>
 
-          <Text style={styles.headerTitle}>
-            My Orders
-          </Text>
-
+          <Text style={styles.headerTitle}>My Orders</Text>
         </View>
 
         <View style={styles.iconOnly}>
-
-  <Ionicons
-    name="person"
-    size={22}
-    color="#000"
-  />
-
-</View>
-
+          <Ionicons name="person" size={22} color="#000" />
+        </View>
       </View>
 
       {/* SEARCH */}
 
       <View style={styles.searchRow}>
-
         <View style={styles.searchContainer}>
-
-          <SearchBar
-            
-            showMic={false}
-            placeholder="Search orders"
-          />
-
+          <SearchBar showMic={false} placeholder="Search orders" />
         </View>
 
         <TouchableOpacity style={styles.filterButton}>
-
-          <Feather
-            name="sliders"
-            size={20}
-            color="#111"
-          />
-
+          <Feather name="sliders" size={20} color="#111" />
         </TouchableOpacity>
-
       </View>
 
       {/* ORDERS */}
 
       <FlatList
         data={orderHistoryData}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={item => item.orderId}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContent}
-        renderItem={({ item }) => (
-          <OrderHistoryCard item={item} />
-        )}
+        renderItem={({ item }) => <OrderHistoryCard item={item} />}
       />
-
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     backgroundColor: '#FFF8F4',
@@ -162,7 +146,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   iconOnly: {
-  justifyContent: 'center',
-  alignItems: 'center',
-},  
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

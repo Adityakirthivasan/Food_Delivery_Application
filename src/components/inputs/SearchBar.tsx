@@ -119,8 +119,10 @@ const styles = StyleSheet.create({
     marginTop: scale(24),
   },
 
+
 searchBar: {
-  width: scale(303),
+  flex: 1,
+
   height: scale(50),
 
   borderRadius: scale(10),

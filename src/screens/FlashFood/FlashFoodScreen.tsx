@@ -14,6 +14,7 @@ import {
 
 import Feather from '@react-native-vector-icons/feather';
 import Ionicons from '@react-native-vector-icons/ionicons';
+import AmicoSvg from '../../assets/images/flash/amico.svg';
 
 import HeroHeader from '../../components/headers/HeroHeader';
 
@@ -59,7 +60,7 @@ export default function FlashFoodScreen() {
             subtitle="Food in 10 mins"
             buttonText="Order now"
 
-            image={require('../../assets/images/flash/amico.png')}
+            image={<AmicoSvg />}
 
             showIcon
 
@@ -107,27 +108,33 @@ export default function FlashFoodScreen() {
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.filterContainer}>
 
-              <FilterChip
-                title="Filter"
-                icon={
-                  <Feather
-                    name="sliders"
-                    size={scale(14)}
-                    color="#040404"
-                  />
-                }
-              />
+<View style={styles.flashFilterChip}>
+<FilterChip
+  title="Filter"
+  textStyle={styles.flashFilterText}
+    icon={
+      <Feather
+        name="sliders"
+        size={scale(14)}
+        color="#040404"
+      />
+    }
+  />
+</View> 
 
-              <FilterChip
-                title="Sort By"
-                icon={
-                  <Ionicons
-                    name="chevron-down"
-                    size={scale(14)}
-                    color="#040404"
-                  />
-                }
-              />
+<View style={styles.flashFilterChip}>
+<FilterChip
+  title="Sort By"
+  textStyle={styles.flashFilterText}
+    icon={
+      <Ionicons
+        name="chevron-down"
+        size={scale(14)}
+        color="#040404"
+      />
+    }
+  />
+</View>
 
             </ScrollView>
 
@@ -224,13 +231,15 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
 
-  heroImage: {
-    width: scale(240),
-    height: scale(240),
+heroImage: {
+  width: scale(245.95),
+  height: scale(242.14),
 
-    right: scale(-0),
-    bottom: scale(-24),
-  },
+  position: 'absolute',
+
+  right: scale(10),
+  bottom: scale(-36),
+},
 
   categorySection: {
     marginTop: scale(20),
@@ -241,8 +250,8 @@ const styles = StyleSheet.create({
   sectionTitle: {
     marginLeft: scale(16),
 
-    fontFamily: 'Montserrat-SemiBold',
-
+    fontFamily: 'Montserrat',
+    fontWeight:'bold',
     fontSize: scale(20),
     lineHeight: scale(24),
 
@@ -256,11 +265,11 @@ const styles = StyleSheet.create({
     paddingTop: scale(14),
   },
 
-  filterWrapper: {
-    marginTop: scale(2),
+filterWrapper: {
+  marginTop: scale(8),
 
-    marginBottom: scale(10),
-  },
+  marginBottom: scale(10),
+},
 
   filterContainer: {
     paddingLeft: scale(12),
@@ -270,5 +279,11 @@ const styles = StyleSheet.create({
   flashFoodContainer: {
     paddingTop: scale(2),
   },
+  flashFilterChip: {
+  transform: [{ translateY: 0 }],
+},
+flashFilterText: {
+  fontWeight: '700',
+},
 
 });

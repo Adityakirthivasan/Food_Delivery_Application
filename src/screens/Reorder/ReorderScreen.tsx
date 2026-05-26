@@ -208,7 +208,7 @@ export default function ReorderScreen() {
                   <View style={styles.topLeftContent}>
 
                     <Text
-                      numberOfLines={1}
+                      
                       style={styles.foodName}>
 
                       {item.name}
@@ -272,17 +272,21 @@ export default function ReorderScreen() {
 
                 <View style={styles.orderInfoRow}>
 
-                  <Text
-                    numberOfLines={1}
-                    style={styles.orderPlaced}>
+<Text
+  numberOfLines={1}
+  style={styles.orderPlaced}>
 
-                    Order placed on 23 oct, 5:08 PM
+  Order placed on 23 oct, 5:08 PM
 
-                  </Text>
+</Text>
 
-                  <Text style={styles.delivered}>
-                    Delivered
-                  </Text>
+<Text style={styles.dot}>
+  •
+</Text>
+
+<Text style={styles.delivered}>
+  Delivered
+</Text>
 
                 </View>
 
@@ -519,50 +523,50 @@ const styles = StyleSheet.create({
   },
 
   /* HISTORY CARD */
+historyCard: {
+  width: '100%',
 
-  historyCard: {
-    width: '100%',
+  minHeight: 160 * scale,
 
-    minHeight: 158 * scale,
+  marginTop: 16 * scale,
 
-    marginTop: 18 * scale,
+  borderRadius: 18 * scale,
 
-    borderRadius: 18 * scale,
+  backgroundColor: '#FFFFFF',
 
-    backgroundColor: '#FFFFFF',
+  overflow: 'hidden',
 
-    overflow: 'hidden',
+  flexDirection: 'row',
 
-    flexDirection: 'row',
-
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-
-    shadowOpacity: 0.08,
-    shadowRadius: 10,
-
-    elevation: 3,
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 2,
   },
 
-  foodImage: {
-    width: 124 * scale,
+  shadowOpacity: 0.08,
+  shadowRadius: 10,
 
-    height: '100%',
+  elevation: 3,
+},
 
-    resizeMode: 'cover',
-  },
 
-  cardContent: {
-    flex: 1,
+foodImage: {
+  width: 128 * scale,
 
-    paddingHorizontal: 14 * scale,
-    paddingVertical: 12 * scale,
+  height: '100%',
 
-    justifyContent: 'space-between',
-  },
+  resizeMode: 'cover',
+},
+
+cardContent: {
+  flex: 1,
+
+  paddingHorizontal: 16 * scale,
+  paddingVertical: 14 * scale,
+
+  justifyContent: 'space-between',
+},
 
   cardTopRow: {
     flexDirection: 'row',
@@ -578,27 +582,29 @@ const styles = StyleSheet.create({
     paddingRight: 8 * scale,
   },
 
-  foodName: {
-    fontFamily: 'Inter',
-    fontWeight: '700',
+foodName: {
+  fontFamily: 'Inter',
 
-    fontSize: 16 * scale,
-    lineHeight: 24 * scale,
+  fontWeight: '700',
 
-    color: '#000000',
-  },
+  fontSize: 18 * scale,
+  lineHeight: 28 * scale,
 
-  locationText: {
-    marginTop: 1 * scale,
+  color: '#000000',
+},
 
-    fontFamily: 'Inter',
-    fontWeight: '400',
+locationText: {
+  marginTop: 2 * scale,
 
-    fontSize: 12 * scale,
-    lineHeight: 16 * scale,
+  fontFamily: 'Inter',
 
-    color: '#000000',
-  },
+  fontWeight: '400',
+
+  fontSize: 12 * scale,
+  lineHeight: 18 * scale,
+
+  color: '#000000',
+},
 
   viewMenuRow: {
     flexDirection: 'row',
@@ -607,27 +613,28 @@ const styles = StyleSheet.create({
     marginTop: 3 * scale,
   },
 
-  viewMenu: {
-    fontFamily: 'Inter',
-    fontWeight: '400',
+viewMenu: {
+  fontFamily: 'Inter',
 
-    fontSize: 9 * scale,
-    lineHeight: 12 * scale,
+  fontWeight: '400',
 
-    color: '#E95322',
-  },
+  fontSize: 10 * scale,
+  lineHeight: 14 * scale,
+
+  color: '#E95322',
+},
 
   moreButton: {
     paddingLeft: 4 * scale,
   },
 
-  itemRow: {
-    flexDirection: 'row',
+itemRow: {
+  flexDirection: 'row',
 
-    alignItems: 'center',
+  alignItems: 'center',
 
-    marginTop: 5 * scale,
-  },
+  marginTop: 6 * scale,
+},
 
   vegDot: {
     width: 12 * scale,
@@ -665,84 +672,93 @@ const styles = StyleSheet.create({
     color: '#8A8A8A',
   },
 
-  orderInfoRow: {
-    flexDirection: 'row',
+orderInfoRow: {
+  flexDirection: 'row',
 
-    alignItems: 'center',
+  alignItems: 'center',
 
-    marginTop: 10 * scale,
-  },
+  marginTop: 8 * scale,
+},
 
-  orderPlaced: {
-    flexShrink: 1,
+orderPlaced: {
+  flex: 1,
 
-    fontFamily: 'Inter',
-    fontWeight: '500',
+  fontFamily: 'Inter',
 
-    fontSize: 10 * scale,
-    lineHeight: 15 * scale,
+  fontWeight: '500',
 
-    color: '#000000',
-  },
+  fontSize: 11 * scale,
+  lineHeight: 16 * scale,
 
-  delivered: {
-    marginLeft: 5 * scale,
+  color: '#000000',
+},
 
-    fontFamily: 'Inter',
-    fontWeight: '700',
+delivered: {
+  marginLeft: 4 * scale,
 
-    fontSize: 10 * scale,
-    lineHeight: 15 * scale,
+  fontFamily: 'Inter',
 
-    color: '#000000',
-  },
+  fontWeight: '700',
 
-  bottomRow: {
-    flexDirection: 'row',
+  fontSize: 11 * scale,
+  lineHeight: 16 * scale,
 
-    justifyContent: 'space-between',
+  color: '#000000',
+},
 
-    alignItems: 'center',
+bottomRow: {
+  flexDirection: 'row',
 
-    marginTop: 12 * scale,
-  },
+  justifyContent: 'space-between',
 
-  amount: {
-    fontFamily: 'Inter',
-    fontWeight: '700',
+  alignItems: 'center',
 
-    fontSize: 17 * scale,
-    lineHeight: 24 * scale,
+  marginTop: 10 * scale,
+},
 
-    color: '#000000',
-  },
+amount: {
+  fontFamily: 'Inter',
+  fontWeight: '700',
 
-  reorderButton: {
-    minWidth: 118 * scale,
+  fontSize: 18 * scale,
+  lineHeight: 28 * scale,
 
-    height: 42 * scale,
+  color: '#000000',
+},
 
-    paddingHorizontal: 18 * scale,
 
-    borderRadius: 10 * scale,
+reorderButton: {
+  width: 122 * scale,
 
-    borderWidth: 1,
-    borderColor: '#D9D9D9',
+  height: 44 * scale,
 
-    justifyContent: 'center',
-    alignItems: 'center',
+  borderRadius: 10 * scale,
 
-    backgroundColor: '#FFFFFF',
-  },
+  borderWidth: 1,
+  borderColor: '#D9D9D9',
 
-  reorderText: {
-    fontFamily: 'Inter',
-    fontWeight: '700',
+  justifyContent: 'center',
+  alignItems: 'center',
 
-    fontSize: 15 * scale,
-    lineHeight: 20 * scale,
+  backgroundColor: '#FFFFFF',
+},
 
-    color: '#000000',
-  },
+reorderText: {
+  fontFamily: 'Inter',
+  fontWeight: '700',
 
+  fontSize: 16 * scale,
+  lineHeight: 22 * scale,
+
+  color: '#000000',
+},
+dot: {
+  marginHorizontal: 2 * scale,
+
+  fontSize: 12 * scale,
+
+  color: '#000000',
+
+  fontWeight: '700',
+},
 });

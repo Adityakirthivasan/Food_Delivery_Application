@@ -21,6 +21,10 @@ import Feather from '@react-native-vector-icons/feather';
 import RatingBadge from '../common/RatingBadge';
 
 import { useNavigation } from '@react-navigation/native';
+import MeatSvg from '../../assets/images/home/categories/Meat.svg';
+import ColdDrinksSvg from '../../assets/images/home/categories/ColdDrinks.svg';
+import DessertSvg from '../../assets/images/home/categories/Dessert.svg';
+import BurgerSvg from '../../assets/images/home/categories/Burger.svg';
 
 const { width } = Dimensions.get('window');
 
@@ -82,10 +86,35 @@ export default function HomeCard({
 
       <View style={styles.categoryItem}>
 
-        <Image
-          source={image}
-          style={styles.categoryImage}
-        />
+<View style={styles.categoryImageContainer}>
+  {image === 'meat' && (
+    <MeatSvg
+      width={82.43 * scale}
+      height={50 * scale}
+    />
+  )}
+
+  {image === 'coldDrinks' && (
+    <ColdDrinksSvg
+      width={49.03 * scale}
+      height={50 * scale}
+    />
+  )}
+
+  {image === 'dessert' && (
+    <DessertSvg
+      width={56 * scale}
+      height={50 * scale}
+    />
+  )}
+
+  {image === 'burger' && (
+    <BurgerSvg
+      width={67.77 * scale}
+      height={50 * scale}
+    />
+  )}
+</View>
 
         <Text style={styles.categoryText}>
           {title}
@@ -244,7 +273,7 @@ export default function HomeCard({
           onScroll={onScrollHandler}
           scrollEventThrottle={16}>
 
-          {item.images.map(
+          {/* {item.images.map(
             (
               img: any,
               index: number,
@@ -257,7 +286,7 @@ export default function HomeCard({
               />
 
             ),
-          )}
+          )} */}
 
         </ScrollView>
 
@@ -278,7 +307,7 @@ export default function HomeCard({
 
         <View style={styles.dotsContainer}>
 
-          {item.images.map(
+          {/* {item.images.map(
             (
               _: any,
               index: number,
@@ -295,7 +324,7 @@ export default function HomeCard({
               />
 
             ),
-          )}
+          )} */}
 
         </View>
 
@@ -376,13 +405,10 @@ const styles = StyleSheet.create({
 
   // CATEGORY
 
-  categoryItem: {
-    width: 82 * scale,
-
-    marginRight: 16 * scale,
-
-    alignItems: 'center',
-  },
+categoryItem: {
+  marginRight: 16 * scale,
+  alignItems: 'center',
+},
 
   categoryImage: {
     width: 58 * scale,
@@ -391,15 +417,15 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
 
-  categoryText: {
-    marginTop: 8 * scale,
+categoryText: {
+  marginTop: 8 * scale,
 
-    fontFamily: 'Montserrat-Medium',
+  fontFamily: 'Montserrat-Medium',
 
-    fontSize: 12 * scale,
+  fontSize: 12 * scale,
 
-    color: '#040404',
-  },
+  color: '#040404',
+},
 
   // MORE
 
@@ -555,35 +581,37 @@ const styles = StyleSheet.create({
 
   // EXACT DOTS
 
-  dotsContainer: {
-    position: 'absolute',
+dotsContainer: {
+  position: 'absolute',
 
-    bottom: 16,
-    right: 18,
+  bottom: 16 * scale,
+  right: 16 * scale,
 
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+  width: 61 * scale,
+  height: 5 * scale,
 
-  dot: {
-    width: 8,
-    height: 8,
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+},
 
-    borderRadius: 10,
+dot: {
+  width: 5 * scale,
+  height: 5 * scale,
 
-    backgroundColor: '#B9A8A3',
+  borderRadius: 10,
 
-    marginLeft: 8,
-  },
+  backgroundColor: '#B9A8A3',
+},
 
-  activeDot: {
-    width: 28,
-    height: 8,
+activeDot: {
+  width: 25 * scale,
+  height: 5 * scale,
 
-    borderRadius: 10,
+  borderRadius: 10,
 
-    backgroundColor: '#000000',
-  },
+  backgroundColor: '#B9A8A3',
+},
 
   content: {
     paddingHorizontal: 16,
@@ -591,73 +619,100 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
 
-  flashText: {
-    fontFamily: 'Inter-Regular',
+flashText: {
+  width: 113 * scale,
 
-    fontSize: 13,
+  fontFamily: 'Inter',
 
-    color: '#111111',
-  },
+  fontWeight: '400',
+
+  fontSize: 12 * scale,
+
+  lineHeight: 16 * scale,
+
+  letterSpacing: 0,
+
+  color: '#111111',
+},
 
   // EXACT TITLE
 
-  name: {
-    fontFamily: 'Inter',
-    fontWeight:'bold',
-    fontSize: 22,
+name: {
+  fontFamily: 'Inter',
 
-    marginTop: 4,
+  fontWeight: '700',
 
-    color: '#000000',
-  },
+  fontSize: 18,
+
+  lineHeight: 24,
+
+  letterSpacing: -0.24,
+
+  marginTop: 4,
+
+  color: '#000000',
+},
 
   // EXACT META ROW
 
-  ratingRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+ratingRow: {
+  flexDirection: 'row',
+  alignItems: 'center',
 
-    marginTop: 6,
-  },
+  marginTop: 4 * scale,
+},
 
-  info: {
-    fontFamily: 'Inter',
-    fontWeight:'bold',
-    fontSize: 13,
+info: {
+  marginLeft: 5,
 
-    color: '#111111',
+  fontFamily: 'Inter',
 
-    marginLeft: 6,
-  },
+  fontWeight: '700',
 
-  cuisine: {
-    marginTop: 8,
+  fontSize: 11,
 
-    fontFamily: 'Inter',
-    fontWeight:'regular',
-    fontSize: 13,
+  lineHeight: 16,
 
-    color: '#444444',
-  },
+  letterSpacing: 0,
 
-  location: {
-    marginTop: 3,
+  color: '#111111',
+},
 
-    fontFamily: 'Inter-Regular',
+cuisine: {
+  marginTop: 4,
 
-    fontSize: 13,
+  fontFamily: 'Inter',
 
-    color: '#444444',
-  },
+  fontWeight: '400',
 
+  fontSize: 11,
+
+  lineHeight: 16,
+
+  color: '#444444',
+},
+
+location: {
+  marginTop: 4,
+
+  fontFamily: 'Inter',
+
+  fontWeight: '400',
+
+  fontSize: 11,
+
+  lineHeight: 16,
+
+  color: '#444444',
+},
   // EXACT TAGS
 
-  tagRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+tagRow: {
+  flexDirection: 'row',
+  alignItems: 'center',
 
-    marginTop: 14,
-  },
+  marginTop: 4 * scale,
+},
 
   largeTag: {
     width: 164,
@@ -695,19 +750,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
 
-  tagText: {
-    fontFamily: 'Inter-Regular',
+tagText: {
+  fontFamily: 'Inter',
 
-    fontSize: 11,
-    lineHeight: 21,
+  fontWeight: '400',
 
-    letterSpacing: -0.32,
+  fontSize: 10 * scale,
 
-    textAlign: 'center',
+  lineHeight: 21 * scale,
 
-    color: '#000000',
+  letterSpacing: -0.32,
 
-    includeFontPadding: false,
-  },
+  textAlign: 'center',
+
+  color: '#000000',
+
+  includeFontPadding: false,
+},
+  categoryImageContainer: {
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: 50 * scale,
+},
 
 });

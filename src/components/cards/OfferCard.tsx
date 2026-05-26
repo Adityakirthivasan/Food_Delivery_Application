@@ -1,12 +1,6 @@
 import React from 'react';
 
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
@@ -18,54 +12,32 @@ interface Props {
   item: any;
 }
 
-export default function OfferCard({
-  item,
-}: Props) {
-
+export default function OfferCard({ item }: Props) {
   return (
-
     <View style={styles.card}>
-
       {/* LEFT SECTION */}
 
       <View style={styles.leftSection}>
-
         <View>
-
-          <Text
-            numberOfLines={1}
-            style={styles.title}>
-
-            {item.title}
-
+          <Text numberOfLines={1} style={styles.title}>
+            {item.name}
           </Text>
 
-          <Text
-            numberOfLines={2}
-            style={styles.subtitle}>
-
-            {item.subtitle}
-
+          <Text numberOfLines={2} style={styles.subtitle}>
+            {item.description}
           </Text>
-
         </View>
 
         <View style={styles.couponBox}>
-
-          <Text style={styles.couponText}>
-            {item.code}
-          </Text>
-
+          <Text style={styles.couponText}>{item.promoCode}</Text>
         </View>
-
       </View>
 
       {/* RIGHT SECTION */}
 
       <View style={styles.rightSection}>
-
         <Image
-          source={item.image}
+          source={{ uri: item.image }}
           style={[
             styles.image,
 
@@ -79,25 +51,16 @@ export default function OfferCard({
         {/* BADGE */}
 
         <View style={styles.badge}>
+          <Text style={styles.discount}>{item.percentOff}%</Text>
 
-          <Text style={styles.discount}>
-            {item.discount}
-          </Text>
-
-          <Text style={styles.off}>
-            Off!
-          </Text>
-
+          <Text style={styles.off}>Off!</Text>
         </View>
-
       </View>
-
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-
   card: {
     width: width - 40,
     height: 145,
@@ -278,5 +241,4 @@ const styles = StyleSheet.create({
 
     marginTop: -2,
   },
-
 });

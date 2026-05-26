@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   View,
@@ -9,20 +9,19 @@ import {
   Image,
   Dimensions,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
 import Ionicons from '@react-native-vector-icons/ionicons';
 
-import {
-  useNavigation,
-} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 const { width, height } = Dimensions.get('window');
 
-const scale = (size: number) =>
-  (width / 393) * size;
+const scale = (size: number) => (width / 393) * size;
 
 const NOODLES = require('../../assets/images/restaurant/Noodles.png');
 
@@ -30,146 +29,116 @@ const PANCAKE = require('../../assets/images/restaurant/Pancake.png');
 
 const RUCHIBE = require('../../assets/images/restaurant/Ruchibe.png');
 
-export default function RestaurantScreen() {
-
+export default function RestaurantScreen({ route }: any) {
   const navigation = useNavigation<any>();
 
-  const [search, setSearch] =
-    React.useState('');
+  const [search, setSearch] = React.useState('');
 
-  const [showCart, setShowCart] =
-    React.useState(false);
+  const [showCart, setShowCart] = React.useState(false);
 
-  const [selectedItem, setSelectedItem] =
-    React.useState<any>(null);
+  const [selectedItem, setSelectedItem] = React.useState<any>(null);
+
+  const [restaurantDishes, setRestaurantDishes] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const { restaurant } = route.params;
+
+  useEffect(() => {
+    axios
+      .get('https://dinedash-backend-1.onrender.com/api/user/get-dishes')
+      .then(response => {
+        setRestaurantDishes(response.data.result);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Network Error:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator size="large" />;
+  }
 
   return (
-
     <View style={styles.screen}>
-
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: scale(130),
-        }}>
-
+        }}
+      >
         {/* ORANGE HEADER */}
 
         <View style={styles.mainContainer}>
-
           <LinearGradient
             colors={['#FF8340', '#C64500']}
             start={{ x: 0.5, y: 0 }}
             end={{ x: 0.5, y: 1 }}
-            style={styles.orangeContainer}>
-
+            style={styles.orangeContainer}
+          >
             {/* TOP BAR */}
 
             <View style={styles.topBar}>
-
               <TouchableOpacity
                 activeOpacity={0.9}
                 style={styles.iconBtn}
-                onPress={() =>
-                  navigation.goBack()
-                }>
-
-                <Ionicons
-                  name="arrow-back"
-                  size={scale(24)}
-                  color="#FFFFFF"
-                />
-
+                onPress={() => navigation.goBack()}
+              >
+                <Ionicons name="arrow-back" size={scale(24)} color="#FFFFFF" />
               </TouchableOpacity>
 
               <View style={styles.rightActions}>
-
                 <TouchableOpacity
                   activeOpacity={0.9}
-                  style={styles.groupOrderBtn}>
-
+                  style={styles.groupOrderBtn}
+                >
                   <Ionicons
                     name="person-add-outline"
                     size={scale(16)}
                     color="#FFFFFF"
                   />
 
-                  <Text style={styles.groupOrderText}>
-                    Group Order
-                  </Text>
-
+                  <Text style={styles.groupOrderText}>Group Order</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                  activeOpacity={0.9}
-                  style={styles.dotButton}>
-
+                <TouchableOpacity activeOpacity={0.9} style={styles.dotButton}>
                   <Ionicons
                     name="ellipsis-horizontal"
                     size={scale(18)}
                     color="#FFFFFF"
                   />
-
                 </TouchableOpacity>
-
               </View>
-
             </View>
 
             {/* INFO CARD */}
 
             <View style={styles.infoCard}>
-
               <View style={styles.cardHeaderRow}>
-
                 <View style={styles.nameSection}>
-
-                  <Text style={styles.restaurantName}>
-                    Ruchibe (Guru Restaurant)
-                  </Text>
+                  <Text style={styles.restaurantName}>{restaurant.name}</Text>
 
                   <View style={styles.metaRow}>
-
-                    <Text style={styles.metaText}>
-                      15-20 mins
-                    </Text>
+                    <Text style={styles.metaText}>15-20 mins</Text>
 
                     <View style={styles.verticalLine} />
 
-                    <Text style={styles.metaText}>
-                      Bangalore Locality
-                    </Text>
-
+                    <Text style={styles.metaText}>{restaurant.address}</Text>
                   </View>
-
                 </View>
 
                 <View style={styles.ratingSection}>
-
                   <View style={styles.ratingRow}>
-
                     <View style={styles.starBox}>
-
-                      <Ionicons
-                        name="star"
-                        size={scale(8)}
-                        color="#2FE922"
-                      />
-
+                      <Ionicons name="star" size={scale(8)} color="#2FE922" />
                     </View>
 
-                    <Text style={styles.ratingValue}>
-                      3.3
-                    </Text>
-
+                    <Text style={styles.ratingValue}>{restaurant.rating}</Text>
                   </View>
 
-                  <Text style={styles.ratingCount}>
-                    1.4k+ Rating
-                  </Text>
-
+                  <Text style={styles.ratingCount}>1.4k+ Rating</Text>
                 </View>
-
               </View>
 
               <LinearGradient
@@ -186,22 +155,14 @@ export default function RestaurantScreen() {
               <Text style={styles.deliveryText}>
                 Free delivery on order above $99
               </Text>
-
             </View>
-
           </LinearGradient>
-
         </View>
 
         {/* SEARCH */}
 
         <View style={styles.searchContainer}>
-
-          <Ionicons
-            name="search"
-            size={scale(18)}
-            color="#111111"
-          />
+          <Ionicons name="search" size={scale(18)} color="#111111" />
 
           <TextInput
             value={search}
@@ -213,100 +174,54 @@ export default function RestaurantScreen() {
 
           <View style={styles.searchDivider} />
 
-          <Ionicons
-            name="mic"
-            size={scale(22)}
-            color="#E95322"
-          />
-
+          <Ionicons name="mic" size={scale(22)} color="#E95322" />
         </View>
 
         {/* FILTERS */}
 
         <ScrollView
-  horizontal
-  showsHorizontalScrollIndicator={false}
-  contentContainerStyle={{
-    paddingHorizontal: scale(16),
-  }}
-  style={styles.chipWrapper}>
-
-  <View style={styles.chipRow}>
-
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingHorizontal: scale(16),
+          }}
+          style={styles.chipWrapper}
+        >
+          <View style={styles.chipRow}>
             {/* VEG */}
 
-            <TouchableOpacity
-              activeOpacity={0.9}
-              style={styles.smallChip}>
-
+            <TouchableOpacity activeOpacity={0.9} style={styles.smallChip}>
               <View style={styles.toggleTrack}>
-
-                <View
-                  style={styles.toggleSquareGreen}>
-
-                  <View
-                    style={styles.toggleCircleGreen}
-                  />
-
+                <View style={styles.toggleSquareGreen}>
+                  <View style={styles.toggleCircleGreen} />
                 </View>
-
               </View>
-
             </TouchableOpacity>
 
             {/* NON VEG */}
 
-            <TouchableOpacity
-              activeOpacity={0.9}
-              style={styles.smallChip}>
-
+            <TouchableOpacity activeOpacity={0.9} style={styles.smallChip}>
               <View style={styles.toggleTrack}>
-
-                <View
-                  style={styles.toggleSquareRed}>
-
-                  <View
-                    style={styles.toggleCircleRed}
-                  />
-
+                <View style={styles.toggleSquareRed}>
+                  <View style={styles.toggleCircleRed} />
                 </View>
-
               </View>
-
             </TouchableOpacity>
 
             {/* FLASH */}
 
-            <TouchableOpacity
-              activeOpacity={0.9}
-              style={styles.flashChip}>
+            <TouchableOpacity activeOpacity={0.9} style={styles.flashChip}>
+              <Ionicons name="flash-outline" size={scale(16)} color="#000000" />
 
-              <Ionicons
-                name="flash-outline"
-                size={scale(16)}
-                color="#000000"
-              />
-
-              <Text style={styles.flashChipText}>
-                Flash food in 10 min
-              </Text>
-
+              <Text style={styles.flashChipText}>Flash food in 10 min</Text>
             </TouchableOpacity>
 
             {/* RATING */}
 
-            <TouchableOpacity
-              activeOpacity={0.9}
-              style={styles.ratingChip}>
-
-              <Text style={styles.ratingChipText}>
-                Rating 5
-              </Text>
-
+            <TouchableOpacity activeOpacity={0.9} style={styles.ratingChip}>
+              <Text style={styles.ratingChipText}>Rating 5</Text>
             </TouchableOpacity>
-
           </View>
-
         </ScrollView>
 
         {/* DIVIDER */}
@@ -315,9 +230,7 @@ export default function RestaurantScreen() {
 
         {/* TOP PICKS */}
 
-        <Text style={styles.sectionTitle}>
-          Top picks
-        </Text>
+        <Text style={styles.sectionTitle}>Top picks</Text>
 
         <ScrollView
           horizontal
@@ -325,222 +238,139 @@ export default function RestaurantScreen() {
           contentContainerStyle={{
             paddingLeft: scale(16),
             paddingRight: scale(6),
-          }}>
+          }}
+        >
+          {[RUCHIBE, RUCHIBE].map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              activeOpacity={0.9}
+              style={styles.topCard}
+            >
+              <Image source={item} style={styles.topImage} />
 
-{[RUCHIBE, RUCHIBE].map(
-  (item, index) => (
+              <LinearGradient
+                colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.82)']}
+                style={styles.topOverlay}
+              >
+                <Text style={styles.topName}>Ruchibe (guru Restaurant)</Text>
 
-    <TouchableOpacity
-      key={index}
-      activeOpacity={0.9}
-      style={styles.topCard}>
+                <View style={styles.topMetaRow}>
+                  <View style={styles.smallStarBox}>
+                    <Ionicons name="star" size={scale(7)} color="#2FE922" />
+                  </View>
 
-      <Image
-        source={item}
-        style={styles.topImage}
-      />
-
-      <LinearGradient
-        colors={[
-          'rgba(0,0,0,0)',
-          'rgba(0,0,0,0.82)',
-        ]}
-        style={styles.topOverlay}>
-
-        <Text style={styles.topName}>
-          Ruchibe (guru Restaurant)
-        </Text>
-
-        <View style={styles.topMetaRow}>
-
-          <View style={styles.smallStarBox}>
-
-<Ionicons
-  name="star"
-  size={scale(7)}
-  color="#2FE922"
-/>
-
-          </View>
-
-          <Text style={styles.topMetaText}>
-            3.3 (1.4k+) • 10-15 mins
-          </Text>
-
-        </View>
-
-      </LinearGradient>
-
-    </TouchableOpacity>
-  ),
-)}
-
+                  <Text style={styles.topMetaText}>
+                    3.3 (1.4k+) • 10-15 mins
+                  </Text>
+                </View>
+              </LinearGradient>
+            </TouchableOpacity>
+          ))}
         </ScrollView>
 
         {/* RECOMMENDED */}
 
         <Text style={styles.recommendedTitle}>
-          Recommended (10)
+          Recommended ({restaurantDishes.length})
         </Text>
 
         <View style={styles.grid}>
-{Array.from({ length: 10 }).map(
-  (_, index) => {
+          {restaurantDishes.map((dish, index) => {
+            const item = {
+              ...dish,
+            };
 
-    const item =
-      index % 2 === 0
-        ? {
-            title: 'Rammen Noodel',
-            image: NOODLES,
-          }
-        : {
-            title: 'Hanoi Pancake Shop',
-            image: PANCAKE,
-          };
+            return (
+              <TouchableOpacity
+                activeOpacity={0.95}
+                key={index}
+                style={styles.foodCard}
+                onPress={() => {
+                  setShowCart(true);
 
-    return (
+                  setSelectedItem({
+                    id: index,
+                    ...item,
+                  });
+                }}
+              >
+                <View>
+                  <Image
+                    source={{ uri: item.image }}
+                    style={styles.foodImage}
+                  />
 
-      <TouchableOpacity
-        activeOpacity={0.95}
-        key={index}
-        style={styles.foodCard}
-        onPress={() => {
+                  <TouchableOpacity activeOpacity={0.9} style={styles.heartBtn}>
+                    <Ionicons
+                      name="heart-outline"
+                      size={scale(24)}
+                      color="#FFFFFF"
+                    />
+                  </TouchableOpacity>
+                </View>
 
-          setShowCart(true);
+                <View style={styles.foodContent}>
+                  <View style={styles.bestSellerRow}>
+                    <View style={styles.vegMini}>
+                      <View style={styles.vegMiniInner} />
+                    </View>
 
-          setSelectedItem({
-            id: index,
-            title: item.title,
-            image: item.image,
-            price: 200,
-          });
-        }}>
+                    <Text style={styles.bestSellerText}>Best Seller</Text>
+                  </View>
 
-        <View>
+                  <Text style={styles.foodTitle}>{item.name}</Text>
 
-          <Image
-            source={item.image}
-            style={styles.foodImage}
-          />
+                  <View style={styles.priceRow}>
+                    <Text style={styles.price}>${item.price}</Text>
 
-          <TouchableOpacity
-            activeOpacity={0.9}
-            style={styles.heartBtn}>
+                    <TouchableOpacity
+                      activeOpacity={0.9}
+                      style={styles.addButton}
+onPress={() => {
+  setShowCart(true);
 
-            <Ionicons
-              name="heart-outline"
-              size={scale(24)}
-              color="#FFFFFF"
-            />
-
-          </TouchableOpacity>
-
+  setSelectedItem({
+    id: index,
+    ...item,
+  });
+}}
+                    >
+                      <Text style={styles.addText}>ADD</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            );
+          })}
         </View>
-
-        <View style={styles.foodContent}>
-
-          <View style={styles.bestSellerRow}>
-
-            <View style={styles.vegMini}>
-              <View style={styles.vegMiniInner} />
-            </View>
-
-            <Text style={styles.bestSellerText}>
-              Best Seller
-            </Text>
-
-          </View>
-
-          <Text style={styles.foodTitle}>
-            {item.title}
-          </Text>
-
-          <View style={styles.priceRow}>
-
-            <Text style={styles.price}>
-              $200
-            </Text>
-
-            <TouchableOpacity
-              activeOpacity={0.9}
-              style={styles.addButton}
-              onPress={() =>
-                navigation.navigate(
-                  'ProductDetailScreen',
-                  {
-                    item: {
-                      id: index,
-                      title: item.title,
-                      image: item.image,
-                      price: 200,
-                    },
-                  },
-                )
-              }>
-
-              <Text style={styles.addText}>
-                ADD
-              </Text>
-
-            </TouchableOpacity>
-
-          </View>
-
-        </View>
-
-      </TouchableOpacity>
-    );
-  },
-)}
-
-        </View>
-
       </ScrollView>
 
       {/* CART */}
 
       {showCart && (
-
         <TouchableOpacity
           activeOpacity={0.95}
           style={styles.cartBar}
           onPress={() =>
-            navigation.navigate(
-              'ProductDetailScreen',
-              {
-                item: selectedItem,
-              },
-            )
-          }>
-
-          <Text style={styles.cartLeftText}>
-            1 Item added
-          </Text>
+            navigation.navigate('ProductDetailScreen', {
+              item: selectedItem,
+            })
+          }
+        >
+          <Text style={styles.cartLeftText}>1 Item added</Text>
 
           <View style={styles.cartRight}>
+            <Text style={styles.cartRightText}>View Cart</Text>
 
-            <Text style={styles.cartRightText}>
-              View Cart
-            </Text>
-
-            <Ionicons
-              name="chevron-forward"
-              size={scale(22)}
-              color="#FFFFFF"
-            />
-
+            <Ionicons name="chevron-forward" size={scale(22)} color="#FFFFFF" />
           </View>
-
         </TouchableOpacity>
-
       )}
-
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-
   screen: {
     flex: 1,
     backgroundColor: '#F5F5F5',
@@ -632,16 +462,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-restaurantName: {
-  fontFamily: 'Inter',
-  fontWeight:'bold',
-  fontSize: scale(16),
+  restaurantName: {
+    fontFamily: 'Inter',
+    fontWeight: 'bold',
+    fontSize: scale(16),
 
-  lineHeight: scale(24),
-  letterSpacing: -0.24,
+    lineHeight: scale(24),
+    letterSpacing: -0.24,
 
-  color: '#000000',
-},
+    color: '#000000',
+  },
 
   metaRow: {
     flexDirection: 'row',
@@ -650,14 +480,14 @@ restaurantName: {
     marginTop: scale(4),
   },
 
-metaText: {
-  fontFamily: 'Inter-Regular',
-  fontSize: scale(12),
+  metaText: {
+    fontFamily: 'Inter-Regular',
+    fontSize: scale(12),
 
-  lineHeight: scale(16),
+    lineHeight: scale(16),
 
-  color: '#0000008A',
-},
+    color: '#0000008A',
+  },
 
   verticalLine: {
     width: 1,
@@ -677,21 +507,21 @@ metaText: {
     alignItems: 'center',
   },
 
-starBox: {
-  width: scale(18),
-  height: scale(18),
+  starBox: {
+    width: scale(18),
+    height: scale(18),
 
-  borderRadius: scale(3),
-  borderWidth: 1.8,
+    borderRadius: scale(3),
+    borderWidth: 1.8,
 
-  borderColor: '#2FE922',
-  // backgroundColor: '#FFFFFF',
+    borderColor: '#2FE922',
+    // backgroundColor: '#FFFFFF',
 
-  justifyContent: 'center',
-  alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
 
-  marginRight: scale(6),
-},
+    marginRight: scale(6),
+  },
 
   ratingValue: {
     fontFamily: 'Inter-Bold',
@@ -715,20 +545,20 @@ starBox: {
     marginTop: scale(11),
   },
 
-deliveryText: {
-  alignSelf: 'center',
+  deliveryText: {
+    alignSelf: 'center',
 
-  marginTop: scale(6),
+    marginTop: scale(6),
 
-  fontFamily: 'Inter',
-  fontWeight:'bold',
-  fontSize: scale(14),
+    fontFamily: 'Inter',
+    fontWeight: 'bold',
+    fontSize: scale(14),
 
-  lineHeight: scale(24),
-  letterSpacing: -0.24,
+    lineHeight: scale(24),
+    letterSpacing: -0.24,
 
-  color: '#000000',
-},
+    color: '#000000',
+  },
 
   searchContainer: {
     width: width - scale(32),
@@ -754,7 +584,7 @@ deliveryText: {
     marginLeft: scale(12),
 
     fontFamily: 'Inter',
-    fontWeight:'regular',
+    fontWeight: 'regular',
     fontSize: scale(14),
 
     color: '#696969',
@@ -920,18 +750,18 @@ deliveryText: {
     marginBottom: scale(20),
   },
 
-sectionTitle: {
-  marginLeft: scale(16),
-  marginBottom: scale(14),
+  sectionTitle: {
+    marginLeft: scale(16),
+    marginBottom: scale(14),
 
-  fontFamily: 'Inter',
-  fontWeight:'bold',
-  fontSize: scale(22),
+    fontFamily: 'Inter',
+    fontWeight: 'bold',
+    fontSize: scale(22),
 
-  lineHeight: scale(28),
+    lineHeight: scale(28),
 
-  color: '#000000',
-},
+    color: '#000000',
+  },
 
   topCard: {
     width: scale(228),
@@ -960,17 +790,17 @@ sectionTitle: {
     paddingTop: scale(24),
   },
 
-topName: {
-  fontFamily: 'SF-Pro',
-  fontWeight: 'bold',
+  topName: {
+    fontFamily: 'SF-Pro',
+    fontWeight: 'bold',
 
-  fontSize: scale(13),
-  lineHeight: scale(18),
+    fontSize: scale(13),
+    lineHeight: scale(18),
 
-  letterSpacing: -0.08,
+    letterSpacing: -0.08,
 
-  color: '#FFFFFF',
-},
+    color: '#FFFFFF',
+  },
 
   topMetaRow: {
     flexDirection: 'row',
@@ -979,29 +809,29 @@ topName: {
     marginTop: scale(4),
   },
 
-smallStarBox: {
-  width: scale(14),
-  height: scale(14),
+  smallStarBox: {
+    width: scale(14),
+    height: scale(14),
 
-  borderRadius: scale(2),
-  borderWidth: 1.5,
+    borderRadius: scale(2),
+    borderWidth: 1.5,
 
-  borderColor: '#2FE922',
-  // backgroundColor: '#FFFFFF',
+    borderColor: '#2FE922',
+    // backgroundColor: '#FFFFFF',
 
-  justifyContent: 'center',
-  alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
 
-  marginRight: scale(4),
-},
+    marginRight: scale(4),
+  },
 
-topMetaText: {
-  fontFamily: 'Inter',
-  fontWeight:'bold',
-  fontSize: scale(11),
+  topMetaText: {
+    fontFamily: 'Inter',
+    fontWeight: 'bold',
+    fontSize: scale(11),
 
-  color: '#FFFFFF',
-},
+    color: '#FFFFFF',
+  },
 
   recommendedTitle: {
     marginTop: scale(28),
@@ -1010,7 +840,7 @@ topMetaText: {
     marginLeft: scale(16),
 
     fontFamily: 'Inter',
-    fontWeight:'bold',
+    fontWeight: 'bold',
     fontSize: scale(20),
 
     color: '#000000',
@@ -1091,7 +921,7 @@ topMetaText: {
     marginTop: scale(4),
 
     fontFamily: 'Inter',
-    fontWeight:'bold',
+    fontWeight: 'bold',
     fontSize: scale(14),
 
     color: '#4c4b4b',
@@ -1107,8 +937,8 @@ topMetaText: {
 
   price: {
     fontFamily: 'Inter',
-    fontWeight:'bold',
-    
+    fontWeight: 'bold',
+
     fontSize: scale(14),
 
     color: '#000000',
@@ -1131,7 +961,7 @@ topMetaText: {
 
   addText: {
     fontFamily: 'Inter',
-    fontWeight:'bold',
+    fontWeight: 'bold',
     fontSize: scale(14),
 
     color: '#000000',
@@ -1176,5 +1006,4 @@ topMetaText: {
 
     color: '#FFFFFF',
   },
-
 });

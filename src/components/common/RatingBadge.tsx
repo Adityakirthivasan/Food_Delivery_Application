@@ -34,7 +34,7 @@ export default function RatingBadge({
 
         <Ionicons
           name="star"
-          size={small ? scale(8) : scale(10)}
+          size={small ? 7 : 8}
           color="#43D12D"
         />
 
@@ -62,13 +62,13 @@ const styles = StyleSheet.create({
   },
 
   box: {
-    width: scale(16),
-    height: scale(16),
+    width: 12,
+    height: 12,
 
-    borderWidth: scale(1.5),
+    borderWidth: scale(1),
     borderColor: '#43D12D',
 
-    borderRadius: scale(2),
+    borderRadius: 2,
 
     justifyContent: 'center',
     alignItems: 'center',
@@ -81,16 +81,19 @@ const styles = StyleSheet.create({
     height: scale(14),
   },
 
-  text: {
-    marginLeft: scale(4),
+text: {
+  marginLeft: 3,
 
-    fontFamily: 'Inter',
-    fontWeight:'bold',
-    fontSize: scale(10),
-    lineHeight: scale(12),
+  fontFamily: 'Inter',
 
-    color: '#040404',
-  },
+  fontWeight: '700',
+
+  fontSize: 11,
+
+  lineHeight: 16,
+
+  color: '#040404',
+},
 
   smallText: {
     fontSize: scale(9),

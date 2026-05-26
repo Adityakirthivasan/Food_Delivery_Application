@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   View,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -16,72 +17,71 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 import OfferCard from '../../components/cards/OfferCard';
 
 import { offerData } from '../../data/offerData';
+import axios from 'axios';
 
 const { width } = Dimensions.get('window');
 
 const scale = width / 393;
 
 export default function OfferScreen({ navigation }: any) {
+  const [offerData, setOfferData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get('https://dinedash-backend-1.onrender.com/api/user/get-offers')
+      .then(response => {
+        setOfferData(response.data.result);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Network Error:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator size="large" />;
+  }
 
   return (
-
-    <SafeAreaView
-      style={styles.container}
-      edges={['top']}>
-
+    <SafeAreaView style={styles.container} edges={['top']}>
       {/* HEADER */}
 
       <View style={styles.header}>
-
         <TouchableOpacity
           activeOpacity={0.9}
           style={styles.backButton}
-          onPress={() => navigation.goBack()}>
-
-          <Ionicons
-            name="arrow-back"
-            size={24 * scale}
-            color="#040404"
-          />
-
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="arrow-back" size={24 * scale} color="#040404" />
         </TouchableOpacity>
 
-        <Text style={styles.headerTitle}>
-          Best Offers
-        </Text>
-
+        <Text style={styles.headerTitle}>Best Offers</Text>
       </View>
 
       {/* OFFERS */}
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}>
-
-        {offerData.map((item) => (
-
-          <OfferCard
-            key={item.id}
-            item={item}
-          />
-
+        contentContainerStyle={styles.scrollContent}
+      >
+        {offerData.map(item => (
+          <OfferCard key={item.offerId} item={item} />
         ))}
-
       </ScrollView>
-
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
 
   header: {
-    width: width - (40 * scale),
+    width: width - 40 * scale,
     height: 45 * scale,
 
     marginTop: 4 * scale,
@@ -118,5 +118,4 @@ const styles = StyleSheet.create({
 
     gap: 13 * scale,
   },
-
 });
