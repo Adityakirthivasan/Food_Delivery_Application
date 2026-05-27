@@ -16,7 +16,7 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 
 import OfferCard from '../../components/cards/OfferCard';
 
-import { offerData } from '../../data/offerData';
+//import { offerData } from '../../data/offerData';
 import axios from 'axios';
 
 const { width } = Dimensions.get('window');

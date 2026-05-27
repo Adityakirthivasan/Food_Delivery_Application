@@ -1,4 +1,9 @@
-import React from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
+
+import axios from 'axios';
 
 import {
   View,
@@ -23,7 +28,7 @@ import FlashFoodCard from '../../components/cards/FlashFoodCard';
 import FilterChip from '../../components/buttons/FilterChip';
 
 import {
-  flashFoodData,
+  
   flashFoodCategoryData,
 } from '../../data/flashFoodData';
 
@@ -33,6 +38,98 @@ import {
 } from '../../utils/responsive';
 
 export default function FlashFoodScreen() {
+  const [flashFoodData, setFlashFoodData] =
+  useState<any[]>([]);
+  const [categories, setCategories] =
+  useState<string[]>([]);
+useEffect(() => {
+  axios
+    .get(
+      'https://dinedash-backend-1.onrender.com/api/user/get-dishes',
+    )
+    .then(response => {
+      const dishes =
+        response.data.result || [];
+
+      const availableDishes =
+        dishes.filter(
+          (dish: any) =>
+            dish.available !== false,
+        );
+
+      // Dynamic categories
+const uniqueCategories = [
+  ...new Map(
+    availableDishes.map(
+      (dish: any) => [
+        dish.category,
+        {
+          category:
+            dish.category,
+          image:
+            availableDishes.find(
+              (d: any) =>
+                d.category ===
+                  dish.category &&
+                d.image,
+            )?.image || '',
+        },
+      ],
+    ),
+  ).values(),
+];
+
+setCategories(
+  uniqueCategories as any,
+);
+
+      // Group by restaurant
+      const grouped =
+        availableDishes.reduce(
+          (acc: any, dish: any) => {
+            const key =
+              dish.restaurantId ||
+              'restaurant';
+
+            if (!acc[key]) {
+              acc[key] = {
+                id: key,
+                hotelName:
+                  'Flash Food',
+                rating:
+                  dish.rating || '4.0',
+                deliveryTime: `${dish.prepTime || 10}-${(dish.prepTime || 10) + 5} mins`,
+                distance:
+                  '2.0 km',
+                foods: [],
+              };
+            }
+
+            acc[key].foods.push({
+              ...dish,
+              id: dish.dishId,
+              veg: true,
+              image:
+                dish.image,
+              price: dish.price,
+            });
+
+            return acc;
+          },
+          {},
+        );
+
+      setFlashFoodData(
+        Object.values(grouped),
+      );
+    })
+    .catch(error =>
+      console.log(
+        'Flash food error:',
+        error,
+      ),
+    );
+}, []);
 
   return (
 
@@ -84,16 +181,16 @@ export default function FlashFoodScreen() {
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.categoryScroll}>
 
-              {flashFoodCategoryData.map((item) => (
-
-                <FlashFoodCard
-                  key={item.id}
-                  type="category"
-                  title={item.title}
-                  image={item.image}
-                />
-
-              ))}
+{flashFoodCategoryData.map(
+  (item: any) => (
+    <FlashFoodCard
+      key={item.id}
+      type="category"
+      title={item.title}
+      image={item.image}
+    />
+  ),
+)}
 
             </ScrollView>
 

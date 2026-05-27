@@ -52,35 +52,55 @@ export default function FlashFoodCard({
 
       <View style={styles.categoryItem}>
 
-<View style={styles.categoryImageContainer}>
-  {image === 'meat' && (
+<View
+  style={
+    styles.categoryImageContainer
+  }>
+
+  {title ===
+  'Meat' ? (
+
     <MeatSvg
-width={scale(82.43)}
-height={scale(50)}
+      width={82}
+      height={50}
     />
+
+  ) : title ===
+    'Cold drinks' ? (
+
+    <ColdDrinksSvg
+      width={82}
+      height={50}
+    />
+
+  ) : title ===
+    'Dessert' ? (
+
+    <DessertSvg
+      width={82}
+      height={50}
+    />
+
+  ) : title ===
+    'Burger' ? (
+
+    <BurgerSvg
+      width={82}
+      height={50}
+    />
+
+  ) : (
+
+    <MeatSvg
+      width={82}
+      height={50}
+    />
+
   )}
 
-  {image === 'coldDrinks' && (
-<ColdDrinksSvg
-  width={scale(49.03)}
-  height={scale(50)}
-/>
-  )}
-
-  {image === 'dessert' && (
-<DessertSvg
-  width={scale(56)}
-  height={scale(50)}
-/>
-  )}
-
-  {image === 'burger' && (
-<BurgerSvg
-  width={scale(67.77)}
-  height={scale(50)}
-/>
-  )}
 </View>
+
+
 
         <Text style={styles.categoryText}>
           {title}
@@ -161,10 +181,14 @@ height={scale(50)}
 
             <View>
 
-              <Image
-                source={food.image}
-                style={styles.foodImage}
-              />
+<Image
+  source={
+    food.image
+      ? { uri: food.image }
+      : require('../../assets/images/flash/Noodles.png')
+  }
+  style={styles.foodImage}
+/>
 
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -199,11 +223,11 @@ height={scale(50)}
 
               <View style={styles.bottomRow}>
 
-                <Text style={styles.price}>
-                  {food.price}
-                </Text>
+<Text style={styles.price}>
+  ${food.price}
+</Text>
 
-                <AddButton />
+                <AddButton item={food} />
 
               </View>
 

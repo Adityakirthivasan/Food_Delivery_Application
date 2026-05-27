@@ -1,5 +1,6 @@
 import React from 'react';
-
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   View,
   Text,
@@ -38,6 +39,7 @@ export default function ProductDetailScreen({ navigation, route }: any) {
   const insets = useSafeAreaInsets();
 
   const { item } = route.params;
+  const [quantity, setQuantity] = React.useState(1);
 
   return (
     <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
@@ -90,15 +92,43 @@ export default function ProductDetailScreen({ navigation, route }: any) {
           {/* RIGHT */}
 
           <View style={styles.quantityBox}>
-            <TouchableOpacity activeOpacity={0.8} style={styles.qtyButton}>
-              <Ionicons name="add" size={15} color="#040404" />
-            </TouchableOpacity>
+<TouchableOpacity
+  activeOpacity={0.8}
+  style={styles.qtyButton}
+  onPress={() =>
+    setQuantity(prev => prev + 1)
+  }
+>
+  <Ionicons
+    name="add"
+    size={15}
+    color="#040404"
+  />
+</TouchableOpacity>
 
-            <Text style={styles.quantityText}>1</Text>
+           <Text style={styles.quantityText}>
+  {quantity}
+</Text>
 
-            <TouchableOpacity activeOpacity={0.8} style={styles.qtyButton}>
-              <Ionicons name="trash-outline" size={14} color="#040404" />
-            </TouchableOpacity>
+<TouchableOpacity
+  activeOpacity={0.8}
+  style={styles.qtyButton}
+  onPress={() =>
+    setQuantity(prev =>
+      prev > 1 ? prev - 1 : 1,
+    )
+  }
+>
+  <Ionicons
+    name={
+      quantity > 1
+        ? 'remove'
+        : 'trash-outline'
+    }
+    size={14}
+    color="#040404"
+  />
+</TouchableOpacity>
           </View>
         </View>
 
@@ -115,23 +145,77 @@ export default function ProductDetailScreen({ navigation, route }: any) {
       <View style={styles.addOnContainer}>
         <Text style={styles.addOnTitle}>Add ones</Text>
 
-        <FlatList
-          horizontal
-          data={item.addOns}
-          keyExtractor={item => item._id.toString()}
+<FlatList
+  horizontal
+  data={
+    item.addOns?.length
+      ? item.addOns
+      : [{ id: 1 }, { id: 2 }]
+  }
+         keyExtractor={(
+  item,
+  index,
+) =>
+  (
+    item._id ||
+    item.id ||
+    index
+  ).toString()
+}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.addOnList}
-          renderItem={({ item }) => (
-            <View style={styles.addOnCard}>
-              <View style={styles.addOnImageBox}>
-                <Image source={item.image} style={styles.addOnImage} />
-              </View>
+renderItem={({
+  item,
+  index,
+}) => (
 
-              <TouchableOpacity activeOpacity={0.8} style={styles.plusButton}>
-                <Ionicons name="add" size={11} color="#FFFFFF" />
-              </TouchableOpacity>
-            </View>
-          )}
+  <View style={styles.addOnCard}>
+
+    <View
+      style={
+        styles.addOnImageBox
+      }>
+
+<Image
+  source={
+    item.image &&
+    typeof item.image ===
+      'string' &&
+    item.image.startsWith(
+      'http',
+    )
+      ? {
+          uri:
+            item.image,
+        }
+      : addOnsData[
+          index %
+            addOnsData.length
+        ].image
+  }
+  style={
+    styles.addOnImage
+  }
+/>
+
+    </View>
+
+    <TouchableOpacity
+      activeOpacity={0.8}
+      style={
+        styles.plusButton
+      }>
+
+      <Ionicons
+        name="add"
+        size={11}
+        color="#FFFFFF"
+      />
+
+    </TouchableOpacity>
+
+  </View>
+)}
         />
       </View>
 
@@ -145,7 +229,62 @@ export default function ProductDetailScreen({ navigation, route }: any) {
             bottom: insets.bottom > 0 ? insets.bottom + 8 : 18,
           },
         ]}
-        onPress={() => navigation.navigate('BookingScreen')}
+onPress={async () => {
+
+  let user = null;
+
+  try {
+
+    const storedUser =
+      await AsyncStorage.getItem(
+        'user',
+      );
+
+    if (!storedUser) {
+      console.log(
+        'No logged user found',
+      );
+      return;
+    }
+
+    user =
+      JSON.parse(
+        storedUser,
+      );
+
+    await axios.put(
+      `https://dinedash-backend-1.onrender.com/api/user/update-cart/${user.userId}`,
+      {
+        cart: [
+          {
+            dishId:
+              item.dishId,
+            quantity,
+          },
+        ],
+      },
+    );
+
+  } catch (error) {
+    console.log(
+      'Cart update error:',
+      error,
+    );
+  }
+
+  navigation.navigate(
+    'BookingScreen',
+    {
+      cartItem: {
+        ...item,
+        quantity,
+      },
+
+      userAddress:
+        user?.address,
+    },
+  );
+}}
       >
         <Text style={styles.cartButtonText}>Add to cart</Text>
       </TouchableOpacity>

@@ -18,7 +18,7 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 
 import BestSellerCard from '../../components/cards/BestSellerCard';
 
-import { bestSellerData } from '../../data/bestSellerData';
+//import { bestSellerData } from '../../data/bestSellerData';
 
 const { width } = Dimensions.get('window');
 
@@ -32,12 +32,17 @@ export default function BestSellerScreen({
   const [bestSellerData, setbestSellerData] = useState<any[]>([]);
 const [loading, setLoading] = useState(true);
 useEffect(() => {
-  axios
-    .get(
-      'https://dinedash-backend-1.onrender.com/api/user/get-dishes?bestSeller=true',
-    )
+axios.get(
+'https://dinedash-backend-1.onrender.com/api/user/get-dishes',
+)
     .then(response => {
-      setbestSellerData(response.data.result);
+      setbestSellerData(
+  (response.data.result || []).filter(
+    (dish: any) =>
+      dish.bestSeller === true &&
+      dish.available !== false,
+  ),
+);
 
       setLoading(false);
     })

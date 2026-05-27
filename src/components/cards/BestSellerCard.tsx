@@ -139,16 +139,17 @@ export default function BestSellerCard({
         <View style={styles.priceRow}>
 
           <Text style={styles.price}>
-            {item.price}
+            ${item.price}
           </Text>
 
-          {!!item.discount && (
+<Text style={styles.discount}>
+  {item.discount ||
+    item.percentOff
+    ? `${item.percentOff}% off`
+    : '10% off'}
+</Text>
 
-            <Text style={styles.discount}>
-              {item.discount}
-            </Text>
-
-          )}
+        
 
         </View>
 

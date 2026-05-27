@@ -1,5 +1,11 @@
-import React from 'react';
-
+import React, {
+  useEffect,
+  useState,
+} from 'react';
+import axios from 'axios';
+import {
+  flashFoodData,
+} from '../../data/flashFoodData';
 import {
   View,
   Text,
@@ -9,6 +15,7 @@ import {
   Dimensions,
   ScrollView,
   TextInput,
+  ActivityIndicator
 } from 'react-native';
 
 import Ionicons from '@react-native-vector-icons/ionicons';
@@ -25,6 +32,50 @@ const {
 export default function SearchScreen() {
 
   const navigation = useNavigation<any>();
+  const [search, setSearch] =
+  useState('');
+
+const [restaurants, setRestaurants] =
+  useState<any[]>([]);
+
+const [dishes, setDishes] =
+  useState<any[]>([]);
+
+const [loading, setLoading] =
+  useState(true);
+
+  useEffect(() => {
+  Promise.all([
+    axios.get(
+      'https://dinedash-backend-1.onrender.com/api/user/get-restaurants',
+    ),
+    axios.get(
+      'https://dinedash-backend-1.onrender.com/api/user/get-dishes',
+    ),
+  ])
+    .then(([resData, dishData]) => {
+      setRestaurants(
+        resData.data.result || [],
+      );
+
+      setDishes(
+        dishData.data.result || [],
+      );
+
+      setLoading(false);
+    })
+    .catch(error => {
+      console.log(error);
+      setLoading(false);
+    });
+}, []);
+if (loading) {
+  return (
+    <ActivityIndicator
+      size="large"
+    />
+  );
+}
 
   return (
 
@@ -76,6 +127,8 @@ export default function SearchScreen() {
               placeholder="Search your food"
               placeholderTextColor="#7A7A7A"
               style={styles.searchInput}
+              value={search}
+onChangeText={setSearch}
             />
 
             <View style={styles.searchDivider} />
@@ -113,19 +166,39 @@ export default function SearchScreen() {
 
         {/* RUCHIBE CARD */}
 
-        <TouchableOpacity
-          activeOpacity={0.95}
-          style={styles.bannerContainer}
-          onPress={() =>
-            navigation.navigate(
-              'RestaurantScreen',
-            )
-          }>
+{restaurants.length > 0 && (
 
-          <Image
-            source={require('../../assets/images/search/Rest.png')}
-            style={styles.bannerImage}
-          />
+<TouchableOpacity
+  activeOpacity={0.95}
+  style={styles.bannerContainer}
+  onPress={() =>
+    navigation.navigate(
+      'RestaurantScreen',
+      {
+        restaurant:
+          restaurants[0],
+      },
+    )
+  }>
+
+<Image
+  source={
+    restaurants[0]?.image &&
+    restaurants[0].image.startsWith(
+      'http',
+    )
+      ? {
+          uri:
+            restaurants[0]
+              .image,
+        }
+      : flashFoodData[0]
+          .foods[0].image
+  }
+  style={
+    styles.bannerImage
+  }
+/>
 
           <View style={styles.overlay} />
 
@@ -140,7 +213,7 @@ export default function SearchScreen() {
           <View style={styles.bannerBottom}>
 
             <Text style={styles.bannerTitle}>
-              Ruchibe (guru Restaurant)
+             {restaurants[0]?.name}
             </Text>
 
             <View style={styles.bannerMetaRow}>
@@ -156,7 +229,10 @@ export default function SearchScreen() {
               </View>
 
               <Text style={styles.bannerMeta}>
-                3.3 (1.4k+) • 10-15 mins
+               {restaurants[0]?.rating} •
+{' '}
+{restaurants[0]?.deliveryTime ||
+'10-15 mins'}
               </Text>
 
             </View>
@@ -164,6 +240,7 @@ export default function SearchScreen() {
           </View>
 
         </TouchableOpacity>
+)}
 
         {/* HOTEL SHREE */}
 
@@ -174,7 +251,8 @@ export default function SearchScreen() {
             <View>
 
               <Text style={styles.hotelTitle}>
-                Hotel Shree Bhavan
+              {restaurants[0]?.name ||
+'Restaurant'}
               </Text>
 
               <View style={styles.metaRow}>
@@ -190,7 +268,10 @@ export default function SearchScreen() {
                 </View>
 
                 <Text style={styles.metaText}>
-                  3.3 (1.4k+) • 10-15 mins • 2.0 km
+                 {restaurants[0]?.rating}
+•{' '}
+{restaurants[0]?.deliveryTime ||
+'10-15 mins'}
                 </Text>
 
               </View>
@@ -223,51 +304,60 @@ export default function SearchScreen() {
               paddingRight: 16,
             }}>
 
-            {[1, 2, 3].map((item) => (
+           {dishes
+.filter(
+  (dish: any) =>
+    dish.available !==
+      false &&
+    dish.name
+      ?.toLowerCase()
+      .includes(
+        search.toLowerCase(),
+      ),
+)
+.slice(0, 6)
+.map((
+  item: any,
+  index: number,
+) => (
 
               <TouchableOpacity
-                key={item}
+             key={item.dishId}
                 activeOpacity={0.95}
                 style={styles.foodCard}
 onPress={() =>
   navigation.navigate(
     'ProductDetailScreen',
     {
-      item: {
-        name:
-          item % 2 === 0
-            ? 'Hanoi Pancake Shop'
-            : 'Rammen Noodel',
-
-        price: '$200',
-
-        image:
-          item % 2 === 0
-            ? require('../../assets/images/flash/Pancake.png')
-            : require('../../assets/images/flash/Noodles.png'),
-
-        rating: '3.3',
-
-        deliveryTime: '10-15 mins',
-
-        distance: '2.0 km',
-      },
+      item,
     },
   )
-}>
+}
+>
 
                 {/* IMAGE */}
 
                 <View>
 
-                  <Image
-                    source={
-                      item % 2 === 0
-                        ? require('../../assets/images/flash/Pancake.png')
-                        : require('../../assets/images/flash/Noodles.png')
-                    }
-                    style={styles.foodImage}
-                  />
+<Image
+  source={
+    item.image &&
+    item.image.startsWith(
+      'http',
+    )
+      ? {
+          uri:
+            item.image,
+        }
+      : flashFoodData[
+          index %
+            flashFoodData.length
+        ].foods[0].image
+  }
+  style={
+    styles.foodImage
+  }
+/>
 
                   <TouchableOpacity
                     style={styles.heartBtn}>
@@ -300,49 +390,30 @@ onPress={() =>
 
                   </View>
 
-                  <Text
-                    numberOfLines={2}
-                    style={styles.foodTitle}>
+<Text
+  numberOfLines={2}
+  style={styles.foodTitle}>
 
-                    {item % 2 === 0
-                      ? 'Hanoi Pancake Shop'
-                      : 'Rammen Noodel'}
+  {item.name}
 
-                  </Text>
+</Text>
 
                   <View style={styles.priceRow}>
 
                     <Text style={styles.price}>
-                      $200
+                    ${item.price}
                     </Text>
 
                    <TouchableOpacity
   style={styles.addButton}
   onPress={() =>
-    navigation.navigate(
-      'ProductDetailScreen',
-      {
-        item: {
-          name:
-            item % 2 === 0
-              ? 'Hanoi Pancake Shop'
-              : 'Rammen Noodel',
+  navigation.navigate(
+    'ProductDetailScreen',
+    {
+      item,
+    },
+  )
 
-          price: '$200',
-
-          image:
-            item % 2 === 0
-              ? require('../../assets/images/flash/Pancake.png')
-              : require('../../assets/images/flash/Noodles.png'),
-
-          rating: '3.3',
-
-          deliveryTime: '10-15 mins',
-
-          distance: '2.0 km',
-        },
-      },
-    )
   }>
 
   <Text style={styles.addText}>
@@ -371,31 +442,63 @@ onPress={() =>
           More with us
         </Text>
 
-        {[1, 2, 3, 4].map((item) => (
+{restaurants
+.filter(
+  (restaurant: any) =>
+    restaurant.name
+      ?.toLowerCase()
+      .includes(
+        search.toLowerCase(),
+      ),
+)
+.map((
+  item: any,
+  index: number,
+) => (
 
           <TouchableOpacity
-            key={item}
+          key={item.restaurantId || item.name}
             activeOpacity={0.95}
             style={styles.restaurantCard}
-            onPress={() =>
-              navigation.navigate(
-                'RestaurantScreen',
-              )
+onPress={() =>
+  navigation.navigate(
+    'RestaurantScreen',
+    {
+      restaurant: item,
+    },
+  )
+
             }>
 
-            <Image
-              source={require('../../assets/images/search/Rest.png')}
-              style={styles.restaurantImage}
-            />
+<Image
+  source={
+    item.image &&
+    item.image.startsWith(
+      'http',
+    )
+      ? {
+          uri:
+            item.image,
+        }
+      : flashFoodData[
+          index %
+            flashFoodData.length
+        ].foods[0].image
+  }
+  style={
+    styles.restaurantImage
+  }
+/>
 
             <View style={styles.restaurantContent}>
 
               <Text style={styles.restaurantName}>
-                Burger king
+               {item.name}
               </Text>
 
               <Text style={styles.restaurantLocation}>
-                HSR, Bangalore
+               {item.location ||
+'Restaurant'}
               </Text>
 
               <View style={styles.viewMenuRow}>
@@ -425,7 +528,10 @@ onPress={() =>
                 </View>
 
                 <Text style={styles.metaText}>
-                  3.3 (1.4k+) • 10-15 mins
+                  {item.rating} •
+{' '}
+{item.deliveryTime ||
+'10-15 mins'}
                 </Text>
 
               </View>
@@ -445,7 +551,8 @@ onPress={() =>
               </View>
 
               <Text style={styles.addressText}>
-                Bangalore, HSR Layout
+               {item.address ||
+item.location}
               </Text>
 
             </View>

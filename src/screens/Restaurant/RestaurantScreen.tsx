@@ -43,18 +43,25 @@ export default function RestaurantScreen({ route }: any) {
 
   const { restaurant } = route.params;
 
-  useEffect(() => {
-    axios
-      .get('https://dinedash-backend-1.onrender.com/api/user/get-dishes')
-      .then(response => {
-        setRestaurantDishes(response.data.result);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Network Error:', error);
-        setLoading(false);
-      });
-  }, []);
+ useEffect(() => {
+  axios
+    .get(
+      'https://dinedash-backend-1.onrender.com/api/user/get-dishes',
+      {
+        params: {
+          restaurantId: restaurant.restaurantId,
+        },
+      },
+    )
+    .then(response => {
+      setRestaurantDishes(response.data.result || []);
+      setLoading(false);
+    })
+    .catch(error => {
+      console.error('Network Error:', error);
+      setLoading(false);
+    });
+}, [restaurant.restaurantId]);
 
   if (loading) {
     return <ActivityIndicator size="large" />;
@@ -120,7 +127,9 @@ export default function RestaurantScreen({ route }: any) {
                   <Text style={styles.restaurantName}>{restaurant.name}</Text>
 
                   <View style={styles.metaRow}>
-                    <Text style={styles.metaText}>15-20 mins</Text>
+                   <Text style={styles.metaText}>
+  {restaurant.deliveryTime || '15-20'} mins
+</Text>
 
                     <View style={styles.verticalLine} />
 
@@ -137,7 +146,9 @@ export default function RestaurantScreen({ route }: any) {
                     <Text style={styles.ratingValue}>{restaurant.rating}</Text>
                   </View>
 
-                  <Text style={styles.ratingCount}>1.4k+ Rating</Text>
+                  <Text style={styles.ratingCount}>
+  {restaurant.rating || 0} Rating
+</Text>
                 </View>
               </View>
 
@@ -230,52 +241,126 @@ export default function RestaurantScreen({ route }: any) {
 
         {/* TOP PICKS */}
 
-        <Text style={styles.sectionTitle}>Top picks</Text>
+{restaurantDishes.length > 0 && (
+  <>
+    <Text style={styles.sectionTitle}>
+      Top picks
+    </Text>
 
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingLeft: scale(16),
-            paddingRight: scale(6),
-          }}
-        >
-          {[RUCHIBE, RUCHIBE].map((item, index) => (
-            <TouchableOpacity
-              key={index}
-              activeOpacity={0.9}
-              style={styles.topCard}
-            >
-              <Image source={item} style={styles.topImage} />
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={{
+        paddingLeft: scale(16),
+        paddingRight: scale(6),
+      }}
+    >
+{(
+restaurantDishes.some(
+  (dish: any) =>
+    dish.bestSeller &&
+    dish.available !== false,
+)
+    ? restaurantDishes.filter(
+  (dish: any) =>
+    dish.bestSeller &&
+    dish.available !== false,
+)
+    : restaurantDishes
+  .filter(
+    (dish: any) =>
+      dish.available !== false,
+  )
+  .slice(0, 5)
+).map((item: any, index: number) => (
+    <TouchableOpacity
+      key={index}
+      activeOpacity={0.9}
+      style={styles.topCard}
+    >
+      <Image
+        source={{ uri: item.image }}
+        style={styles.topImage}
+      />
 
-              <LinearGradient
-                colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.82)']}
-                style={styles.topOverlay}
-              >
-                <Text style={styles.topName}>Ruchibe (guru Restaurant)</Text>
+      <LinearGradient
+        colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.82)']}
+        style={styles.topOverlay}
+      >
+        <Text style={styles.topName}>
+          {item.name}
+        </Text>
 
-                <View style={styles.topMetaRow}>
-                  <View style={styles.smallStarBox}>
-                    <Ionicons name="star" size={scale(7)} color="#2FE922" />
-                  </View>
+        <View style={styles.topMetaRow}>
+          <View style={styles.smallStarBox}>
+            <Ionicons
+              name="star"
+              size={scale(7)}
+              color="#2FE922"
+            />
+          </View>
 
-                  <Text style={styles.topMetaText}>
-                    3.3 (1.4k+) • 10-15 mins
-                  </Text>
-                </View>
-              </LinearGradient>
-            </TouchableOpacity>
-          ))}
+          <Text style={styles.topMetaText}>
+            {item.rating || 0} • {item.prepTime} mins
+          </Text>
+        </View>
+      </LinearGradient>
+    </TouchableOpacity>
+))}
+
         </ScrollView>
+        </>
+      )}
 
         {/* RECOMMENDED */}
 
-        <Text style={styles.recommendedTitle}>
-          Recommended ({restaurantDishes.length})
-        </Text>
+{restaurantDishes.filter(
+  (dish: any) =>
+    dish.available !== false &&
+    (
+      dish.name
+        ?.toLowerCase()
+        .includes(search.toLowerCase()) ||
+      dish.category
+        ?.toLowerCase()
+        .includes(search.toLowerCase())
+    ),
+).length > 0 && (
+  <Text style={styles.recommendedTitle}>
+    Recommended (
+    {
+      restaurantDishes.filter(
+        (dish: any) =>
+          dish.available !== false &&
+          (
+            dish.name
+              ?.toLowerCase()
+              .includes(search.toLowerCase()) ||
+            dish.category
+              ?.toLowerCase()
+              .includes(search.toLowerCase())
+          ),
+      ).length
+    }
+    )
+  </Text>
+)}
 
         <View style={styles.grid}>
-          {restaurantDishes.map((dish, index) => {
+{restaurantDishes
+  .filter(
+    (dish: any) =>
+      dish.available !== false &&
+      (
+        dish.name
+          ?.toLowerCase()
+          .includes(search.toLowerCase()) ||
+        dish.category
+          ?.toLowerCase()
+          .includes(search.toLowerCase())
+      ),
+  )
+  .map((dish, index) => {
             const item = {
               ...dish,
             };
@@ -310,13 +395,23 @@ export default function RestaurantScreen({ route }: any) {
                 </View>
 
                 <View style={styles.foodContent}>
-                  <View style={styles.bestSellerRow}>
-                    <View style={styles.vegMini}>
-                      <View style={styles.vegMiniInner} />
-                    </View>
+<View style={styles.bestSellerRow}>
+  <View
+    style={{
+      flexDirection: 'row',
+      alignItems: 'center',
+      opacity: item.bestSeller ? 1 : 0,
+    }}
+  >
+    <View style={styles.vegMini}>
+      <View style={styles.vegMiniInner} />
+    </View>
 
-                    <Text style={styles.bestSellerText}>Best Seller</Text>
-                  </View>
+    <Text style={styles.bestSellerText}>
+      Best Seller
+    </Text>
+  </View>
+</View>
 
                   <Text style={styles.foodTitle}>{item.name}</Text>
 
@@ -343,7 +438,10 @@ onPress={() => {
             );
           })}
         </View>
+        
       </ScrollView>
+      
+      
 
       {/* CART */}
 

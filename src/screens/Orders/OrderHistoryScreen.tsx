@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   View,
   Text,
@@ -23,21 +23,109 @@ import axios from 'axios';
 export default function OrderHistoryScreen({ navigation }: any) {
   const [orderHistoryData, setOrderHistoryData] = useState<any>([]);
   const [loading, setLoading] = useState(true);
+  const [dishes, setDishes] =
+  useState<any[]>([]);
 
-  useEffect(() => {
-    axios
-.get(
-'https://dinedash-backend-1.onrender.com/api/user/get-orders?userId=3588d041-5366-4dc4-8979-cef3b51f26f0',
-)
-      .then(response => {
-        setOrderHistoryData(response.data.result);
+ useEffect(() => {
+
+  const fetchOrders =
+    async () => {
+
+      try {
+
+        const storedUser =
+          await AsyncStorage.getItem(
+            'user',
+          );
+
+        if (!storedUser) {
+          setLoading(false);
+          return;
+        }
+
+        const user =
+          JSON.parse(
+            storedUser,
+          );
+
+        const ordersResponse =
+          await axios.get(
+            `https://dinedash-backend-1.onrender.com/api/user/get-orders?userId=${user.userId}`,
+          );
+
+        const dishesResponse =
+          await axios.get(
+            'https://dinedash-backend-1.onrender.com/api/user/get-dishes',
+          );
+
+        const mappedOrders =
+          (
+            ordersResponse
+              .data
+              .result ||
+            []
+          ).map(
+            (
+              order: any,
+            ) => {
+
+              const dish =
+                (
+                  dishesResponse
+                    .data
+                    .result ||
+                  []
+                ).find(
+                  (
+                    d: any,
+                  ) =>
+                    d.dishId ===
+                    order
+                      .items?.[0]
+                      ?.dishId,
+                );
+
+              return {
+                ...order,
+
+                image:
+                  dish?.image,
+
+                dishName:
+                  dish?.name,
+
+                price:
+                  dish?.price,
+              };
+            },
+          );
+
+        setOrderHistoryData(
+          mappedOrders,
+        );
+
+        setDishes(
+          dishesResponse
+            .data
+            .result ||
+            [],
+        );
+
         setLoading(false);
-      })
-      .catch(error => {
-        console.error('Network Error:', error);
+
+      } catch (error) {
+
+        console.log(
+          error,
+        );
+
         setLoading(false);
-      });
-  }, []);
+      }
+    };
+
+  fetchOrders();
+
+}, []);
 
   if (loading) {
     return <ActivityIndicator size="large" />;
@@ -84,9 +172,27 @@ export default function OrderHistoryScreen({ navigation }: any) {
   showsVerticalScrollIndicator={false}
   contentContainerStyle={styles.listContent}
   style={{ marginTop: 20 }}
-  renderItem={({ item }) => (
-    <OrderHistoryCard item={item} />
-  )}
+renderItem={({ item }) => (
+  <OrderHistoryCard
+    item={{
+      ...item,
+
+      title:
+        item.dishName ||
+        'Food Item',
+
+      image:
+        item.image,
+
+      amount:
+        `$${item.price || 0}`,
+
+      status:
+        item.status ||
+        'New',
+    }}
+  />
+)}
 />
     </View>
   );

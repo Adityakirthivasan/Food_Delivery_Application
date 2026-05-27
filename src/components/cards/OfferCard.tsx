@@ -36,17 +36,14 @@ export default function OfferCard({ item }: Props) {
       {/* RIGHT SECTION */}
 
       <View style={styles.rightSection}>
-        <Image
-          source={{ uri: item.image }}
-          style={[
-            styles.image,
-
-            item.id === 1 && styles.burgerImage,
-            item.id === 2 && styles.dessertImage,
-            item.id === 3 && styles.meatImage,
-            item.id === 4 && styles.biriyaniImage,
-          ]}
-        />
+<Image
+  source={
+    item.image
+      ? { uri: item.image }
+      : require('../../assets/images/home/categories/Burger.png')
+  }
+  style={styles.offerImage}
+/>
 
         {/* BADGE */}
 
@@ -167,38 +164,48 @@ const styles = StyleSheet.create({
 
   /* IMAGE FIXES */
 
-  burgerImage: {
-    width: 160,
-    height: 118,
+  // burgerImage: {
+  //   width: 160,
+  //   height: 118,
 
-    right: -6,
-    top: 16,
-  },
+  //   right: -6,
+  //   top: 16,
+  // },
 
-  dessertImage: {
-    width: 128,
-    height: 118,
+  // dessertImage: {
+  //   width: 128,
+  //   height: 118,
 
-    right: 8,
-    top: 14,
-  },
+  //   right: 8,
+  //   top: 14,
+  // },
 
-  meatImage: {
-    width: 145,
-    height: 92,
+  // meatImage: {
+  //   width: 145,
+  //   height: 92,
 
-    right: -2,
-    top: 34,
-  },
+  //   right: -2,
+  //   top: 34,
+  // },
 
-  biriyaniImage: {
-    width: 160,
-    height: 160,
+  // biriyaniImage: {
+  //   width: 160,
+  //   height: 160,
 
-    right: -8,
-    top: -6,
-  },
+  //   right: -8,
+  //   top: -6,
+  // },
+offerImage: {
+  width: 145,
+  height: 110,
 
+  resizeMode: 'contain',
+
+  position: 'absolute',
+
+  right: 0,
+  top: 18,
+},
   /* BADGE */
 
   badge: {

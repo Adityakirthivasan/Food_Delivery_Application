@@ -1,15 +1,19 @@
 export type BottomTabParamList = {
-
   Home: undefined;
-
   FlashFood: undefined;
-
   Reorder: undefined;
 };
 
 export type RootStackParamList = {
+  SplashScreen: undefined;
 
-  BottomTabs: undefined;
+  OnboardingScreen: undefined;
+
+LoginScreen: undefined;
+
+RegisterScreen: undefined;
+
+BottomTabs: undefined;
 
   OfferScreen: undefined;
 
@@ -19,6 +23,7 @@ export type RootStackParamList = {
 
   RestaurantScreen: {
     item?: any;
+    restaurant?: any;
   };
 
   ProductDetailScreen: {
@@ -27,5 +32,9 @@ export type RootStackParamList = {
 
   SearchScreen: undefined;
 
-  BookingScreen: undefined;
+  ReorderScreen: undefined;
+
+  BookingScreen: {
+    order?: any;
+  };
 };

@@ -1,4 +1,10 @@
-import React from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
+
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   View,
@@ -8,6 +14,7 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
+  ActivityIndicator
 } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -22,45 +29,119 @@ const { width } = Dimensions.get('window');
 
 const scale = width / 393;
 
-const historyData = [
-  {
-    id: 1,
-    name: 'Burger king',
-    location: 'HSR, Bangalore',
-    amount: '$200',
+// const historyData = [
+//   {
+//     id: 1,
+//     name: 'Burger king',
+//     location: 'HSR, Bangalore',
+//     amount: '$200',
 
-    image: require('../../assets/images/reorder/Dish.png'),
-  },
+//     image: require('../../assets/images/reorder/Dish.png'),
+//   },
 
-  {
-    id: 2,
-    name: 'Burger king',
-    location: 'HSR, Bangalore',
-    amount: '$200',
+//   {
+//     id: 2,
+//     name: 'Burger king',
+//     location: 'HSR, Bangalore',
+//     amount: '$200',
 
-    image: require('../../assets/images/reorder/Dish.png'),
-  },
+//     image: require('../../assets/images/reorder/Dish.png'),
+//   },
 
-  {
-    id: 3,
-    name: 'Burger king',
-    location: 'HSR, Bangalore',
-    amount: '$200',
+//   {
+//     id: 3,
+//     name: 'Burger king',
+//     location: 'HSR, Bangalore',
+//     amount: '$200',
 
-    image: require('../../assets/images/reorder/Dish.png'),
-  },
+//     image: require('../../assets/images/reorder/Dish.png'),
+//   },
 
-  {
-    id: 4,
-    name: 'Burger king',
-    location: 'HSR, Bangalore',
-    amount: '$200',
+//   {
+//     id: 4,
+//     name: 'Burger king',
+//     location: 'HSR, Bangalore',
+//     amount: '$200',
 
-    image: require('../../assets/images/reorder/Dish.png'),
-  },
-];
+//     image: require('../../assets/images/reorder/Dish.png'),
+//   },
+// ];
 
-export default function ReorderScreen() {
+export default function ReorderScreen({
+  navigation,
+}: any) {
+  const [historyData, setHistoryData] =
+  useState<any[]>([]);
+  const [dishes, setDishes] =
+  useState<any[]>([]);
+
+const [loading, setLoading] =
+  useState(true);
+const [userData, setUserData] =
+  useState<any>(null);
+useEffect(() => {
+
+  const fetchOrders =
+    async () => {
+
+      try {
+
+        const storedUser =
+          await AsyncStorage.getItem(
+            'user',
+          );
+
+        if (!storedUser) {
+          setLoading(false);
+          return;
+        }
+
+        const user =
+          JSON.parse(
+            storedUser,
+          );
+
+        setUserData(user);
+
+const ordersResponse =
+  await axios.get(
+    `https://dinedash-backend-1.onrender.com/api/user/get-orders?userId=${user.userId}`,
+  );
+
+const dishesResponse =
+  await axios.get(
+    'https://dinedash-backend-1.onrender.com/api/user/get-dishes',
+  );
+
+setHistoryData(
+  ordersResponse.data
+    .result || [],
+);
+
+setDishes(
+  dishesResponse.data
+    .result || [],
+);
+
+        setLoading(false);
+
+      } catch (error) {
+        console.log(error);
+
+        setLoading(false);
+      }
+    };
+
+  fetchOrders();
+
+}, []);
+if (loading) {
+  return (
+    <ActivityIndicator
+      size="large"
+    />
+  );
+}
 
   return (
 
@@ -77,11 +158,17 @@ export default function ReorderScreen() {
 
         <View style={styles.topSection}>
 
-          <LocationHeader
-            title="Rivertown Haven"
-            subtitle="SGM, petals, sai baba colony..."
-            dark
-          />
+<LocationHeader
+  title={
+    userData?.name ||
+    'Rivertown Haven'
+  }
+  subtitle={
+    userData?.address ||
+    'SGM, petals, sai baba colony...'
+  }
+  dark
+/>
 
           <SearchBar dark />
 
@@ -184,18 +271,40 @@ export default function ReorderScreen() {
             History
           </Text>
 
-          {historyData.map(item => (
+{historyData.map(item => {
+
+const dish =
+  dishes.find(
+    d =>
+      d.dishId ===
+      item.items?.[0]
+        ?.dishId,
+  );
+
+return (
+            
 
             <View
-              key={item.id}
+             key={item.orderId}
               style={styles.historyCard}>
 
               {/* IMAGE */}
 
-              <Image
-                source={item.image}
-                style={styles.foodImage}
-              />
+<Image
+  source={
+    dish?.image
+      ? {
+          uri:
+            dish.image,
+        }
+      : require(
+          '../../assets/images/reorder/Dish.png'
+        )
+  }
+  style={
+    styles.foodImage
+  }
+/>
 
               {/* CONTENT */}
 
@@ -211,12 +320,14 @@ export default function ReorderScreen() {
                       
                       style={styles.foodName}>
 
-                      {item.name}
+{dish?.name ||
+'Food Item'}
 
                     </Text>
 
                     <Text style={styles.locationText}>
-                      {item.location}
+{userData?.address ||
+'Address'}
                     </Text>
 
                     <View style={styles.viewMenuRow}>
@@ -262,7 +373,14 @@ export default function ReorderScreen() {
                     numberOfLines={1}
                     style={styles.itemText}>
 
-                    5 x Crispy Chicken + Crispy Chicken.
+{item.items?.length
+  ? item.items
+.map(
+(food: any) =>
+`${food.quantity} x ${dish?.name}`
+)
+      .join(', ')
+  : 'No items'}
 
                   </Text>
 
@@ -276,7 +394,10 @@ export default function ReorderScreen() {
   numberOfLines={1}
   style={styles.orderPlaced}>
 
-  Order placed on 23 oct, 5:08 PM
+ Order placed on{' '}
+{new Date(
+  item.createdAt,
+).toLocaleString()}
 
 </Text>
 
@@ -295,12 +416,58 @@ export default function ReorderScreen() {
                 <View style={styles.bottomRow}>
 
                   <Text style={styles.amount}>
-                    {item.amount}
+                 ${
+(
+(dish?.price || 0) *
+(item.items?.[0]
+?.quantity || 1)
+).toFixed(2)
+}
                   </Text>
 
-                  <TouchableOpacity
-                    activeOpacity={0.9}
-                    style={styles.reorderButton}>
+<TouchableOpacity
+  activeOpacity={0.9}
+  style={styles.reorderButton}
+onPress={() =>
+  navigation.navigate(
+    'BookingScreen',
+    {
+      order: {
+        ...item,
+
+        dishId:
+          dish?.dishId,
+
+        name:
+          dish?.name,
+
+        image:
+          dish?.image,
+
+        price:
+          dish?.price,
+
+        quantity:
+          item.items?.[0]
+            ?.quantity || 1,
+
+        prepTime:
+          dish?.prepTime,
+
+        restaurantName:
+          'Restaurant',
+
+        userAddress:
+          userData?.address,
+
+        originalPrice:
+          (
+            dish?.price || 0
+          ) + 5,
+      },
+    },
+  )
+}>
 
                     <Text style={styles.reorderText}>
                       Reorder
@@ -314,7 +481,7 @@ export default function ReorderScreen() {
 
             </View>
 
-          ))}
+          );})}
 
         </View>
 

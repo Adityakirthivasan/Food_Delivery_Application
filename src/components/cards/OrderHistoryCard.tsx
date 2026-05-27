@@ -99,7 +99,7 @@ export default function OrderHistoryCard({ item }: any){
                 letterSpacing: -0.24,
               },
             ]}>
-            {item.price}
+            ${item.total ?? 0}
           </Text>
         </View>
 

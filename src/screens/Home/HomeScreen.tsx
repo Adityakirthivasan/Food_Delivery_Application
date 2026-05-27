@@ -28,28 +28,122 @@ import SearchBar from '../../components/inputs/SearchBar';
 
 import HomeCard from '../../components/cards/HomeCard';
 
-import { topPickData, categoryData } from '../../data/homeData';
 
+import { topPickData, categoryData } from '../../data/homeData';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { scale, width } from '../../utils/responsive';
 import ScooterSvg from '../../assets/images/home/action/Scooter.svg';
 export default function HomeScreen() {
   const navigation = useNavigation<any>();
     const [restaurantData, setRestaurantData] = useState<any[]>([]);
+    const [topPicks, setTopPicks] = useState<any[]>([]);
+    const [offers, setOffers] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+  // const [categories, setCategories] = useState<any[]>([]);
+  const [categories] =
+  useState(categoryData);
+  const [userData, setUserData] =
+  useState<any>(null);
 
-    useEffect(() => {
-      axios
-        .get('https://dinedash-backend-1.onrender.com/api/user/get-restaurants')
-        .then(response => {
-          setRestaurantData(response.data.result);
-          console.log(restaurantData)
-          setLoading(false);
-        })
-        .catch(error => {
-          console.error('Network Error:', error);
-          setLoading(false);
-        });
-    }, []);
+useEffect(() => {
+
+  const fetchRestaurants =
+    async () => {
+
+      const storedUser =
+        await AsyncStorage.getItem(
+          'user',
+        );
+
+      if (storedUser) {
+        setUserData(
+          JSON.parse(
+            storedUser,
+          ),
+        );
+      }
+
+      try {
+      const restaurantsRes = await axios.get(
+        'https://dinedash-backend-1.onrender.com/api/user/get-restaurants',
+      );
+
+      const rawRestaurants = restaurantsRes.data.result || [];
+
+      const distancePromises = rawRestaurants.map(
+        async (restaurant: any) => {
+          try {
+            const distanceRes = await axios.get(
+              'https://dinedash-backend-1.onrender.com/api/user/get-distances',
+              {
+                params: {
+                  userLat: 11.027471,
+                  userLng: 76.873813,
+                  resLat: restaurant.latitude,
+                  resLng: restaurant.longitude,
+                },
+              },
+            );
+
+            const logistics = distanceRes.data.data;
+
+            return {
+              ...restaurant,
+              distance: logistics.distanceKm,
+              deliveryTime: logistics.travelDurationMinutes,
+            };
+          } catch {
+            return {
+              ...restaurant,
+              distance: '2.0',
+              deliveryTime: '15-20',
+            };
+          }
+        },
+      );
+
+      const hydratedRestaurants =
+        await Promise.all(distancePromises);
+        const dishesRes = await axios.get(
+  'https://dinedash-backend-1.onrender.com/api/user/get-dishes',
+);
+
+setTopPicks(dishesRes.data.result || []);
+const offersRes = await axios.get(
+  'https://dinedash-backend-1.onrender.com/api/user/get-offers',
+);
+// const uniqueCategories = [
+//   ...new Map(
+//     (dishesRes.data.result || []).map(
+//       (dish: any) => [
+//         dish.category,
+//         {
+//           category: dish.category,
+//           image: dish.image || '',
+//         },
+//       ],
+//     ),
+//   ).values(),
+// ];
+
+// setCategories(uniqueCategories);
+
+//setCategories(uniqueCategories as any);
+
+
+
+setOffers(offersRes.data.result || []);
+
+      setRestaurantData(hydratedRestaurants);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+
+  fetchRestaurants();
+}, []);
 
     if (loading) {
       return <ActivityIndicator size="large" />;
@@ -76,11 +170,21 @@ export default function HomeScreen() {
             {/* HEADER */}
 
             <View style={styles.headerWrapper}>
-              <LocationHeader
-                title="Rivertown Haven"
-                subtitle="SGM, petals, sai baba colony..."
-                onProfilePress={() => navigation.navigate('MyOrdersScreen')}
-              />
+<LocationHeader
+  title={
+    userData?.name ||
+    'Rivertown Haven'
+  }
+  subtitle={
+    userData?.address ||
+    'SGM, petals, sai baba colony...'
+  }
+  onProfilePress={() =>
+    navigation.navigate(
+      'MyOrdersScreen',
+    )
+  }
+/>
 
               <TouchableOpacity
                 activeOpacity={0.95}
@@ -93,12 +197,18 @@ export default function HomeScreen() {
             {/* OFFER */}
 
             <View style={styles.offerContent}>
-              <Text style={styles.offerTitle}>Get extra $50 OFF!</Text>
+              {/* <Text style={styles.offerTitle}>Get extra $50 OFF!</Text> */}
+              <Text style={styles.offerTitle}>
+  {offers?.[0]?.name || 'Get extra $50 OFF!'}
+</Text>
 
-              <Text style={styles.offerSubtitle}>
+              {/* <Text style={styles.offerSubtitle}>
                 Win today, eat for less tomorrow.
-              </Text>
-
+              </Text> */}
+<Text style={styles.offerSubtitle}>
+  {offers?.[0]?.description ||
+    'Win today, eat for less tomorrow.'}
+</Text>
               <TouchableOpacity activeOpacity={0.9} style={styles.orderButton}>
                 <Text style={styles.orderButtonText}>Order now</Text>
               </TouchableOpacity>
@@ -152,14 +262,16 @@ export default function HomeScreen() {
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.categoryScroll}
             >
-              {categoryData.map(item => (
-                <HomeCard
-                  key={item.id}
-                  type="category"
-                  title={item.title}
-                  image={item.image}
-                />
-              ))}
+{categories.map(
+  (item: any) => (
+    <HomeCard
+      key={item.id}
+      type="category"
+      title={item.title}
+      image={item.image}
+    />
+  ),
+)}
             </ScrollView>
           </View>
 
@@ -181,9 +293,13 @@ export default function HomeScreen() {
             </View>
 
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {topPickData.map(item => (
-                <HomeCard key={item.id} type="topPick" item={item} />
-              ))}
+{topPicks.map(item => (
+  <HomeCard
+    key={item.dishId}
+    type="topPick"
+    item={item}
+  />
+))}
             </ScrollView>
           </View>
 
